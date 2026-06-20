@@ -1,8 +1,5 @@
 module Main where
 
-import qualified MyLib (someFunc)
-
 main :: IO ()
 main = do
-  putStrLn "Hello, Haskell!"
-  MyLib.someFunc
+  error "The executable app part is not implemented yet!"
