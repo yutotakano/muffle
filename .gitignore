@@ -1,0 +1,9 @@
+# General Files
+.DS_Store
+
+# IDE files
+.vscode
+
+# Cabal Artifacts
+dist-newstyle
+
