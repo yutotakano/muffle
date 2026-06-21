@@ -73,6 +73,7 @@ data ParsedSchema
     | IntegerSchema ParsedSchemaInteger
     | ObjectSchema ParsedSchemaObject
     | RawTypeSchema ParsedSchemaRawType
+    | EmptySchema
     deriving Show
 
 parseSchema :: Object -> Parser ParsedSchema
@@ -81,7 +82,9 @@ parseSchema obj
     | member "const" obj = parseConstant obj
     | member "enum" obj && member "allOf" obj = parseTypedEnum obj
     | member "enum" obj = parseEnum obj
-    | otherwise = parseAnyOf obj <|> parseAllOf obj <|> parseOneOf obj <|> parseArray obj <|> parseInteger obj <|> parseObject obj <|> parseRawType obj <|> parseAlternativeTypes obj
+    | member "type" obj && Data.Aeson.KeyMap.lookup "type" obj == Just (Data.Aeson.Types.String $ T.pack "object") = parseObject obj
+    | null (keys obj) = pure EmptySchema
+    | otherwise = parseAnyOf obj <|> parseAllOf obj <|> parseOneOf obj <|> parseArray obj <|> parseInteger obj <|> parseRawType obj <|> parseAlternativeTypes obj
   where
     parseRef o = do
         ref <- o .: "$ref"
@@ -222,6 +225,7 @@ convertRawTypeSchemasToRef topLevel (schema:schemas) = case schema of
         ((name, RefSchema (ParsedSchemaRef name)) :)
         (convertRawTypeSchemasToRef topLevel schemas)
     (_name, RefSchema _ref) -> bimap id (schema :) (convertRawTypeSchemasToRef topLevel schemas)
+    (_name, EmptySchema) -> bimap id (schema :) (convertRawTypeSchemasToRef topLevel schemas)
 
 
 main :: IO ()
