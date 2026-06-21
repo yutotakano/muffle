@@ -10,7 +10,7 @@ import qualified Data.Aeson.Types (Value (Object, String))
 import Data.Aeson.KeyMap (keys, insert, member, lookup)
 import Control.Monad (forM)
 import Control.Applicative ((<|>))
-import Data.Aeson.Key (toString)
+import Data.Aeson.Key (toString, fromString)
 import qualified Data.Text as T
 import Data.Bifunctor (bimap)
 import Text.Pretty.Simple (pPrint)
@@ -158,7 +158,7 @@ parseSchema obj
             [] -> fail "Expected 'type' field to be a non-empty array of strings"
             _ -> pure ()
 
-        AnyOfSchema <$> forM types (\t -> do
+        AnyOfSchema <$> forM types (\t -> flip (<?>) (Key $ fromString t) $ do
             let schemaObj = insert "type" (Data.Aeson.Types.String (T.pack t)) o
             parsedSchema <- parseSchema schemaObj
             return ("", parsedSchema))
