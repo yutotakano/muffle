@@ -60,17 +60,18 @@ data ParsedSchemaObject = ParsedSchemaObject
         parsedSchemaObjectRequired :: [String]
     } deriving Show
 
-data ParsedSchema = RefSchema ParsedSchemaRef
-                  | AnyOfSchema [(String, ParsedSchema)]
-                  | AllOfSchema [(String, ParsedSchema)]
-                  | OneOfSchema [(String, ParsedSchema)]
-                  | ConstSchema ParsedSchemaConstant
-                  | EnumSchema ParsedSchemaEnum
-                  | TypedEnumSchema ParsedSchemaTypedEnum
-                  | ArraySchema ParsedSchemaArray
-                  | IntegerSchema ParsedSchemaInteger
-                  | ObjectSchema ParsedSchemaObject
-                  | RawTypeSchema ParsedSchemaRawType
+data ParsedSchema
+    = RefSchema ParsedSchemaRef
+    | AnyOfSchema [(String, ParsedSchema)]
+    | AllOfSchema [(String, ParsedSchema)]
+    | OneOfSchema [(String, ParsedSchema)]
+    | ConstSchema ParsedSchemaConstant
+    | EnumSchema ParsedSchemaEnum
+    | TypedEnumSchema ParsedSchemaTypedEnum
+    | ArraySchema ParsedSchemaArray
+    | IntegerSchema ParsedSchemaInteger
+    | ObjectSchema ParsedSchemaObject
+    | RawTypeSchema ParsedSchemaRawType
     deriving Show
 
 parseSchema :: Object -> Parser ParsedSchema
