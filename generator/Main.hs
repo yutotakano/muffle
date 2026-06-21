@@ -177,8 +177,8 @@ convertRawTypeSchemasToRef :: [(String, ParsedSchema)] -> [(String, ParsedSchema
 convertRawTypeSchemasToRef _ [] = ([], [])
 convertRawTypeSchemasToRef topLevel (schema:schemas) = case schema of
     (name, RawTypeSchema rawType) -> bimap
-        ((name ++ parsedSchemaRawType rawType, RawTypeSchema rawType) :)
-        ((name, RefSchema (ParsedSchemaRef (name ++ parsedSchemaRawType rawType))) :)
+        ((name ++ parsedSchemaRawType rawType ++ "Type", RawTypeSchema rawType) :)
+        ((name, RefSchema (ParsedSchemaRef (name ++ parsedSchemaRawType rawType ++ "Type"))) :)
         (convertRawTypeSchemasToRef topLevel schemas)
     (_name, AnyOfSchema subschemas) -> bimap
         (fst (convertRawTypeSchemasToRef topLevel subschemas) ++)
@@ -205,8 +205,8 @@ convertRawTypeSchemasToRef topLevel (schema:schemas) = case schema of
         ((name, RefSchema (ParsedSchemaRef name)) :)
         (convertRawTypeSchemasToRef topLevel schemas)
     (name, ArraySchema array) -> bimap
-        ((name, ArraySchema array) :)
-        ((name, RefSchema (ParsedSchemaRef name)) :)
+        ((name ++ "Array", ArraySchema array) :)
+        ((name, RefSchema (ParsedSchemaRef (name ++ "Array"))) :)
         (convertRawTypeSchemasToRef topLevel schemas)
     (name, IntegerSchema integer) -> bimap
         ((name ++ "Integer", IntegerSchema integer) :)
