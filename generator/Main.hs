@@ -5,11 +5,13 @@ module Main where
 
 import Data.Aeson (eitherDecode)
 import Data.ByteString.Lazy as BS ( readFile )
-import Data.Aeson.Types ( (.:), (.:?),  (.!=), Object, Parser, parseEither, (<?>), JSONPathElement (..), Value (Object) )
-import Data.Aeson.KeyMap (keys)
+import Data.Aeson.Types ( (.:), (.:?),  (.!=), Object, Parser, parseEither, (<?>), JSONPathElement (..) )
+import qualified Data.Aeson.Types (Value (Object, String))
+import Data.Aeson.KeyMap (keys, insert)
 import Control.Monad (forM)
 import Control.Applicative ((<|>))
 import Data.Aeson.Key (toString)
+import qualified Data.Text as T
 
 
 -- | OpenAPI 3.1 allows arrays of types or a single type.
@@ -79,7 +81,7 @@ data ParsedSchema = RefSchema ParsedSchemaRef
 
 parseSchema :: Object -> Parser ParsedSchema
 parseSchema obj =
-    parseRef obj <|> parseConstant obj <|> parseTypedEnum obj <|> parseEnum obj <|> parseAnyOf obj <|> parseAllOf obj <|> parseOneOf obj <|> parseArray obj <|> parseInteger obj <|> parseObject obj <|> parseRawType obj
+    parseRef obj <|> parseConstant obj <|> parseTypedEnum obj <|> parseEnum obj <|> parseAnyOf obj <|> parseAllOf obj <|> parseOneOf obj <|> parseArray obj <|> parseInteger obj <|> parseObject obj <|> parseRawType obj <|> parseAlternativeTypes obj
   where
     parseRef o = RefSchema . ParsedSchemaRef <$> (o .: "$ref")
     parseConstant o = ConstSchema . ParsedSchemaConstant <$> (o .: "const")
@@ -121,7 +123,7 @@ parseSchema obj =
     parseArray o = do
         items <- o .:? "items"
         case items of
-            Just (Object itemsObj) -> do
+            Just (Data.Aeson.Types.Object itemsObj) -> do
                 parsedItems <- parseSchema itemsObj
                 minItems <- itemsObj .:? "minItems"
                 maxItems <- itemsObj .:? "maxItems"
@@ -151,6 +153,16 @@ parseSchema obj =
         return $ ObjectSchema $ ParsedSchemaObject properties required
     parseRawType o = do
         RawTypeSchema . ParsedSchemaRawType <$> (o .: "type")
+    parseAlternativeTypes o = do
+        types <- o .: "type"
+        case types of
+            [] -> fail "Expected 'type' field to be a non-empty array of strings"
+            _ -> pure()
+
+        AnyOfSchema <$> forM types (\t -> do
+            let schemaObj = insert "type" (Data.Aeson.Types.String (T.pack t)) o
+            parsedSchema <- parseSchema schemaObj
+            return ("", parsedSchema))
 
 parseSchemas :: Object -> Parser [(String, ParsedSchema)]
 parseSchemas obj = do
