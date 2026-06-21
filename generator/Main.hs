@@ -12,6 +12,7 @@ import Control.Monad (forM)
 import Control.Applicative ((<|>))
 import Data.Aeson.Key (toString)
 import qualified Data.Text as T
+import Data.Bifunctor (bimap)
 
 
 data ParsedSchemaConstant = ParsedSchemaConstant
@@ -177,6 +178,52 @@ parseSchemas obj = do
         schema <- parseSchema schemaObj
         return (toString k, schema)
 
+convertRawTypeSchemasToRef :: [(String, ParsedSchema)] -> [(String, ParsedSchema)] -> ([(String, ParsedSchema)], [(String, ParsedSchema)])
+convertRawTypeSchemasToRef _ [] = ([], [])
+convertRawTypeSchemasToRef topLevel (schema:schemas) = case schema of
+    (name, RawTypeSchema rawType) -> bimap
+        ((name, RawTypeSchema rawType) :)
+        ((name, RefSchema (ParsedSchemaRef name)) :)
+        (convertRawTypeSchemasToRef topLevel schemas)
+    (_name, AnyOfSchema subschemas) -> bimap
+        (fst (convertRawTypeSchemasToRef topLevel subschemas) ++)
+        (snd (convertRawTypeSchemasToRef topLevel subschemas) ++)
+        (convertRawTypeSchemasToRef topLevel schemas)
+    (_name, AllOfSchema subschemas) -> bimap
+        (fst (convertRawTypeSchemasToRef topLevel subschemas) ++)
+        (snd (convertRawTypeSchemasToRef topLevel subschemas) ++)
+        (convertRawTypeSchemasToRef topLevel schemas)
+    (_name, OneOfSchema subschemas) -> bimap
+        (fst (convertRawTypeSchemasToRef topLevel subschemas) ++)
+        (snd (convertRawTypeSchemasToRef topLevel subschemas) ++)
+        (convertRawTypeSchemasToRef topLevel schemas)
+    (name, ConstSchema value) -> bimap
+        ((name, ConstSchema value) :)
+        ((name, RefSchema (ParsedSchemaRef name)) :)
+        (convertRawTypeSchemasToRef topLevel schemas)
+    (name, EnumSchema enum) -> bimap
+        ((name, EnumSchema enum) :)
+        ((name, RefSchema (ParsedSchemaRef name)) :)
+        (convertRawTypeSchemasToRef topLevel schemas)
+    (name, TypedEnumSchema typedEnum) -> bimap
+        ((name, TypedEnumSchema typedEnum) :)
+        ((name, RefSchema (ParsedSchemaRef name)) :)
+        (convertRawTypeSchemasToRef topLevel schemas)
+    (name, ArraySchema array) -> bimap 
+        ((name, ArraySchema array) :)
+        ((name, RefSchema (ParsedSchemaRef name)) :)
+        (convertRawTypeSchemasToRef topLevel schemas)
+    (name, IntegerSchema integer) -> bimap
+        ((name, IntegerSchema integer) :)
+        ((name, RefSchema (ParsedSchemaRef name)) :)
+        (convertRawTypeSchemasToRef topLevel schemas)
+    (name, ObjectSchema object) -> bimap
+        ((name, ObjectSchema object) :)
+        ((name, RefSchema (ParsedSchemaRef name)) :)
+        (convertRawTypeSchemasToRef topLevel schemas)
+    (_name, RefSchema _ref) -> bimap id (schema :) (convertRawTypeSchemasToRef topLevel schemas)
+
+
 main :: IO ()
 main = do
     putStrLn "Starting Generator"
@@ -192,4 +239,4 @@ main = do
         Right s -> return s
         Left err -> error err
 
-    print schemas
+    print $ convertRawTypeSchemasToRef schemas schemas
