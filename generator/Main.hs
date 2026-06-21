@@ -23,13 +23,13 @@ data ParsedSchemaConstant = ParsedSchemaConstant
 
 data ParsedSchemaEnum = ParsedSchemaEnum
     {
-        parsedSchemaEnum :: [Either String Integer]
+        parsedSchemaEnum :: Either [String] [Integer]
     } deriving Show
 
 data ParsedSchemaTypedEnum = ParsedSchemaTypedEnum
     {
         parsedSchemaTypedEnumType :: String,
-        parsedSchemaTypedEnumValues :: [Either String Integer]
+        parsedSchemaTypedEnumValues :: Either [String] [Integer]
     } deriving Show
 
 data ParsedSchemaRef = ParsedSchemaRef
@@ -93,12 +93,12 @@ parseSchema obj
             then pure $ RefSchema . ParsedSchemaRef $ T.unpack $ T.drop (T.length "#/components/schemas/") ref
             else fail "Expected $ref to start with '#/components/schemas/'"
     parseConstant o = ConstSchema . ParsedSchemaConstant <$> (o .: "const")
-    parseEnum o = EnumSchema . ParsedSchemaEnum <$> (o .: "enum")
+    parseEnum o = EnumSchema . ParsedSchemaEnum <$> (Left <$> (o .: "enum") <|> Right <$> (o .: "enum"))
     parseTypedEnum o = do
         -- If there is an "allOf" and "enum" and the allOf array is a single
         -- schema that succeeds parseRef, then we can treat this as a typed enum
         allOf <- o .:? "allOf"
-        enum <- (Left <$>) <$> o .: "enum" <|> (Right <$>) <$> o .: "enum"
+        enum <- Left <$> (o .: "enum") <|> Right <$> (o .: "enum")
         case (allOf, enum) of
             (Just [schema], eVal) -> case parseEither parseRef schema of
                 Right (RefSchema ref) -> return $ TypedEnumSchema (ParsedSchemaTypedEnum (parsedSchemaRef ref) eVal)
