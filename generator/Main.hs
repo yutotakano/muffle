@@ -14,12 +14,6 @@ import Data.Aeson.Key (toString)
 import qualified Data.Text as T
 
 
--- | OpenAPI 3.1 allows arrays of types or a single type.
-data ParsedSchemaType
-    = ParsedSchemaTypeString String
-    | ParsedSchemaTypeArray [String]
-    deriving Show
-
 data ParsedSchemaConstant = ParsedSchemaConstant
     {
         parsedSchemaConst :: String
