@@ -83,7 +83,7 @@ parseSchema obj
     | member "const" obj = parseConstant obj
     | member "enum" obj && member "allOf" obj = parseTypedEnum obj
     | member "enum" obj = parseEnum obj
-    | member "type" obj && Data.Aeson.KeyMap.lookup "type" obj == Just (Data.Aeson.Types.String $ T.pack "object") = parseObject obj
+    | Data.Aeson.KeyMap.lookup "type" obj == Just (Data.Aeson.Types.String $ T.pack "object") = parseObject obj
     | null (keys obj) = pure EmptySchema
     | otherwise = parseAnyOf obj <|> parseAllOf obj <|> parseOneOf obj <|> parseArray obj <|> parseInteger obj <|> parseRawType obj <|> parseAlternativeTypes obj
   where
