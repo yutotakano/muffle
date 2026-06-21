@@ -7,7 +7,7 @@ import Data.Aeson (eitherDecode)
 import Data.ByteString.Lazy as BS ( readFile )
 import Data.Aeson.Types ( (.:), (.:?),  (.!=), Object, Parser, parseEither, (<?>), JSONPathElement (..) )
 import qualified Data.Aeson.Types (Value (Object, String))
-import Data.Aeson.KeyMap (keys, insert)
+import Data.Aeson.KeyMap (keys, insert, member)
 import Control.Monad (forM)
 import Control.Applicative ((<|>))
 import Data.Aeson.Key (toString)
@@ -75,10 +75,18 @@ data ParsedSchema
     deriving Show
 
 parseSchema :: Object -> Parser ParsedSchema
-parseSchema obj =
-    parseRef obj <|> parseConstant obj <|> parseTypedEnum obj <|> parseEnum obj <|> parseAnyOf obj <|> parseAllOf obj <|> parseOneOf obj <|> parseArray obj <|> parseInteger obj <|> parseObject obj <|> parseRawType obj <|> parseAlternativeTypes obj
+parseSchema obj
+    | member "$ref" obj = parseRef obj
+    | member "const" obj = parseConstant obj
+    | member "enum" obj && member "allOf" obj = parseTypedEnum obj
+    | member "enum" obj = parseEnum obj
+    | otherwise = parseAnyOf obj <|> parseAllOf obj <|> parseOneOf obj <|> parseArray obj <|> parseInteger obj <|> parseObject obj <|> parseRawType obj <|> parseAlternativeTypes obj
   where
-    parseRef o = RefSchema . ParsedSchemaRef <$> (o .: "$ref")
+    parseRef o = do
+        ref <- o .: "$ref"
+        if T.isPrefixOf "#/components/schemas/" ref
+            then pure $ RefSchema . ParsedSchemaRef $ T.unpack $ T.drop (T.length "#/components/schemas/") ref
+            else fail "Expected $ref to start with '#/components/schemas/'"
     parseConstant o = ConstSchema . ParsedSchemaConstant <$> (o .: "const")
     parseEnum o = EnumSchema . ParsedSchemaEnum <$> (o .: "enum")
     parseTypedEnum o = do
@@ -152,7 +160,7 @@ parseSchema obj =
         types <- o .: "type"
         case types of
             [] -> fail "Expected 'type' field to be a non-empty array of strings"
-            _ -> pure()
+            _ -> pure ()
 
         AnyOfSchema <$> forM types (\t -> do
             let schemaObj = insert "type" (Data.Aeson.Types.String (T.pack t)) o
