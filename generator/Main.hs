@@ -1,77 +1,158 @@
 {-# LANGUAGE OverloadedStrings #-}
+{- HLINT ignore "Use newtype instead of data" -}
 
 module Main where
 
 import Data.Aeson (eitherDecode)
 import Data.ByteString.Lazy as BS ( readFile )
-import Data.Aeson.Types ( (.:), (.:?),  (.!=), Object, Parser, parseEither, (<?>), JSONPathElement (..) )
+import Data.Aeson.Types ( (.:), (.:?),  (.!=), Object, Parser, parseEither, (<?>), JSONPathElement (..), Value (Object) )
 import Data.Aeson.KeyMap (keys)
 import Control.Monad (forM)
 import Control.Applicative ((<|>))
+import Data.Aeson.Key (toString)
 
 
+-- | OpenAPI 3.1 allows arrays of types or a single type.
+data ParsedSchemaType
+    = ParsedSchemaTypeString String
+    | ParsedSchemaTypeArray [String]
+    deriving Show
 
-data SchemaBaseSchema = SchemaBaseSchema
+data ParsedSchemaConstant = ParsedSchemaConstant
     {
-        schemaType :: [String],
-        schemaProperties :: [(String, Schema)],
-        schemaRequired :: [String]
+        parsedSchemaConst :: String
     } deriving Show
 
-data Schema = BaseSchema SchemaBaseSchema
-            | RefSchema String
-            | AnyOfSchema [Schema]
-            | AllOfSchema [Schema]
-            | OneOfSchema [Schema]
-            | EmptySchema
-            deriving Show
+data ParsedSchemaEnum = ParsedSchemaEnum
+    {
+        parsedSchemaEnum :: [Either String Integer]
+    } deriving Show
 
-newtype NoRefSchema = NoRefSchema SchemaBaseSchema deriving Show
+data ParsedSchemaTypedEnum = ParsedSchemaTypedEnum
+    {
+        parsedSchemaTypedEnumType :: String,
+        parsedSchemaTypedEnumValues :: [Either String Integer]
+    } deriving Show
 
-parseSchema :: Object -> Parser Schema
+data ParsedSchemaRef = ParsedSchemaRef
+    {
+        parsedSchemaRef :: String
+    } deriving Show
+
+data ParsedSchemaArray = ParsedSchemaArray
+    {
+        parsedSchemaArrayItems :: ParsedSchema,
+        parsedSchemaArrayMinItems :: Maybe Integer,
+        parsedSchemaArrayMaxItems :: Maybe Integer
+    } deriving Show
+
+data ParsedSchemaInteger = ParsedSchemaInteger
+    {
+        parsedSchemaFormat :: Maybe String,
+        parsedSchemaIntegerMinimum :: Maybe Integer,
+        parsedSchemaIntegerMaximum :: Maybe Integer
+    } deriving Show
+
+data ParsedSchemaRawType = ParsedSchemaRawType
+    {
+        parsedSchemaRawType :: String
+    } deriving Show
+
+data ParsedSchemaObject = ParsedSchemaObject
+    {
+        parsedSchemaObjectProperties :: [(String, ParsedSchema)],
+        parsedSchemaObjectRequired :: [String]
+    } deriving Show
+
+data ParsedSchema = RefSchema ParsedSchemaRef
+                  | AnyOfSchema [(String, ParsedSchema)]
+                  | AllOfSchema [(String, ParsedSchema)]
+                  | OneOfSchema [(String, ParsedSchema)]
+                  | ConstSchema ParsedSchemaConstant
+                  | EnumSchema ParsedSchemaEnum
+                  | TypedEnumSchema ParsedSchemaTypedEnum
+                  | ArraySchema ParsedSchemaArray
+                  | IntegerSchema ParsedSchemaInteger
+                  | ObjectSchema ParsedSchemaObject
+                  | RawTypeSchema ParsedSchemaRawType
+    deriving Show
+
+parseSchema :: Object -> Parser ParsedSchema
 parseSchema obj =
-    parseRef
-    <|> parseAnyOf
-    <|> parseAllOf
-    <|> parseOneOf
-    <|> parseBase
-    <|> parseEmpty
+    parseRef obj <|> parseConstant obj <|> parseTypedEnum obj <|> parseEnum obj <|> parseAnyOf obj <|> parseAllOf obj <|> parseOneOf obj <|> parseArray obj <|> parseInteger obj <|> parseObject obj <|> parseRawType obj
   where
-    parseRef = do
-        RefSchema <$> obj .: "$ref"
+    parseRef o = RefSchema . ParsedSchemaRef <$> (o .: "$ref")
+    parseConstant o = ConstSchema . ParsedSchemaConstant <$> (o .: "const")
+    parseEnum o = EnumSchema . ParsedSchemaEnum <$> (o .: "enum")
+    parseTypedEnum o = do
+        -- If there is an "allOf" and "enum" and the allOf array is a single
+        -- schema that succeeds parseRef, then we can treat this as a typed enum
+        allOf <- o .:? "allOf"
+        enum <- o .:? "enum"
+        case (allOf, enum) of
+            (Just [schema], Just enumValues) -> case parseEither parseRef schema of
+                Right (RefSchema ref) -> return $ TypedEnumSchema (ParsedSchemaTypedEnum (parsedSchemaRef ref) enumValues)
+                _ -> fail "allOf array did not contain a single $ref schema"
+            _ -> fail "Not a typed enum"
+    parseAnyOf o = do
+        anyOfSchemas <- o .:? "anyOf"
+        case anyOfSchemas of
+            Nothing -> fail "Expected 'anyOf' field for anyOf schema"
+            Just [] -> fail "Expected 'anyOf' array to have at least one schema"
+            Just schemas -> AnyOfSchema <$> forM schemas (\s -> do
+                parsed <- parseSchema s
+                return ("", parsed)) -- We don't have a name for these schemas, so we use an empty string
+    parseAllOf o = do
+        allOfSchemas <- o .:? "allOf"
+        case allOfSchemas of
+            Nothing -> fail "Expected 'allOf' field for allOf schema"
+            Just [] -> fail "Expected 'allOf' array to have at least one schema"
+            Just schemas -> AllOfSchema <$> forM schemas (\s -> do
+                parsed <- parseSchema s
+                return ("", parsed))
+    parseOneOf o = do
+        oneOfSchemas <- o .:? "oneOf"
+        case oneOfSchemas of
+            Nothing -> fail "Expected 'oneOf' field for oneOf schema"
+            Just [] -> fail "Expected 'oneOf' array to have at least one schema"
+            Just schemas -> OneOfSchema <$> forM schemas (\s -> do
+                parsed <- parseSchema s
+                return ("", parsed))
+    parseArray o = do
+        items <- o .:? "items"
+        case items of
+            Just (Object itemsObj) -> do
+                parsedItems <- parseSchema itemsObj
+                minItems <- itemsObj .:? "minItems"
+                maxItems <- itemsObj .:? "maxItems"
+                return $ ArraySchema $ ParsedSchemaArray parsedItems minItems maxItems
+            Just _ -> fail "Expected 'items' to be an object"
+            Nothing -> fail "Expected 'items' field for array schema"
+    parseInteger o = do
+        parsedType <- o .: "type"
+        case (parsedType :: String) of
+            "integer" -> pure ()
+            _ -> fail "Expected 'type' to be 'integer'"
+        IntegerSchema <$> (ParsedSchemaInteger <$> (o .:? "format") <*> (o .:? "minimum") <*> (o .:? "maximum"))
+    parseObject o = do
+        parsedType <- o .: "type"
+        case (parsedType :: String) of
+            "object" -> pure ()
+            _ -> fail "Expected 'type' to be 'object'"
 
-    parseAnyOf = do
-        mAnyOf <- obj .: "anyOf"
-        AnyOfSchema <$> forM mAnyOf parseSchema
-
-    parseAllOf = do
-        mAllOf <- obj .: "allOf"
-        AllOfSchema <$> forM mAllOf parseSchema
-
-    parseOneOf = do
-        mOneOf <- obj .: "oneOf"
-        OneOfSchema <$> forM mOneOf parseSchema
-
-    parseBase = do
-        -- If "type" is a string, convert it to a list with one element
-        parsedSchemaType <- obj .: "type" <|> fmap (:[]) (obj .: "type")
-
-        propertiesObj <- obj .:? "properties" .!= mempty
+        propertiesObj <- o .:? "properties" .!= mempty
         let propertyNames = keys propertiesObj
-        parsedProperties <- forM propertyNames $ \k -> do
-            propObj <- propertiesObj .: k
-            propSchema <- parseSchema propObj
-            return (show k, propSchema)
-        parsedRequired <- obj .:? "required" .!= []
-        return $ BaseSchema $ SchemaBaseSchema parsedSchemaType parsedProperties parsedRequired
+        properties <- forM propertyNames $ \k -> flip (<?>) (Key k) $
+            do
+                propertySchemaObj <- propertiesObj .: k
+                propertySchema <- parseSchema propertySchemaObj
+                return (toString k, propertySchema)
+        required <- o .:? "required" .!= []
+        return $ ObjectSchema $ ParsedSchemaObject properties required
+    parseRawType o = do
+        RawTypeSchema . ParsedSchemaRawType <$> (o .: "type")
 
-    parseEmpty = do
-        -- Check that the object is empty (i.e., has no keys)
-        if null (keys obj)
-            then return $ BaseSchema $ SchemaBaseSchema [] [] []
-            else fail "Expected an empty schema object as all other parsers failed"
-
-parseSchemas :: Object -> Parser [(String, Schema)]
+parseSchemas :: Object -> Parser [(String, ParsedSchema)]
 parseSchemas obj = do
     components <- obj .: "components"
     schemasObj <- components .: "schemas"
@@ -79,7 +160,7 @@ parseSchemas obj = do
     forM schemaNames $ \k -> flip (<?>) (Key k) $ do
         schemaObj <- schemasObj .: k
         schema <- parseSchema schemaObj
-        return (show k, schema)
+        return (toString k, schema)
 
 main :: IO ()
 main = do
