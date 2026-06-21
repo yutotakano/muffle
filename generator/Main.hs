@@ -106,17 +106,17 @@ parseSchema obj
             _ -> fail "Not a typed enum"
     parseAnyOf o = do
         schemas <- o .: "anyOf"
-        AnyOfSchema <$> forM schemas (\s -> do
+        AnyOfSchema <$> forM (zip [0..] schemas) (\(i, s) -> flip (<?>) (Index i) $ do
             parsed <- parseSchema s
             return ("", parsed)) -- We don't have a name for these schemas, so we use an empty string
     parseAllOf o = do
         schemas <- o .: "allOf"
-        AllOfSchema <$> forM schemas (\s -> do
+        AllOfSchema <$> forM (zip [0..] schemas) (\(i, s) -> flip (<?>) (Index i) $ do
             parsed <- parseSchema s
             return ("", parsed))
     parseOneOf o = do
         schemas <- o .: "oneOf"
-        OneOfSchema <$> forM schemas (\s -> do
+        OneOfSchema <$> forM (zip [0..] schemas) (\(i, s) -> flip (<?>) (Index i) $ do
             parsed <- parseSchema s
             return ("", parsed))
     parseArray o = do
