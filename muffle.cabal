@@ -52,6 +52,7 @@ executable generator
       , aeson ^>=2.3.0.0
       , bytestring ^>=0.12.0.0
       , text ^>=2.1.1
+      , pretty-simple ^>=4.1.4.0
 
     hs-source-dirs:   generator
     default-language: Haskell2010

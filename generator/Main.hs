@@ -13,6 +13,7 @@ import Control.Applicative ((<|>))
 import Data.Aeson.Key (toString)
 import qualified Data.Text as T
 import Data.Bifunctor (bimap)
+import Text.Pretty.Simple (pPrint)
 
 
 data ParsedSchemaConstant = ParsedSchemaConstant
@@ -239,4 +240,4 @@ main = do
         Right s -> return s
         Left err -> error err
 
-    print $ convertRawTypeSchemasToRef schemas schemas
+    pPrint $ convertRawTypeSchemasToRef [] schemas
