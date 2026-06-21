@@ -7,7 +7,7 @@ import Data.Aeson (eitherDecode)
 import Data.ByteString.Lazy as BS ( readFile )
 import Data.Aeson.Types ( (.:), (.:?),  (.!=), Object, Parser, parseEither, (<?>), JSONPathElement (..) )
 import qualified Data.Aeson.Types (Value (Object, String))
-import Data.Aeson.KeyMap (keys, insert, member)
+import Data.Aeson.KeyMap (keys, insert, member, lookup)
 import Control.Monad (forM)
 import Control.Applicative ((<|>))
 import Data.Aeson.Key (toString)
@@ -97,36 +97,27 @@ parseSchema obj
         -- If there is an "allOf" and "enum" and the allOf array is a single
         -- schema that succeeds parseRef, then we can treat this as a typed enum
         allOf <- o .:? "allOf"
-        enum <- o .:? "enum"
+        enum <- (Left <$>) <$> o .: "enum" <|> (Right <$>) <$> o .: "enum"
         case (allOf, enum) of
-            (Just [schema], Just enumValues) -> case parseEither parseRef schema of
-                Right (RefSchema ref) -> return $ TypedEnumSchema (ParsedSchemaTypedEnum (parsedSchemaRef ref) enumValues)
+            (Just [schema], eVal) -> case parseEither parseRef schema of
+                Right (RefSchema ref) -> return $ TypedEnumSchema (ParsedSchemaTypedEnum (parsedSchemaRef ref) eVal)
                 _ -> fail "allOf array did not contain a single $ref schema"
             _ -> fail "Not a typed enum"
     parseAnyOf o = do
-        anyOfSchemas <- o .:? "anyOf"
-        case anyOfSchemas of
-            Nothing -> fail "Expected 'anyOf' field for anyOf schema"
-            Just [] -> fail "Expected 'anyOf' array to have at least one schema"
-            Just schemas -> AnyOfSchema <$> forM schemas (\s -> do
-                parsed <- parseSchema s
-                return ("", parsed)) -- We don't have a name for these schemas, so we use an empty string
+        schemas <- o .: "anyOf"
+        AnyOfSchema <$> forM schemas (\s -> do
+            parsed <- parseSchema s
+            return ("", parsed)) -- We don't have a name for these schemas, so we use an empty string
     parseAllOf o = do
-        allOfSchemas <- o .:? "allOf"
-        case allOfSchemas of
-            Nothing -> fail "Expected 'allOf' field for allOf schema"
-            Just [] -> fail "Expected 'allOf' array to have at least one schema"
-            Just schemas -> AllOfSchema <$> forM schemas (\s -> do
-                parsed <- parseSchema s
-                return ("", parsed))
+        schemas <- o .: "allOf"
+        AllOfSchema <$> forM schemas (\s -> do
+            parsed <- parseSchema s
+            return ("", parsed))
     parseOneOf o = do
-        oneOfSchemas <- o .:? "oneOf"
-        case oneOfSchemas of
-            Nothing -> fail "Expected 'oneOf' field for oneOf schema"
-            Just [] -> fail "Expected 'oneOf' array to have at least one schema"
-            Just schemas -> OneOfSchema <$> forM schemas (\s -> do
-                parsed <- parseSchema s
-                return ("", parsed))
+        schemas <- o .: "oneOf"
+        OneOfSchema <$> forM schemas (\s -> do
+            parsed <- parseSchema s
+            return ("", parsed))
     parseArray o = do
         items <- o .:? "items"
         case items of
@@ -185,8 +176,8 @@ convertRawTypeSchemasToRef :: [(String, ParsedSchema)] -> [(String, ParsedSchema
 convertRawTypeSchemasToRef _ [] = ([], [])
 convertRawTypeSchemasToRef topLevel (schema:schemas) = case schema of
     (name, RawTypeSchema rawType) -> bimap
-        ((name, RawTypeSchema rawType) :)
-        ((name, RefSchema (ParsedSchemaRef name)) :)
+        ((name ++ parsedSchemaRawType rawType, RawTypeSchema rawType) :)
+        ((name, RefSchema (ParsedSchemaRef (name ++ parsedSchemaRawType rawType))) :)
         (convertRawTypeSchemasToRef topLevel schemas)
     (_name, AnyOfSchema subschemas) -> bimap
         (fst (convertRawTypeSchemasToRef topLevel subschemas) ++)
@@ -201,31 +192,36 @@ convertRawTypeSchemasToRef topLevel (schema:schemas) = case schema of
         (snd (convertRawTypeSchemasToRef topLevel subschemas) ++)
         (convertRawTypeSchemasToRef topLevel schemas)
     (name, ConstSchema value) -> bimap
-        ((name, ConstSchema value) :)
-        ((name, RefSchema (ParsedSchemaRef name)) :)
+        ((name ++ "Const" ++ parsedSchemaConst value, ConstSchema value) :)
+        ((name, RefSchema (ParsedSchemaRef (name ++ "Const" ++ parsedSchemaConst value))) :)
         (convertRawTypeSchemasToRef topLevel schemas)
     (name, EnumSchema enum) -> bimap
-        ((name, EnumSchema enum) :)
-        ((name, RefSchema (ParsedSchemaRef name)) :)
+        ((name ++ "Enum", EnumSchema enum) :)
+        ((name, RefSchema (ParsedSchemaRef (name ++ "Enum"))) :)
         (convertRawTypeSchemasToRef topLevel schemas)
     (name, TypedEnumSchema typedEnum) -> bimap
         ((name, TypedEnumSchema typedEnum) :)
         ((name, RefSchema (ParsedSchemaRef name)) :)
         (convertRawTypeSchemasToRef topLevel schemas)
-    (name, ArraySchema array) -> bimap 
+    (name, ArraySchema array) -> bimap
         ((name, ArraySchema array) :)
         ((name, RefSchema (ParsedSchemaRef name)) :)
         (convertRawTypeSchemasToRef topLevel schemas)
     (name, IntegerSchema integer) -> bimap
-        ((name, IntegerSchema integer) :)
-        ((name, RefSchema (ParsedSchemaRef name)) :)
+        ((name ++ "Integer", IntegerSchema integer) :)
+        ((name, RefSchema (ParsedSchemaRef $ name ++ "Integer")) :)
         (convertRawTypeSchemasToRef topLevel schemas)
     (name, ObjectSchema object) -> bimap
-        ((name, ObjectSchema object) :)
-        ((name, RefSchema (ParsedSchemaRef name)) :)
+        (\rest -> [(name ++ "Object", ObjectSchema . fst $ replaceObjectPropertiesWithRefs object)] ++ snd (replaceObjectPropertiesWithRefs object) ++ rest)
+        ((name, RefSchema (ParsedSchemaRef $ name ++ "Object")) :)
         (convertRawTypeSchemasToRef topLevel schemas)
     (_name, RefSchema _ref) -> bimap id (schema :) (convertRawTypeSchemasToRef topLevel schemas)
     (_name, EmptySchema) -> bimap id (schema :) (convertRawTypeSchemasToRef topLevel schemas)
+
+replaceObjectPropertiesWithRefs :: ParsedSchemaObject -> (ParsedSchemaObject, [(String, ParsedSchema)])
+replaceObjectPropertiesWithRefs (ParsedSchemaObject properties required) = (ParsedSchemaObject newProperties required, newSchemas)
+  where
+    (newSchemas, newProperties) = convertRawTypeSchemasToRef [] properties
 
 
 main :: IO ()
