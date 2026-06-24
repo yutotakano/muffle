@@ -68,6 +68,7 @@ data ParsedSchemaObject = ParsedSchemaObject
 
 data ParsedSchema
     = RefSchema ParsedSchemaRef
+    | NullableSchema ParsedSchema
     | AnyOfSchema [(String, ParsedSchema)]
     | AllOfSchema [(String, ParsedSchema)]
     | OneOfSchema [(String, ParsedSchema)]
@@ -110,9 +111,20 @@ parseSchema obj
             _ -> fail "Not a typed enum"
     parseAnyOf o = do
         schemas <- o .: "anyOf"
-        AnyOfSchema <$> forM (zip [0..] schemas) (\(i, s) -> flip (<?>) (Index i) $ do
-            parsed <- parseSchema s
-            return ("", parsed)) -- We don't have a name for these schemas, so we use an empty string
+        (containsNull, nonNullSchemas) <- mapM parseSchema schemas >>= \parsedSchemas -> pure (any isRawTypeNullSchema parsedSchemas, filter (not . isRawTypeNullSchema) parsedSchemas)
+        if containsNull then do
+            -- Call function recursively with the null anyOf entry removed and
+            -- wrap in a NullableSchema
+            case nonNullSchemas of
+                -- Special case for a single non-null schema, we cut out the
+                -- anyOf
+                [schema] -> pure $ NullableSchema schema
+                _ -> NullableSchema . AnyOfSchema <$> forM (zip [0..] nonNullSchemas) (\(i, parsed) -> flip (<?>) (Index i) $ do
+                    return ("", parsed)) -- We don't have a name for these schemas, so we use an empty string
+            else
+                AnyOfSchema <$> forM (zip [0..] schemas) (\(i, s) -> flip (<?>) (Index i) $ do
+                    parsed <- parseSchema s
+                    return ("", parsed)) -- We don't have a name for these schemas, so we use an empty string
     parseAllOf o = do
         schemas <- o .: "allOf"
         AllOfSchema <$> forM (zip [0..] schemas) (\(i, s) -> flip (<?>) (Index i) $ do
@@ -120,9 +132,16 @@ parseSchema obj
             return ("", parsed))
     parseOneOf o = do
         schemas <- o .: "oneOf"
-        OneOfSchema <$> forM (zip [0..] schemas) (\(i, s) -> flip (<?>) (Index i) $ do
-            parsed <- parseSchema s
-            return ("", parsed))
+        (containsNull, nonNullSchemas) <- mapM parseSchema schemas >>= \parsedSchemas -> pure (any isRawTypeNullSchema parsedSchemas, filter (not . isRawTypeNullSchema) parsedSchemas)
+        if containsNull then do
+            case nonNullSchemas of
+                [schema] -> pure $ NullableSchema schema
+                _ -> NullableSchema . AnyOfSchema <$> forM (zip [0..] nonNullSchemas) (\(i, parsed) -> flip (<?>) (Index i) $ do
+                    return ("", parsed))
+            else
+                OneOfSchema <$> forM (zip [0..] schemas) (\(i, s) -> flip (<?>) (Index i) $ do
+                    parsed <- parseSchema s
+                    return ("", parsed))
     parseArray o = do
         items <- o .:? "items"
         case items of
@@ -190,6 +209,10 @@ convert schemas = foldl' (\acc (name, schema) -> flattenSchema name schema acc) 
 -- exists already.
 flattenSchema :: String -> ParsedSchema -> StrictMap.Map String ParsedSchema -> StrictMap.Map String ParsedSchema
 flattenSchema name EmptySchema acc = snd $ insertDeduplicate name EmptySchema acc
+flattenSchema name sch@(NullableSchema (RefSchema _ref)) acc = snd $ insertDeduplicate name sch acc
+flattenSchema name (NullableSchema innerSchema) acc =
+    let accWithFlattenedInner = flattenSchema (name ++ "NullableInner") innerSchema acc
+    in snd $ insertDeduplicate name (NullableSchema (RefSchema (ParsedSchemaRef (name ++ "NullableInner")))) accWithFlattenedInner
 flattenSchema name sch@(RefSchema _ref) acc = snd $ insertDeduplicate name sch acc
 flattenSchema name sch@(ConstSchema _const) acc = snd $ insertDeduplicate name sch acc
 flattenSchema name sch@(RawTypeSchema _rawType) acc = snd $ insertDeduplicate name sch acc
@@ -257,6 +280,10 @@ isRefSchema :: ParsedSchema -> Bool
 isRefSchema (RefSchema _) = True
 isRefSchema _ = False
 
+isRawTypeNullSchema :: ParsedSchema -> Bool
+isRawTypeNullSchema (RawTypeSchema (ParsedSchemaRawType "null")) = True
+isRawTypeNullSchema _ = False
+
 isFlatSchema :: ParsedSchema -> Bool
 isFlatSchema (RefSchema _) = True
 isFlatSchema (ConstSchema _) = True
@@ -271,6 +298,8 @@ isFlatSchema (AnyOfSchema schemas) = all (isRefSchema . snd) schemas
 isFlatSchema (AllOfSchema schemas) = all (isRefSchema . snd) schemas
 isFlatSchema (OneOfSchema schemas) = all (isRefSchema . snd) schemas
 isFlatSchema EmptySchema = True
+isFlatSchema (NullableSchema (RefSchema _)) = True
+isFlatSchema (NullableSchema _) = False
 
 capitalize :: String -> String
 capitalize [] = []
