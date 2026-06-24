@@ -421,5 +421,5 @@ main = do
     let haskellDeclarations = map (uncurry schemaToHaskellDeclaration) (StrictMap.toList flattenedSchemas)
 
     let outputFile = "lib/Muffle/Discord/Generated/Schemas.hs"
-    let moduleHeader = "{-# LANGUAGE DuplicateRecordFields #-}\nmodule Muffle.Discord.Generated.Schemas where\n\n"
+    let moduleHeader = "{-# LANGUAGE DuplicateRecordFields #-}\nmodule Muffle.Discord.Generated.Schemas where\n\nimport Data.Int (Int32, Int64)\n\n"
     writeFile outputFile (moduleHeader ++ unlines haskellDeclarations)
