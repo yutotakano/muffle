@@ -309,7 +309,7 @@ capitalize (x:xs) = toUpper x : xs
 schemaToHaskellDeclaration :: String -> ParsedSchema -> String
 schemaToHaskellDeclaration _ (RefSchema (ParsedSchemaRef _)) = error "Only way this can happen is if the original OpenAPI doc has a top-level ref schema"
 schemaToHaskellDeclaration name (NullableSchema (RefSchema (ParsedSchemaRef ref))) = "newtype " ++ name ++ " = " ++ name ++ " (Maybe " ++ ref ++ ")"
-schemaToHaskellDeclaration name (ConstSchema (ParsedSchemaConstant constValue)) = "newtype " ++ name ++ " = " ++ name ++ " (" ++ constValue ++ ")"
+schemaToHaskellDeclaration name (ConstSchema (ParsedSchemaConstant constValue)) = "newtype " ++ name ++ " = " ++ name ++ " \"" ++ constValue ++ "\""
 schemaToHaskellDeclaration name (RawTypeSchema (ParsedSchemaRawType rawType)) = case rawType of
     "string" -> "newtype " ++ name ++ " = " ++ name ++ " String"
     "number" -> "newtype " ++ name ++ " = " ++ name ++ " Integer"
@@ -320,7 +320,7 @@ schemaToHaskellDeclaration name (EnumSchema (ParsedSchemaEnum (Left values))) =
     "data " ++ name ++ " = " ++ intercalate " | " (map capitalize values)
 schemaToHaskellDeclaration name (EnumSchema (ParsedSchemaEnum (Right values))) =
     "data " ++ name ++ " = " ++ intercalate " | " (map (("Enum" ++) . show) values)
-schemaToHaskellDeclaration name (TypedEnumSchema (ParsedSchemaTypedEnum enumType _)) = "newtype " ++ name ++ " = " ++ name ++ " (" ++ enumType ++ ")"
+schemaToHaskellDeclaration name (TypedEnumSchema (ParsedSchemaTypedEnum enumType _)) = "newtype " ++ name ++ " = " ++ name ++ " \"" ++ enumType ++ "\""
 schemaToHaskellDeclaration name (IntegerSchema (ParsedSchemaInteger format _min _max)) = case format of
     Just "int32" -> "newtype " ++ name ++ " = " ++ name ++ " Int32"
     Just "int64" -> "newtype " ++ name ++ " = " ++ name ++ " Int64"
