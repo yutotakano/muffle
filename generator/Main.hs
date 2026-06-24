@@ -402,7 +402,9 @@ schemaToSimpleHaskellType (IntegerSchema (ParsedSchemaInteger format _min _max))
     Just "int64" -> Just "Int64"
     Nothing -> Just "Integer"
     _ -> Nothing
-schemaToSimpleHaskellType (ArraySchema (ParsedSchemaArray (RefSchema (ParsedSchemaRef ref)) _min _max)) = Just $ "[" ++ ref ++ "]"
+schemaToSimpleHaskellType (ArraySchema (ParsedSchemaArray innerSchema _min _max)) = case schemaToSimpleHaskellType innerSchema of
+    Just t -> Just $ "[" ++ t ++ "]"
+    Nothing -> Nothing
 schemaToSimpleHaskellType _ = Nothing
 
 main :: IO ()
