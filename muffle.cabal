@@ -23,6 +23,7 @@ library
         Muffle
         Muffle.Discord
         Muffle.Discord.Generated
+        Muffle.Discord.Generated.Schemas
     -- other-modules:
     -- other-extensions:
     build-depends:
