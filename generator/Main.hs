@@ -334,7 +334,7 @@ schemaToHaskellDeclaration name (EnumSchema (ParsedSchemaEnum (Left values))) =
     "data " ++ name ++ " = " ++ intercalate " | " (map capitalize values)
 schemaToHaskellDeclaration name (EnumSchema (ParsedSchemaEnum (Right values))) =
     "data " ++ name ++ " = " ++ intercalate " | " (map (((name ++ "Enum") ++) . show) values)
-schemaToHaskellDeclaration name flattish@(TypedEnumSchema _) = "newtype " ++ name ++ " = " ++ name ++ " \"" ++ fromJust (schemaToSimpleHaskellType flattish) ++ "\""
+schemaToHaskellDeclaration name flattish@(TypedEnumSchema _) = "newtype " ++ name ++ " = " ++ name ++ " " ++ fromJust (schemaToSimpleHaskellType flattish)
 schemaToHaskellDeclaration name flattish@(IntegerSchema _) = "newtype " ++ name ++ " = " ++ name ++ " " ++ fromJust (schemaToSimpleHaskellType flattish)
 schemaToHaskellDeclaration name (ArraySchema (ParsedSchemaArray flattish _min _max)) =
     "newtype " ++ name ++ " = " ++ name ++ " [" ++ fromJust (schemaToSimpleHaskellType flattish) ++ "]"
