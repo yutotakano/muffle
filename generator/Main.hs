@@ -223,9 +223,11 @@ convert schemas = foldl' (\acc (name, schema) -> flattenSchema name schema acc) 
 flattenSchema :: String -> ParsedSchema -> StrictMap.Map String ParsedSchema -> StrictMap.Map String ParsedSchema
 flattenSchema name EmptySchema acc = snd $ insertDeduplicate name EmptySchema acc
 flattenSchema name sch@(NullableSchema (RefSchema _ref)) acc = snd $ insertDeduplicate name sch acc
-flattenSchema name (NullableSchema innerSchema) acc =
-    let accWithFlattenedInner = flattenSchema (name ++ "NullableInner") innerSchema acc
-    in snd $ insertDeduplicate name (NullableSchema (RefSchema (ParsedSchemaRef (name ++ "NullableInner")))) accWithFlattenedInner
+flattenSchema name (NullableSchema innerSchema) acc
+    | isJust (schemaToSimpleHaskellType innerSchema) = snd $ insertDeduplicate name (NullableSchema innerSchema) acc
+    | otherwise =
+        let accWithFlattenedInner = flattenSchema (name ++ "NullableInner") innerSchema acc
+        in snd $ insertDeduplicate name (NullableSchema (RefSchema (ParsedSchemaRef (name ++ "NullableInner")))) accWithFlattenedInner
 flattenSchema name sch@(RefSchema _ref) acc = snd $ insertDeduplicate name sch acc
 flattenSchema name sch@(ConstSchema _const) acc = snd $ insertDeduplicate name sch acc
 flattenSchema name sch@(RawTypeSchema _rawType) acc = snd $ insertDeduplicate name sch acc
