@@ -377,4 +377,7 @@ main = do
     pPrint $ not (any isRefSchema (StrictMap.elems flattenedSchemas))
 
     let haskellDeclarations = map (uncurry schemaToHaskellDeclaration) (StrictMap.toList flattenedSchemas)
-    mapM_ putStrLn haskellDeclarations
+
+    let outputFile = "lib/Muffle/Discord/Generated/Schemas.hs"
+    let moduleHeader = "{-# LANGUAGE DuplicateRecordFields #-}\nmodule Muffle.Discord.Generated.Schemas where\n\n"
+    writeFile outputFile (moduleHeader ++ unlines haskellDeclarations)
