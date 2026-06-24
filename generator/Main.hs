@@ -312,23 +312,6 @@ isRawTypeNullSchema :: ParsedSchema -> Bool
 isRawTypeNullSchema (RawTypeSchema (ParsedSchemaRawType "null")) = True
 isRawTypeNullSchema _ = False
 
-isFlatishSchema :: ParsedSchema -> Bool
-isFlatishSchema (RefSchema _) = True
-isFlatishSchema (ConstSchema _) = True
-isFlatishSchema (RawTypeSchema _) = True
-isFlatishSchema (EnumSchema _) = True
-isFlatishSchema (TypedEnumSchema _) = True
-isFlatishSchema (IntegerSchema _) = True
-isFlatishSchema (ArraySchema (ParsedSchemaArray items _ _))
-    | isJust (schemaToSimpleHaskellType items) = True
-    | otherwise = False
-isFlatishSchema (ObjectSchema (ParsedSchemaObject properties _)) = all (isJust . schemaToSimpleHaskellType . snd) properties
-isFlatishSchema (AnyOfSchema schemas) = all (isJust . schemaToSimpleHaskellType . snd) schemas
-isFlatishSchema (AllOfSchema schemas) = all (isJust . schemaToSimpleHaskellType . snd) schemas
-isFlatishSchema (OneOfSchema schemas) = all (isJust . schemaToSimpleHaskellType . snd) schemas
-isFlatishSchema EmptySchema = True
-isFlatishSchema (NullableSchema innerSchema) = isJust (schemaToSimpleHaskellType innerSchema)
-
 capitalize :: String -> String
 capitalize [] = []
 capitalize (x:xs) = toUpper x : xs
@@ -402,6 +385,23 @@ newValidConstructorName name = capitalize $ camelCase $ replaceInvalidChars $ ap
 
 newValidIdentifierName :: String -> String
 newValidIdentifierName name = camelCase $ replaceInvalidChars $ apostrophizeIfKeyword name
+
+isFlatishSchema :: ParsedSchema -> Bool
+isFlatishSchema (RefSchema _) = True
+isFlatishSchema (NullableSchema innerSchema) = isJust (schemaToSimpleHaskellType innerSchema)
+isFlatishSchema (ConstSchema _) = True
+isFlatishSchema (RawTypeSchema _) = True
+isFlatishSchema (EnumSchema _) = True
+isFlatishSchema (TypedEnumSchema _) = True
+isFlatishSchema (IntegerSchema _) = True
+isFlatishSchema (ArraySchema (ParsedSchemaArray items _ _))
+    | isJust (schemaToSimpleHaskellType items) = True
+    | otherwise = False
+isFlatishSchema (ObjectSchema (ParsedSchemaObject properties _)) = all (isJust . schemaToSimpleHaskellType . snd) properties
+isFlatishSchema (AnyOfSchema schemas) = all (isJust . schemaToSimpleHaskellType . snd) schemas
+isFlatishSchema (AllOfSchema schemas) = all (isJust . schemaToSimpleHaskellType . snd) schemas
+isFlatishSchema (OneOfSchema schemas) = all (isJust . schemaToSimpleHaskellType . snd) schemas
+isFlatishSchema EmptySchema = True
 
 schemaToSimpleHaskellType :: ParsedSchema -> Maybe String
 schemaToSimpleHaskellType (RefSchema (ParsedSchemaRef ref)) = Just ref
