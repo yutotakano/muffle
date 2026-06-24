@@ -14,6 +14,8 @@ import Data.Aeson.Key (toString, fromString)
 import qualified Data.Text as T
 import Data.Bifunctor (bimap)
 import Text.Pretty.Simple (pPrint)
+import qualified Data.Map.Strict as StrictMap
+import Data.Char (toUpper)
 
 
 data ParsedSchemaConstant = ParsedSchemaConstant
@@ -173,57 +175,89 @@ parseSchemas obj = do
         schema <- parseSchema schemaObj
         return (toString k, schema)
 
-convertRawTypeSchemasToRef :: [(String, ParsedSchema)] -> [(String, ParsedSchema)] -> ([(String, ParsedSchema)], [(String, ParsedSchema)])
-convertRawTypeSchemasToRef _ [] = ([], [])
-convertRawTypeSchemasToRef topLevel (schema:schemas) = case schema of
-    (name, RawTypeSchema rawType) -> bimap
-        ((name ++ parsedSchemaRawType rawType ++ "Type", RawTypeSchema rawType) :)
-        ((name, RefSchema (ParsedSchemaRef (name ++ parsedSchemaRawType rawType ++ "Type"))) :)
-        (convertRawTypeSchemasToRef topLevel schemas)
-    (_name, AnyOfSchema subschemas) -> bimap
-        (fst (convertRawTypeSchemasToRef topLevel subschemas) ++)
-        (snd (convertRawTypeSchemasToRef topLevel subschemas) ++)
-        (convertRawTypeSchemasToRef topLevel schemas)
-    (_name, AllOfSchema subschemas) -> bimap
-        (fst (convertRawTypeSchemasToRef topLevel subschemas) ++)
-        (snd (convertRawTypeSchemasToRef topLevel subschemas) ++)
-        (convertRawTypeSchemasToRef topLevel schemas)
-    (_name, OneOfSchema subschemas) -> bimap
-        (fst (convertRawTypeSchemasToRef topLevel subschemas) ++)
-        (snd (convertRawTypeSchemasToRef topLevel subschemas) ++)
-        (convertRawTypeSchemasToRef topLevel schemas)
-    (name, ConstSchema value) -> bimap
-        ((name ++ "Const" ++ parsedSchemaConst value, ConstSchema value) :)
-        ((name, RefSchema (ParsedSchemaRef (name ++ "Const" ++ parsedSchemaConst value))) :)
-        (convertRawTypeSchemasToRef topLevel schemas)
-    (name, EnumSchema enum) -> bimap
-        ((name ++ "Enum", EnumSchema enum) :)
-        ((name, RefSchema (ParsedSchemaRef (name ++ "Enum"))) :)
-        (convertRawTypeSchemasToRef topLevel schemas)
-    (name, TypedEnumSchema typedEnum) -> bimap
-        ((name, TypedEnumSchema typedEnum) :)
-        ((name, RefSchema (ParsedSchemaRef name)) :)
-        (convertRawTypeSchemasToRef topLevel schemas)
-    (name, ArraySchema array) -> bimap
-        ((name ++ "Array", ArraySchema array) :)
-        ((name, RefSchema (ParsedSchemaRef (name ++ "Array"))) :)
-        (convertRawTypeSchemasToRef topLevel schemas)
-    (name, IntegerSchema integer) -> bimap
-        ((name ++ "Integer", IntegerSchema integer) :)
-        ((name, RefSchema (ParsedSchemaRef $ name ++ "Integer")) :)
-        (convertRawTypeSchemasToRef topLevel schemas)
-    (name, ObjectSchema object) -> bimap
-        (\rest -> [(name ++ "Object", ObjectSchema . fst $ replaceObjectPropertiesWithRefs object)] ++ snd (replaceObjectPropertiesWithRefs object) ++ rest)
-        ((name, RefSchema (ParsedSchemaRef $ name ++ "Object")) :)
-        (convertRawTypeSchemasToRef topLevel schemas)
-    (_name, RefSchema _ref) -> bimap id (schema :) (convertRawTypeSchemasToRef topLevel schemas)
-    (_name, EmptySchema) -> bimap id (schema :) (convertRawTypeSchemasToRef topLevel schemas)
+-- | @convert@ takes a map of schemas and flattens them into a single map of
+-- schemas, where each schema is a "flat" schema, i.e. no nested schemas.
+convert :: StrictMap.Map String ParsedSchema -> StrictMap.Map String ParsedSchema
+convert schemas = foldl' (\acc (name, schema) -> flattenSchema name schema acc) StrictMap.empty (StrictMap.toList schemas)
 
-replaceObjectPropertiesWithRefs :: ParsedSchemaObject -> (ParsedSchemaObject, [(String, ParsedSchema)])
-replaceObjectPropertiesWithRefs (ParsedSchemaObject properties required) = (ParsedSchemaObject newProperties required, newSchemas)
-  where
-    (newSchemas, newProperties) = convertRawTypeSchemasToRef [] properties
+-- | @flattenSchema@ takes a schema (and it's name) and flattens it by
+-- recursing through the schema and assigning any nested schemas a unique name
+-- and adding them to the accumulator map. As the newly created schemas are only
+-- referenced by the parent schema, the unique naming scheme can be whatever we
+-- want. We pick it based on the parent schema's name and de-duplicate if it
+-- exists already.
+flattenSchema :: String -> ParsedSchema -> StrictMap.Map String ParsedSchema -> StrictMap.Map String ParsedSchema
+flattenSchema name EmptySchema acc = snd $ insertDeduplicate name EmptySchema acc
+flattenSchema name sch@(RefSchema ref) acc = snd $ insertDeduplicate name sch acc
+flattenSchema name sch@(ConstSchema const) acc = snd $ insertDeduplicate name sch acc
+flattenSchema name sch@(RawTypeSchema rawType) acc = snd $ insertDeduplicate name sch acc
+flattenSchema name sch@(EnumSchema enum) acc = snd $ insertDeduplicate name sch acc
+flattenSchema name sch@(TypedEnumSchema typedEnum) acc = snd $ insertDeduplicate name sch acc
+flattenSchema name sch@(IntegerSchema intSchema) acc = snd $ insertDeduplicate name sch acc
+flattenSchema name sch@(ArraySchema (ParsedSchemaArray (RefSchema ref) _ _)) acc = snd $ insertDeduplicate name sch acc
+-- For arrays, flatten every child schema - then replace the items in the main
+-- schema with a reference to the new generated child ref.
+flattenSchema name (ArraySchema (ParsedSchemaArray items minItems maxItems)) acc =
+    let accWithFlattenedItems = flattenSchema (name ++ "ArrayElement") items acc
+    in snd $ insertDeduplicate name (ArraySchema (ParsedSchemaArray (RefSchema (ParsedSchemaRef (name ++ "ArrayElement"))) minItems maxItems)) accWithFlattenedItems
+-- For objects, flatten every property schema except if they are refs already,
+-- then replace the main schema with references to them.
+flattenSchema name (ObjectSchema (ParsedSchemaObject properties required)) acc =
+    let (newProperties, accWithFlattenedProps) = foldl' (\(propsAcc, accAcc) (propName, propSchema) ->
+            let newPropName = name ++ "ObjectProperty" ++ capitalize propName
+                accWithFlattenedProp = flattenSchema newPropName propSchema accAcc
+            in if isRefSchema propSchema
+                then (propsAcc ++ [(propName, propSchema)], accAcc)
+                else (propsAcc ++ [(propName, RefSchema (ParsedSchemaRef newPropName))], accWithFlattenedProp)
+            ) ([], acc) properties
+    in snd $ insertDeduplicate name (ObjectSchema (ParsedSchemaObject newProperties required)) accWithFlattenedProps
+-- For anyOf, allOf, oneOf, flatten every child schema if it's not a ref, then
+-- replace the main schema with references to them.
+flattenSchema name (AnyOfSchema schemas) acc =
+    let (newSchemas, accWithFlattenedSchemas) = foldl' (\(schemasAcc, accAcc) (i, schema) ->
+            let newSchemaName = name ++ "AnyOf" ++ show i
+                accWithFlattenedSchema = flattenSchema newSchemaName schema accAcc
+            in if isRefSchema schema
+                then (schemasAcc ++ [(show i, schema)], accAcc)
+                else (schemasAcc ++ [(show i, RefSchema (ParsedSchemaRef newSchemaName))], accWithFlattenedSchema)
+            ) ([], acc) (zip [0..] $ map snd schemas)
+    in snd $ insertDeduplicate name (AnyOfSchema newSchemas) accWithFlattenedSchemas
+flattenSchema name (AllOfSchema schemas) acc =
+    let (newSchemas, accWithFlattenedSchemas) = foldl' (\(schemasAcc, accAcc) (i, schema) ->
+            let newSchemaName = name ++ "AllOf" ++ show i
+                accWithFlattenedSchema = flattenSchema newSchemaName schema accAcc
+            in if isRefSchema schema
+                then (schemasAcc ++ [(show i, schema)], accAcc)
+                else (schemasAcc ++ [(show i, RefSchema (ParsedSchemaRef newSchemaName))], accWithFlattenedSchema)
+            ) ([], acc) (zip [0..] $ map snd schemas)
+    in snd $ insertDeduplicate name (AllOfSchema newSchemas) accWithFlattenedSchemas
+flattenSchema name (OneOfSchema schemas) acc =
+    let (newSchemas, accWithFlattenedSchemas) = foldl' (\(schemasAcc, accAcc) (i, schema) ->
+            let newSchemaName = name ++ "OneOf" ++ show i
+                accWithFlattenedSchema = flattenSchema newSchemaName schema accAcc
+            in if isRefSchema schema
+                then (schemasAcc ++ [(show i, schema)], accAcc)
+                else (schemasAcc ++ [(show i, RefSchema (ParsedSchemaRef newSchemaName))], accWithFlattenedSchema)
+            ) ([], acc) (zip [0..] $ map snd schemas)
+    in snd $ insertDeduplicate name (OneOfSchema newSchemas) accWithFlattenedSchemas
 
+-- | @insertDeduplicate@ takes a key/value to insert into a map, and if the key
+-- already exists, will append a suffix to the key. The return value is the
+-- chosen key and the updaterd map.
+insertDeduplicate :: String -> ParsedSchema -> StrictMap.Map String ParsedSchema -> (String, StrictMap.Map String ParsedSchema)
+insertDeduplicate name schema acc =
+    let newName = if StrictMap.member name acc
+                    then head [name ++ "_" ++ show i | i <- [1..], not (StrictMap.member (name ++ "_" ++ show i) acc)]
+                    else name
+    in (newName, StrictMap.insert newName schema acc)
+
+isRefSchema :: ParsedSchema -> Bool
+isRefSchema (RefSchema _) = True
+isRefSchema _ = False
+
+capitalize :: String -> String
+capitalize [] = []
+capitalize (x:xs) = toUpper x : xs
 
 main :: IO ()
 main = do
@@ -240,4 +274,9 @@ main = do
         Right s -> return s
         Left err -> error err
 
-    pPrint $ convertRawTypeSchemasToRef [] schemas
+    -- We can assume the schemas are unique by name since they are JSON keys
+    let schemaMap = StrictMap.fromList schemas
+    -- Flatten to ensure everything is a "flat" schema, i.e. no nested schemas.
+    let flattenedSchemas = convert schemaMap
+
+    pPrint flattenedSchemas
