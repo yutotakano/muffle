@@ -14,11 +14,12 @@ import Data.Aeson.Key (toString, fromString)
 import qualified Data.Text as T
 import Text.Pretty.Simple (pPrint)
 import qualified Data.Map.Strict as StrictMap
-import Data.Char (toUpper)
+import Data.Char (toUpper, isAlphaNum, isAlpha)
 import Data.List.NonEmpty (head)
 import qualified Data.List.NonEmpty as NE
 import Prelude hiding (head)
 import Data.List (intercalate)
+import Data.Maybe (isJust, fromJust)
 
 
 data ParsedSchemaConstant = ParsedSchemaConstant
@@ -220,19 +221,20 @@ flattenSchema name sch@(RawTypeSchema _rawType) acc = snd $ insertDeduplicate na
 flattenSchema name sch@(EnumSchema _enum) acc = snd $ insertDeduplicate name sch acc
 flattenSchema name sch@(TypedEnumSchema _typedEnum) acc = snd $ insertDeduplicate name sch acc
 flattenSchema name sch@(IntegerSchema _intSchema) acc = snd $ insertDeduplicate name sch acc
-flattenSchema name sch@(ArraySchema (ParsedSchemaArray (RefSchema _ref) _ _)) acc = snd $ insertDeduplicate name sch acc
--- For arrays, flatten every child schema - then replace the items in the main
--- schema with a reference to the new generated child ref.
-flattenSchema name (ArraySchema (ParsedSchemaArray items minItems maxItems)) acc =
-    let accWithFlattenedItems = flattenSchema (name ++ "ArrayElement") items acc
-    in snd $ insertDeduplicate name (ArraySchema (ParsedSchemaArray (RefSchema (ParsedSchemaRef (name ++ "ArrayElement"))) minItems maxItems)) accWithFlattenedItems
+flattenSchema name sch@(ArraySchema (ParsedSchemaArray items minItems maxItems)) acc
+    | isJust (schemaToSimpleHaskellType items) = snd $ insertDeduplicate name sch acc
+    | otherwise =
+        -- For arrays, flatten every child schema - then replace the items in the main
+        -- schema with a reference to the new generated child ref.
+            let accWithFlattenedItems = flattenSchema (name ++ "ArrayElement") items acc
+            in snd $ insertDeduplicate name (ArraySchema (ParsedSchemaArray (RefSchema (ParsedSchemaRef (name ++ "ArrayElement"))) minItems maxItems)) accWithFlattenedItems
 -- For objects, flatten every property schema except if they are refs already,
 -- then replace the main schema with references to them.
 flattenSchema name (ObjectSchema (ParsedSchemaObject properties required)) acc =
     let (newProperties, accWithFlattenedProps) = foldl' (\(propsAcc, accAcc) (propName, propSchema) ->
             let newPropName = name ++ capitalize propName
                 accWithFlattenedProp = flattenSchema newPropName propSchema accAcc
-            in if isRefSchema propSchema
+            in if isJust (schemaToSimpleHaskellType propSchema)
                 then (propsAcc ++ [(propName, propSchema)], accAcc)
                 else (propsAcc ++ [(propName, RefSchema (ParsedSchemaRef newPropName))], accWithFlattenedProp)
             ) ([], acc) properties
@@ -243,7 +245,7 @@ flattenSchema name (AnyOfSchema schemas) acc =
     let (newSchemas, accWithFlattenedSchemas) = foldl' (\(schemasAcc, accAcc) (i, schema) ->
             let newSchemaName = name ++ "AnyOf" ++ show i
                 accWithFlattenedSchema = flattenSchema newSchemaName schema accAcc
-            in if isRefSchema schema
+            in if isJust (schemaToSimpleHaskellType schema)
                 then (schemasAcc ++ [(show i, schema)], accAcc)
                 else (schemasAcc ++ [(show i, RefSchema (ParsedSchemaRef newSchemaName))], accWithFlattenedSchema)
             ) ([], acc) (zip [(0 :: Integer)..] $ map snd schemas)
@@ -252,7 +254,7 @@ flattenSchema name (AllOfSchema schemas) acc =
     let (newSchemas, accWithFlattenedSchemas) = foldl' (\(schemasAcc, accAcc) (i, schema) ->
             let newSchemaName = name ++ "AllOf" ++ show i
                 accWithFlattenedSchema = flattenSchema newSchemaName schema accAcc
-            in if isRefSchema schema
+            in if isJust (schemaToSimpleHaskellType schema)
                 then (schemasAcc ++ [(show i, schema)], accAcc)
                 else (schemasAcc ++ [(show i, RefSchema (ParsedSchemaRef newSchemaName))], accWithFlattenedSchema)
             ) ([], acc) (zip [(0 :: Integer)..] $ map snd schemas)
@@ -261,7 +263,7 @@ flattenSchema name (OneOfSchema schemas) acc =
     let (newSchemas, accWithFlattenedSchemas) = foldl' (\(schemasAcc, accAcc) (i, schema) ->
             let newSchemaName = name ++ "OneOf" ++ show i
                 accWithFlattenedSchema = flattenSchema newSchemaName schema accAcc
-            in if isRefSchema schema
+            in if isJust (schemaToSimpleHaskellType schema)
                 then (schemasAcc ++ [(show i, schema)], accAcc)
                 else (schemasAcc ++ [(show i, RefSchema (ParsedSchemaRef newSchemaName))], accWithFlattenedSchema)
             ) ([], acc) (zip [(0 :: Integer)..] $ map snd schemas)
@@ -302,56 +304,96 @@ isFlatSchema EmptySchema = True
 isFlatSchema (NullableSchema (RefSchema _)) = True
 isFlatSchema (NullableSchema _) = False
 
+isFlatishSchema :: ParsedSchema -> Bool
+isFlatishSchema (RefSchema _) = True
+isFlatishSchema (ConstSchema _) = True
+isFlatishSchema (RawTypeSchema _) = True
+isFlatishSchema (EnumSchema _) = True
+isFlatishSchema (TypedEnumSchema _) = True
+isFlatishSchema (IntegerSchema _) = True
+isFlatishSchema (ArraySchema (ParsedSchemaArray items _ _))
+    | isJust (schemaToSimpleHaskellType items) = True
+    | otherwise = False
+isFlatishSchema (ObjectSchema (ParsedSchemaObject properties _)) = all (isJust . schemaToSimpleHaskellType . snd) properties
+isFlatishSchema (AnyOfSchema schemas) = all (isJust . schemaToSimpleHaskellType . snd) schemas
+isFlatishSchema (AllOfSchema schemas) = all (isJust . schemaToSimpleHaskellType . snd) schemas
+isFlatishSchema (OneOfSchema schemas) = all (isJust . schemaToSimpleHaskellType . snd) schemas
+isFlatishSchema EmptySchema = True
+isFlatishSchema (NullableSchema innerSchema) = isJust (schemaToSimpleHaskellType innerSchema)
+
 capitalize :: String -> String
 capitalize [] = []
 capitalize (x:xs) = toUpper x : xs
 
 schemaToHaskellDeclaration :: String -> ParsedSchema -> String
-schemaToHaskellDeclaration _ (RefSchema (ParsedSchemaRef _)) = error "Only way this can happen is if the original OpenAPI doc has a top-level ref schema"
-schemaToHaskellDeclaration name (NullableSchema (RefSchema (ParsedSchemaRef ref))) = "newtype " ++ name ++ " = " ++ name ++ " (Maybe " ++ ref ++ ")"
+schemaToHaskellDeclaration _ (RefSchema _) = error "Only way this can happen is if the original OpenAPI doc has a top-level ref schema"
+schemaToHaskellDeclaration name (NullableSchema flattish) = "newtype " ++ name ++ " = " ++ name ++ " (Maybe " ++ fromJust (schemaToSimpleHaskellType flattish) ++ ")"
 schemaToHaskellDeclaration name (ConstSchema (ParsedSchemaConstant constValue)) = "newtype " ++ name ++ " = " ++ name ++ " \"" ++ constValue ++ "\""
-schemaToHaskellDeclaration name (RawTypeSchema (ParsedSchemaRawType rawType)) = case rawType of
-    "string" -> "newtype " ++ name ++ " = " ++ name ++ " String"
-    "number" -> "newtype " ++ name ++ " = " ++ name ++ " Integer"
-    "boolean" -> "newtype " ++ name ++ " = " ++ name ++ " Bool"
-    "null" -> "newtype " ++ name ++ " = " ++ name ++ " ()"
-    _ -> error $ "Unsupported raw type: " ++ rawType
+schemaToHaskellDeclaration name flattish@(RawTypeSchema _) = "newtype " ++ name ++ " = " ++ name ++ " " ++ fromJust (schemaToSimpleHaskellType flattish)
 schemaToHaskellDeclaration name (EnumSchema (ParsedSchemaEnum (Left values))) =
     "data " ++ name ++ " = " ++ intercalate " | " (map capitalize values)
 schemaToHaskellDeclaration name (EnumSchema (ParsedSchemaEnum (Right values))) =
     "data " ++ name ++ " = " ++ intercalate " | " (map (("Enum" ++) . show) values)
-schemaToHaskellDeclaration name (TypedEnumSchema (ParsedSchemaTypedEnum enumType _)) = "newtype " ++ name ++ " = " ++ name ++ " \"" ++ enumType ++ "\""
-schemaToHaskellDeclaration name (IntegerSchema (ParsedSchemaInteger format _min _max)) = case format of
-    Just "int32" -> "newtype " ++ name ++ " = " ++ name ++ " Int32"
-    Just "int64" -> "newtype " ++ name ++ " = " ++ name ++ " Int64"
-    Nothing -> "newtype " ++ name ++ " = " ++ name ++ " Integer"
-    _ -> error $ "Unsupported integer format: " ++ show format
-schemaToHaskellDeclaration name (ArraySchema (ParsedSchemaArray (RefSchema (ParsedSchemaRef ref)) _min _max)) =
-    "newtype " ++ name ++ " = " ++ name ++ " [" ++ ref ++ "]"
+schemaToHaskellDeclaration name flattish@(TypedEnumSchema _) = "newtype " ++ name ++ " = " ++ name ++ " \"" ++ fromJust (schemaToSimpleHaskellType flattish) ++ "\""
+schemaToHaskellDeclaration name flattish@(IntegerSchema _) = "newtype " ++ name ++ " = " ++ name ++ " " ++ fromJust (schemaToSimpleHaskellType flattish)
+schemaToHaskellDeclaration name (ArraySchema (ParsedSchemaArray flattish _min _max)) =
+    "newtype " ++ name ++ " = " ++ name ++ " [" ++ fromJust (schemaToSimpleHaskellType flattish) ++ "]"
 schemaToHaskellDeclaration name (ObjectSchema (ParsedSchemaObject properties _)) =
-    "data " ++ name ++ " = " ++ name ++ "\n    { " ++ intercalate "\n    , " (map (\(propName, propSchema) -> apostrophizeIfKeyword propName ++ " :: " ++ case propSchema of
-        RefSchema (ParsedSchemaRef ref) -> ref
-        _ -> error "Input was not flatted...!") properties) ++ "\n    }"
+    "data " ++ name ++ " = " ++ name ++ "\n    { " ++ intercalate "\n    , " (map (\(propName, propSchema) -> apostrophizeIfKeyword propName ++ " :: " ++ case schemaToSimpleHaskellType propSchema of
+        Just t -> t
+        Nothing -> error "Input was not flatted enough...!") properties) ++ "\n    }"
 schemaToHaskellDeclaration name (AnyOfSchema schemas) = "data " ++ name ++ " = " ++ intercalate " | " (zipWith (\_i schema
-  -> (case schema of
-        RefSchema (ParsedSchemaRef ref) -> ref
-        _ -> error "Input was not flatted...!")) [(0 :: Integer)..] (map snd schemas))
+  -> (case schemaToSimpleHaskellType schema of
+        Just t -> name ++ t ++ " " ++ t
+        Nothing -> error "Input was not flatted enough...!")) [(0 :: Integer)..] (map snd schemas))
 schemaToHaskellDeclaration name (AllOfSchema schemas) = "data " ++ name ++ " = " ++ name ++"\n    { " ++ intercalate "\n    , " (zipWith (\_i schema
-  -> (case schema of
-        RefSchema (ParsedSchemaRef ref) -> ref ++ " :: " ++ ref
-        _ -> error "Input was not flatted...!")) [(0 :: Integer)..] (map snd schemas)) ++ "\n    }"
+  -> (case schemaToSimpleHaskellType schema of
+        Just t -> t
+        Nothing -> error "Input was not flatted enough...!")) [(0 :: Integer)..] (map snd schemas)) ++ "\n    }"
 schemaToHaskellDeclaration name (OneOfSchema schemas) = "data " ++ name ++ " = " ++ intercalate " | " (zipWith (\_i schema
-  -> (case schema of
-        RefSchema (ParsedSchemaRef ref) -> ref
-        _ -> error "Input was not flatted...!")) [(0 :: Integer)..] (map snd schemas))
+  -> (case schemaToSimpleHaskellType schema of
+        Just t -> t
+        Nothing -> error "Input was not flatted enough...!")) [(0 :: Integer)..] (map snd schemas))
 schemaToHaskellDeclaration name EmptySchema = "data " ++ name ++ " = " ++ name
-schemaToHaskellDeclaration _ _ = error "Input was likely not flatted...!"
 
 haskellKeywords :: [String]
 haskellKeywords = ["type", "data", "default"]
 
 apostrophizeIfKeyword :: String -> String
 apostrophizeIfKeyword name = if name `elem` haskellKeywords then name ++ "'" else name
+
+-- | First char must be uppercase letter. Rest can be digits, letters or apostrophe.
+replaceInvalidChars :: String -> String
+replaceInvalidChars [] = []
+replaceInvalidChars (x:xs)
+    | isAlpha x = toUpper x : map replaceInvalid xs
+    | otherwise = 'A' : map replaceInvalid (x:xs)
+  where
+    replaceInvalid c
+        | isAlphaNum c || c == '\'' = c
+        | otherwise = '_'
+
+newValidName :: String -> String
+newValidName name = replaceInvalidChars $ apostrophizeIfKeyword $ capitalize name
+
+schemaToSimpleHaskellType :: ParsedSchema -> Maybe String
+schemaToSimpleHaskellType (RefSchema (ParsedSchemaRef ref)) = Just ref
+schemaToSimpleHaskellType (NullableSchema (RefSchema (ParsedSchemaRef ref))) = Just $ "Maybe " ++ ref
+schemaToSimpleHaskellType (ConstSchema (ParsedSchemaConstant constValue)) = Just $ newValidName constValue
+schemaToSimpleHaskellType (RawTypeSchema (ParsedSchemaRawType rawType)) = case rawType of
+    "string" -> Just "String"
+    "number" -> Just "Integer"
+    "boolean" -> Just "Bool"
+    "null" -> Just "()"
+    _ -> Nothing
+schemaToSimpleHaskellType (TypedEnumSchema (ParsedSchemaTypedEnum enumType _)) = Just enumType
+schemaToSimpleHaskellType (IntegerSchema (ParsedSchemaInteger format _min _max)) = case format of
+    Just "int32" -> Just "Int32"
+    Just "int64" -> Just "Int64"
+    Nothing -> Just "Integer"
+    _ -> Nothing
+schemaToSimpleHaskellType (ArraySchema (ParsedSchemaArray (RefSchema (ParsedSchemaRef ref)) _min _max)) = Just $ "[" ++ ref ++ "]"
+schemaToSimpleHaskellType _ = Nothing
 
 main :: IO ()
 main = do
@@ -373,7 +415,7 @@ main = do
     -- Flatten to ensure everything is a "flat" schema, i.e. no nested schemas.
     let flattenedSchemas = convert schemaMap
 
-    pPrint $ all isFlatSchema (StrictMap.elems flattenedSchemas)
+    pPrint $ all isFlatishSchema (StrictMap.elems flattenedSchemas)
     pPrint $ not (any isRefSchema (StrictMap.elems flattenedSchemas))
 
     let haskellDeclarations = map (uncurry schemaToHaskellDeclaration) (StrictMap.toList flattenedSchemas)
