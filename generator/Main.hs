@@ -188,13 +188,13 @@ convert schemas = foldl' (\acc (name, schema) -> flattenSchema name schema acc) 
 -- exists already.
 flattenSchema :: String -> ParsedSchema -> StrictMap.Map String ParsedSchema -> StrictMap.Map String ParsedSchema
 flattenSchema name EmptySchema acc = snd $ insertDeduplicate name EmptySchema acc
-flattenSchema name sch@(RefSchema ref) acc = snd $ insertDeduplicate name sch acc
-flattenSchema name sch@(ConstSchema const) acc = snd $ insertDeduplicate name sch acc
-flattenSchema name sch@(RawTypeSchema rawType) acc = snd $ insertDeduplicate name sch acc
-flattenSchema name sch@(EnumSchema enum) acc = snd $ insertDeduplicate name sch acc
-flattenSchema name sch@(TypedEnumSchema typedEnum) acc = snd $ insertDeduplicate name sch acc
-flattenSchema name sch@(IntegerSchema intSchema) acc = snd $ insertDeduplicate name sch acc
-flattenSchema name sch@(ArraySchema (ParsedSchemaArray (RefSchema ref) _ _)) acc = snd $ insertDeduplicate name sch acc
+flattenSchema name sch@(RefSchema _ref) acc = snd $ insertDeduplicate name sch acc
+flattenSchema name sch@(ConstSchema _const) acc = snd $ insertDeduplicate name sch acc
+flattenSchema name sch@(RawTypeSchema _rawType) acc = snd $ insertDeduplicate name sch acc
+flattenSchema name sch@(EnumSchema _enum) acc = snd $ insertDeduplicate name sch acc
+flattenSchema name sch@(TypedEnumSchema _typedEnum) acc = snd $ insertDeduplicate name sch acc
+flattenSchema name sch@(IntegerSchema _intSchema) acc = snd $ insertDeduplicate name sch acc
+flattenSchema name sch@(ArraySchema (ParsedSchemaArray (RefSchema _ref) _ _)) acc = snd $ insertDeduplicate name sch acc
 -- For arrays, flatten every child schema - then replace the items in the main
 -- schema with a reference to the new generated child ref.
 flattenSchema name (ArraySchema (ParsedSchemaArray items minItems maxItems)) acc =
