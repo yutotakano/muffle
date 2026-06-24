@@ -297,3 +297,5 @@ main = do
     let flattenedSchemas = convert schemaMap
 
     pPrint flattenedSchemas
+
+    pPrint $ all isFlatSchema (StrictMap.elems flattenedSchemas)
