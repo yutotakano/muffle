@@ -386,7 +386,9 @@ newValidName name = replaceInvalidChars $ apostrophizeIfKeyword $ capitalize nam
 
 schemaToSimpleHaskellType :: ParsedSchema -> Maybe String
 schemaToSimpleHaskellType (RefSchema (ParsedSchemaRef ref)) = Just ref
-schemaToSimpleHaskellType (NullableSchema (RefSchema (ParsedSchemaRef ref))) = Just $ "Maybe " ++ ref
+schemaToSimpleHaskellType (NullableSchema innerSchema) = case schemaToSimpleHaskellType innerSchema of
+    Just t -> Just $ "Maybe " ++ t
+    Nothing -> Nothing
 schemaToSimpleHaskellType (ConstSchema (ParsedSchemaConstant _constValue)) = Just $ newValidName _constValue
 schemaToSimpleHaskellType (RawTypeSchema (ParsedSchemaRawType rawType)) = case rawType of
     "string" -> Just "String"
