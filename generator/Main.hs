@@ -230,7 +230,7 @@ flattenSchema name (ArraySchema (ParsedSchemaArray items minItems maxItems)) acc
 -- then replace the main schema with references to them.
 flattenSchema name (ObjectSchema (ParsedSchemaObject properties required)) acc =
     let (newProperties, accWithFlattenedProps) = foldl' (\(propsAcc, accAcc) (propName, propSchema) ->
-            let newPropName = name ++ "ObjectProperty" ++ capitalize propName
+            let newPropName = name ++ capitalize propName
                 accWithFlattenedProp = flattenSchema newPropName propSchema accAcc
             in if isRefSchema propSchema
                 then (propsAcc ++ [(propName, propSchema)], accAcc)
