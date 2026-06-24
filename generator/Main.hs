@@ -342,17 +342,17 @@ schemaToHaskellDeclaration name (ObjectSchema (ParsedSchemaObject properties _))
     "data " ++ name ++ " = " ++ name ++ "\n    { " ++ intercalate "\n    , " (map (\(propName, propSchema) -> apostrophizeIfKeyword propName ++ " :: " ++ case schemaToSimpleHaskellType propSchema of
         Just t -> t
         Nothing -> error "Input was not flatted enough...!") properties) ++ "\n    }"
-schemaToHaskellDeclaration name (AnyOfSchema schemas) = "data " ++ name ++ " = " ++ intercalate " | " (zipWith (\_i schema
+schemaToHaskellDeclaration name (AnyOfSchema schemas) = "data " ++ name ++ " = " ++ intercalate " | " (zipWith (\i schema
   -> (case schemaToSimpleHaskellType schema of
-        Just t -> name ++ t ++ " " ++ t
+        Just t -> name ++ show i ++ " " ++ t
         Nothing -> error "Input was not flatted enough...!")) [(0 :: Integer)..] (map snd schemas))
 schemaToHaskellDeclaration name (AllOfSchema schemas) = "data " ++ name ++ " = " ++ name ++"\n    { " ++ intercalate "\n    , " (zipWith (\_i schema
   -> (case schemaToSimpleHaskellType schema of
         Just t -> t
         Nothing -> error "Input was not flatted enough...!")) [(0 :: Integer)..] (map snd schemas)) ++ "\n    }"
-schemaToHaskellDeclaration name (OneOfSchema schemas) = "data " ++ name ++ " = " ++ intercalate " | " (zipWith (\_i schema
+schemaToHaskellDeclaration name (OneOfSchema schemas) = "data " ++ name ++ " = " ++ intercalate " | " (zipWith (\i schema
   -> (case schemaToSimpleHaskellType schema of
-        Just t -> t
+        Just t -> name ++ show i ++ " " ++ t
         Nothing -> error "Input was not flatted enough...!")) [(0 :: Integer)..] (map snd schemas))
 schemaToHaskellDeclaration name EmptySchema = "data " ++ name ++ " = " ++ name
 
