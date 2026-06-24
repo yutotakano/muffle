@@ -18,6 +18,7 @@ import Data.Char (toUpper)
 import Data.List.NonEmpty (head)
 import qualified Data.List.NonEmpty as NE
 import Prelude hiding (head)
+import Data.List (intercalate)
 
 
 data ParsedSchemaConstant = ParsedSchemaConstant
@@ -305,6 +306,47 @@ capitalize :: String -> String
 capitalize [] = []
 capitalize (x:xs) = toUpper x : xs
 
+schemaToHaskellDeclaration :: String -> ParsedSchema -> String
+schemaToHaskellDeclaration _ (RefSchema (ParsedSchemaRef _)) = error "Only way this can happen is if the original OpenAPI doc has a top-level ref schema"
+schemaToHaskellDeclaration name (NullableSchema (RefSchema (ParsedSchemaRef ref))) = "newtype " ++ name ++ " = " ++ name ++ " (Maybe " ++ ref ++ ")"
+schemaToHaskellDeclaration name (ConstSchema (ParsedSchemaConstant constValue)) = "newtype " ++ name ++ " = " ++ name ++ " (" ++ constValue ++ ")"
+schemaToHaskellDeclaration name (RawTypeSchema (ParsedSchemaRawType rawType)) = case rawType of
+    "string" -> "newtype " ++ name ++ " = " ++ name ++ " String"
+    "number" -> "newtype " ++ name ++ " = " ++ name ++ " Integer"
+    "boolean" -> "newtype " ++ name ++ " = " ++ name ++ " Bool"
+    "null" -> "newtype " ++ name ++ " = " ++ name ++ " ()"
+    _ -> error $ "Unsupported raw type: " ++ rawType
+schemaToHaskellDeclaration name (EnumSchema (ParsedSchemaEnum (Left values))) =
+    "data " ++ name ++ " = " ++ intercalate " | " (map capitalize values)
+schemaToHaskellDeclaration name (EnumSchema (ParsedSchemaEnum (Right values))) =
+    "data " ++ name ++ " = " ++ intercalate " | " (map (("Enum" ++) . show) values)
+schemaToHaskellDeclaration name (TypedEnumSchema (ParsedSchemaTypedEnum enumType _)) = "newtype " ++ name ++ " = " ++ name ++ " (" ++ enumType ++ ")"
+schemaToHaskellDeclaration name (IntegerSchema (ParsedSchemaInteger format _min _max)) = case format of
+    Just "int32" -> "newtype " ++ name ++ " = " ++ name ++ " Int32"
+    Just "int64" -> "newtype " ++ name ++ " = " ++ name ++ " Int64"
+    Nothing -> "newtype " ++ name ++ " = " ++ name ++ " Integer"
+    _ -> error $ "Unsupported integer format: " ++ show format
+schemaToHaskellDeclaration name (ArraySchema (ParsedSchemaArray (RefSchema (ParsedSchemaRef ref)) _min _max)) =
+    "newtype " ++ name ++ " = " ++ name ++ " [" ++ ref ++ "]"
+schemaToHaskellDeclaration name (ObjectSchema (ParsedSchemaObject properties _)) =
+    "data " ++ name ++ " = " ++ name ++ "\n    { " ++ intercalate "\n    , " (map (\(propName, propSchema) -> propName ++ " :: " ++ case propSchema of
+        RefSchema (ParsedSchemaRef ref) -> ref
+        _ -> error "Input was not flatted...!") properties) ++ "\n    }"
+schemaToHaskellDeclaration name (AnyOfSchema schemas) = "data " ++ name ++ " = " ++ intercalate " | " (zipWith (\_i schema
+  -> (case schema of
+        RefSchema (ParsedSchemaRef ref) -> ref
+        _ -> error "Input was not flatted...!")) [(0 :: Integer)..] (map snd schemas))
+schemaToHaskellDeclaration name (AllOfSchema schemas) = "data " ++ name ++ " = " ++ name ++"\n    { " ++ intercalate "\n    , " (zipWith (\_i schema
+  -> (case schema of
+        RefSchema (ParsedSchemaRef ref) -> ref ++ " :: " ++ ref
+        _ -> error "Input was not flatted...!")) [(0 :: Integer)..] (map snd schemas)) ++ "\n    }"
+schemaToHaskellDeclaration name (OneOfSchema schemas) = "data " ++ name ++ " = " ++ intercalate " | " (zipWith (\_i schema
+  -> (case schema of
+        RefSchema (ParsedSchemaRef ref) -> ref
+        _ -> error "Input was not flatted...!")) [(0 :: Integer)..] (map snd schemas))
+schemaToHaskellDeclaration name EmptySchema = "data " ++ name ++ " = " ++ name
+schemaToHaskellDeclaration _ _ = error "Input was likely not flatted...!"
+
 main :: IO ()
 main = do
     putStrLn "Starting Generator"
@@ -325,6 +367,8 @@ main = do
     -- Flatten to ensure everything is a "flat" schema, i.e. no nested schemas.
     let flattenedSchemas = convert schemaMap
 
-    pPrint flattenedSchemas
-
     pPrint $ all isFlatSchema (StrictMap.elems flattenedSchemas)
+    pPrint $ not (any isRefSchema (StrictMap.elems flattenedSchemas))
+
+    let haskellDeclarations = map (uncurry schemaToHaskellDeclaration) (StrictMap.toList flattenedSchemas)
+    mapM_ putStrLn haskellDeclarations
