@@ -255,6 +255,21 @@ isRefSchema :: ParsedSchema -> Bool
 isRefSchema (RefSchema _) = True
 isRefSchema _ = False
 
+isFlatSchema :: ParsedSchema -> Bool
+isFlatSchema (RefSchema _) = True
+isFlatSchema (ConstSchema _) = True
+isFlatSchema (RawTypeSchema _) = True
+isFlatSchema (EnumSchema _) = True
+isFlatSchema (TypedEnumSchema _) = True
+isFlatSchema (IntegerSchema _) = True
+isFlatSchema (ArraySchema (ParsedSchemaArray (RefSchema _) _ _)) = True
+isFlatSchema (ArraySchema _) = False
+isFlatSchema (ObjectSchema (ParsedSchemaObject properties _)) = all (isRefSchema . snd) properties
+isFlatSchema (AnyOfSchema schemas) = all (isRefSchema . snd) schemas
+isFlatSchema (AllOfSchema schemas) = all (isRefSchema . snd) schemas
+isFlatSchema (OneOfSchema schemas) = all (isRefSchema . snd) schemas
+isFlatSchema EmptySchema = True
+
 capitalize :: String -> String
 capitalize [] = []
 capitalize (x:xs) = toUpper x : xs
