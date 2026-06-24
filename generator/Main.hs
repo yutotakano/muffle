@@ -304,23 +304,6 @@ isRawTypeNullSchema :: ParsedSchema -> Bool
 isRawTypeNullSchema (RawTypeSchema (ParsedSchemaRawType "null")) = True
 isRawTypeNullSchema _ = False
 
-isFlatSchema :: ParsedSchema -> Bool
-isFlatSchema (RefSchema _) = True
-isFlatSchema (ConstSchema _) = True
-isFlatSchema (RawTypeSchema _) = True
-isFlatSchema (EnumSchema _) = True
-isFlatSchema (TypedEnumSchema _) = True
-isFlatSchema (IntegerSchema _) = True
-isFlatSchema (ArraySchema (ParsedSchemaArray (RefSchema _) _ _)) = True
-isFlatSchema (ArraySchema _) = False
-isFlatSchema (ObjectSchema (ParsedSchemaObject properties _)) = all (isRefSchema . snd) properties
-isFlatSchema (AnyOfSchema schemas) = all (isRefSchema . snd) schemas
-isFlatSchema (AllOfSchema schemas) = all (isRefSchema . snd) schemas
-isFlatSchema (OneOfSchema schemas) = all (isRefSchema . snd) schemas
-isFlatSchema EmptySchema = True
-isFlatSchema (NullableSchema (RefSchema _)) = True
-isFlatSchema (NullableSchema _) = False
-
 isFlatishSchema :: ParsedSchema -> Bool
 isFlatishSchema (RefSchema _) = True
 isFlatishSchema (ConstSchema _) = True
