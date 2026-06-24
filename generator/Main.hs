@@ -245,11 +245,18 @@ flattenSchema name sch@(ArraySchema (ParsedSchemaArray items minItems maxItems))
 -- then replace the main schema with references to them.
 flattenSchema name (ObjectSchema (ParsedSchemaObject properties required)) acc =
     let (newProperties, accWithFlattenedProps) = foldl' (\(propsAcc, accAcc) (propName, propSchema) ->
-            let newPropName = name ++ capitalize propName
+            let newPropName = name ++ newValidConstructorName propName
                 accWithFlattenedProp = flattenSchema newPropName propSchema accAcc
+                -- Simulate insertion to get de-duplicated name
+                nameOfMainSchemaInFlattened = fst $ insertDeduplicate newPropName undefined accAcc
+                mainSchemaInFlattened = fromJust $ StrictMap.lookup nameOfMainSchemaInFlattened accWithFlattenedProp
             in if isJust (schemaToSimpleHaskellType propSchema)
                 then (propsAcc ++ [(propName, propSchema)], accAcc)
-                else (propsAcc ++ [(propName, RefSchema (ParsedSchemaRef newPropName))], accWithFlattenedProp)
+                -- If the flattened schema became simple enough, use that.
+                -- Remove from the accumulator.
+                else if (isJust (schemaToSimpleHaskellType mainSchemaInFlattened))
+                    then (propsAcc ++ [(propName, mainSchemaInFlattened)], StrictMap.delete nameOfMainSchemaInFlattened accWithFlattenedProp)
+                    else (propsAcc ++ [(propName, RefSchema (ParsedSchemaRef newPropName))], accWithFlattenedProp)
             ) ([], acc) properties
     in snd $ insertDeduplicate name (ObjectSchema (ParsedSchemaObject newProperties required)) accWithFlattenedProps
 -- For anyOf, allOf, oneOf, flatten every child schema if it's not a ref, then
