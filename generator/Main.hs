@@ -329,7 +329,7 @@ schemaToHaskellDeclaration name (IntegerSchema (ParsedSchemaInteger format _min 
 schemaToHaskellDeclaration name (ArraySchema (ParsedSchemaArray (RefSchema (ParsedSchemaRef ref)) _min _max)) =
     "newtype " ++ name ++ " = " ++ name ++ " [" ++ ref ++ "]"
 schemaToHaskellDeclaration name (ObjectSchema (ParsedSchemaObject properties _)) =
-    "data " ++ name ++ " = " ++ name ++ "\n    { " ++ intercalate "\n    , " (map (\(propName, propSchema) -> propName ++ " :: " ++ case propSchema of
+    "data " ++ name ++ " = " ++ name ++ "\n    { " ++ intercalate "\n    , " (map (\(propName, propSchema) -> apostrophizeIfKeyword propName ++ " :: " ++ case propSchema of
         RefSchema (ParsedSchemaRef ref) -> ref
         _ -> error "Input was not flatted...!") properties) ++ "\n    }"
 schemaToHaskellDeclaration name (AnyOfSchema schemas) = "data " ++ name ++ " = " ++ intercalate " | " (zipWith (\_i schema
@@ -346,6 +346,12 @@ schemaToHaskellDeclaration name (OneOfSchema schemas) = "data " ++ name ++ " = "
         _ -> error "Input was not flatted...!")) [(0 :: Integer)..] (map snd schemas))
 schemaToHaskellDeclaration name EmptySchema = "data " ++ name ++ " = " ++ name
 schemaToHaskellDeclaration _ _ = error "Input was likely not flatted...!"
+
+haskellKeywords :: [String]
+haskellKeywords = ["type", "data", "default"]
+
+apostrophizeIfKeyword :: String -> String
+apostrophizeIfKeyword name = if name `elem` haskellKeywords then name ++ "'" else name
 
 main :: IO ()
 main = do
