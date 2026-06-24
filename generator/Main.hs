@@ -14,7 +14,7 @@ import Data.Aeson.Key (toString, fromString)
 import qualified Data.Text as T
 import Text.Pretty.Simple (pPrint)
 import qualified Data.Map.Strict as StrictMap
-import Data.Char (toUpper, isAlphaNum, isAlpha)
+import Data.Char (toUpper, isAlphaNum, isAlpha, toLower)
 import Data.List.NonEmpty (head)
 import qualified Data.List.NonEmpty as NE
 import Prelude hiding (head)
@@ -327,19 +327,19 @@ capitalize (x:xs) = toUpper x : xs
 
 schemaToHaskellDeclaration :: String -> ParsedSchema -> String
 schemaToHaskellDeclaration _ (RefSchema _) = error "Only way this can happen is if the original OpenAPI doc has a top-level ref schema"
-schemaToHaskellDeclaration name (NullableSchema flattish) = "newtype " ++ name ++ " = " ++ name ++ " (Maybe " ++ fromJust (schemaToSimpleHaskellType flattish) ++ ")"
-schemaToHaskellDeclaration name (ConstSchema (ParsedSchemaConstant constValue)) = "newtype " ++ name ++ " = " ++ name ++ " " ++ newValidName constValue
-schemaToHaskellDeclaration name flattish@(RawTypeSchema _) = "newtype " ++ name ++ " = " ++ name ++ " " ++ fromJust (schemaToSimpleHaskellType flattish)
+schemaToHaskellDeclaration name (NullableSchema flattish) = "newtype " ++ name ++ " = " ++ newValidConstructorName name ++ " (Maybe " ++ fromJust (schemaToSimpleHaskellType flattish) ++ ")"
+schemaToHaskellDeclaration name (ConstSchema (ParsedSchemaConstant constValue)) = "newtype " ++ name ++ " = " ++ newValidConstructorName name ++ " " ++ newValidConstructorName constValue
+schemaToHaskellDeclaration name flattish@(RawTypeSchema _) = "newtype " ++ name ++ " = " ++ newValidConstructorName name ++ " " ++ fromJust (schemaToSimpleHaskellType flattish)
 schemaToHaskellDeclaration name (EnumSchema (ParsedSchemaEnum (Left values))) =
     "data " ++ name ++ " = " ++ intercalate " | " (map capitalize values)
 schemaToHaskellDeclaration name (EnumSchema (ParsedSchemaEnum (Right values))) =
     "data " ++ name ++ " = " ++ intercalate " | " (map (((name ++ "Enum") ++) . show) values)
-schemaToHaskellDeclaration name flattish@(TypedEnumSchema _) = "newtype " ++ name ++ " = " ++ name ++ " " ++ fromJust (schemaToSimpleHaskellType flattish)
-schemaToHaskellDeclaration name flattish@(IntegerSchema _) = "newtype " ++ name ++ " = " ++ name ++ " " ++ fromJust (schemaToSimpleHaskellType flattish)
+schemaToHaskellDeclaration name flattish@(TypedEnumSchema _) = "newtype " ++ name ++ " = " ++ newValidConstructorName name ++ " " ++ fromJust (schemaToSimpleHaskellType flattish)
+schemaToHaskellDeclaration name flattish@(IntegerSchema _) = "newtype " ++ name ++ " = " ++ newValidConstructorName name ++ " " ++ fromJust (schemaToSimpleHaskellType flattish)
 schemaToHaskellDeclaration name (ArraySchema (ParsedSchemaArray flattish _min _max)) =
-    "newtype " ++ name ++ " = " ++ name ++ " [" ++ fromJust (schemaToSimpleHaskellType flattish) ++ "]"
+    "newtype " ++ name ++ " = " ++ newValidConstructorName name ++ " [" ++ fromJust (schemaToSimpleHaskellType flattish) ++ "]"
 schemaToHaskellDeclaration name (ObjectSchema (ParsedSchemaObject properties _)) =
-    "data " ++ name ++ " = " ++ name ++ "\n    { " ++ intercalate "\n    , " (map (\(propName, propSchema) -> apostrophizeIfKeyword propName ++ " :: " ++ case schemaToSimpleHaskellType propSchema of
+    "data " ++ name ++ " = " ++ newValidConstructorName name ++ "\n    { " ++ intercalate "\n    , " (map (\(propName, propSchema) -> newValidIdentifierName propName ++ " :: " ++ case schemaToSimpleHaskellType propSchema of
         Just t -> t
         Nothing -> error "Input was not flatted enough...!") properties) ++ "\n    }"
 schemaToHaskellDeclaration name (AnyOfSchema schemas)
@@ -381,15 +381,26 @@ replaceInvalidChars (x:xs)
         | isAlphaNum c || c == '\'' = c
         | otherwise = '_'
 
-newValidName :: String -> String
-newValidName name = replaceInvalidChars $ apostrophizeIfKeyword $ capitalize name
+camelCase :: String -> String
+camelCase [] = []
+camelCase (x:xs) = toLower x : go xs
+  where
+    go [] = []
+    go ('_':y:ys) = toUpper y : go ys
+    go (y:ys) = y : go ys
+
+newValidConstructorName :: String -> String
+newValidConstructorName name = capitalize $ camelCase $ replaceInvalidChars $ apostrophizeIfKeyword name
+
+newValidIdentifierName :: String -> String
+newValidIdentifierName name = camelCase $ replaceInvalidChars $ apostrophizeIfKeyword name
 
 schemaToSimpleHaskellType :: ParsedSchema -> Maybe String
 schemaToSimpleHaskellType (RefSchema (ParsedSchemaRef ref)) = Just ref
 schemaToSimpleHaskellType (NullableSchema innerSchema) = case schemaToSimpleHaskellType innerSchema of
     Just t -> Just $ "Maybe " ++ t
     Nothing -> Nothing
-schemaToSimpleHaskellType (ConstSchema (ParsedSchemaConstant _constValue)) = Just $ newValidName _constValue
+schemaToSimpleHaskellType (ConstSchema (ParsedSchemaConstant _constValue)) = Just $ newValidConstructorName _constValue
 schemaToSimpleHaskellType (RawTypeSchema (ParsedSchemaRawType rawType)) = case rawType of
     "string" -> Just "String"
     "number" -> Just "Integer"
