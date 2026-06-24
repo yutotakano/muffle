@@ -12,7 +12,6 @@ import Control.Monad (forM)
 import Control.Applicative ((<|>))
 import Data.Aeson.Key (toString, fromString)
 import qualified Data.Text as T
-import Data.Bifunctor (bimap)
 import Text.Pretty.Simple (pPrint)
 import qualified Data.Map.Strict as StrictMap
 import Data.Char (toUpper)
@@ -220,7 +219,7 @@ flattenSchema name (AnyOfSchema schemas) acc =
             in if isRefSchema schema
                 then (schemasAcc ++ [(show i, schema)], accAcc)
                 else (schemasAcc ++ [(show i, RefSchema (ParsedSchemaRef newSchemaName))], accWithFlattenedSchema)
-            ) ([], acc) (zip [0..] $ map snd schemas)
+            ) ([], acc) (zip [(0 :: Integer)..] $ map snd schemas)
     in snd $ insertDeduplicate name (AnyOfSchema newSchemas) accWithFlattenedSchemas
 flattenSchema name (AllOfSchema schemas) acc =
     let (newSchemas, accWithFlattenedSchemas) = foldl' (\(schemasAcc, accAcc) (i, schema) ->
@@ -229,7 +228,7 @@ flattenSchema name (AllOfSchema schemas) acc =
             in if isRefSchema schema
                 then (schemasAcc ++ [(show i, schema)], accAcc)
                 else (schemasAcc ++ [(show i, RefSchema (ParsedSchemaRef newSchemaName))], accWithFlattenedSchema)
-            ) ([], acc) (zip [0..] $ map snd schemas)
+            ) ([], acc) (zip [(0 :: Integer)..] $ map snd schemas)
     in snd $ insertDeduplicate name (AllOfSchema newSchemas) accWithFlattenedSchemas
 flattenSchema name (OneOfSchema schemas) acc =
     let (newSchemas, accWithFlattenedSchemas) = foldl' (\(schemasAcc, accAcc) (i, schema) ->
@@ -238,7 +237,7 @@ flattenSchema name (OneOfSchema schemas) acc =
             in if isRefSchema schema
                 then (schemasAcc ++ [(show i, schema)], accAcc)
                 else (schemasAcc ++ [(show i, RefSchema (ParsedSchemaRef newSchemaName))], accWithFlattenedSchema)
-            ) ([], acc) (zip [0..] $ map snd schemas)
+            ) ([], acc) (zip [(0 :: Integer)..] $ map snd schemas)
     in snd $ insertDeduplicate name (OneOfSchema newSchemas) accWithFlattenedSchemas
 
 -- | @insertDeduplicate@ takes a key/value to insert into a map, and if the key
@@ -247,7 +246,7 @@ flattenSchema name (OneOfSchema schemas) acc =
 insertDeduplicate :: String -> ParsedSchema -> StrictMap.Map String ParsedSchema -> (String, StrictMap.Map String ParsedSchema)
 insertDeduplicate name schema acc =
     let newName = if StrictMap.member name acc
-                    then head [name ++ "_" ++ show i | i <- [1..], not (StrictMap.member (name ++ "_" ++ show i) acc)]
+                    then head [name ++ "_" ++ show i | i <- [(1 :: Integer)..], not (StrictMap.member (name ++ "_" ++ show i) acc)]
                     else name
     in (newName, StrictMap.insert newName schema acc)
 
