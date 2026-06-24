@@ -328,7 +328,7 @@ capitalize (x:xs) = toUpper x : xs
 schemaToHaskellDeclaration :: String -> ParsedSchema -> String
 schemaToHaskellDeclaration _ (RefSchema _) = error "Only way this can happen is if the original OpenAPI doc has a top-level ref schema"
 schemaToHaskellDeclaration name (NullableSchema flattish) = "newtype " ++ name ++ " = " ++ name ++ " (Maybe " ++ fromJust (schemaToSimpleHaskellType flattish) ++ ")"
-schemaToHaskellDeclaration name (ConstSchema (ParsedSchemaConstant constValue)) = "newtype " ++ name ++ " = " ++ name ++ " \"" ++ constValue ++ "\""
+schemaToHaskellDeclaration name (ConstSchema (ParsedSchemaConstant constValue)) = name ++ " :: String\n" ++ name ++ " = \"" ++ constValue ++ "\""
 schemaToHaskellDeclaration name flattish@(RawTypeSchema _) = "newtype " ++ name ++ " = " ++ name ++ " " ++ fromJust (schemaToSimpleHaskellType flattish)
 schemaToHaskellDeclaration name (EnumSchema (ParsedSchemaEnum (Left values))) =
     "data " ++ name ++ " = " ++ intercalate " | " (map capitalize values)
@@ -379,7 +379,7 @@ newValidName name = replaceInvalidChars $ apostrophizeIfKeyword $ capitalize nam
 schemaToSimpleHaskellType :: ParsedSchema -> Maybe String
 schemaToSimpleHaskellType (RefSchema (ParsedSchemaRef ref)) = Just ref
 schemaToSimpleHaskellType (NullableSchema (RefSchema (ParsedSchemaRef ref))) = Just $ "Maybe " ++ ref
-schemaToSimpleHaskellType (ConstSchema (ParsedSchemaConstant constValue)) = Just $ newValidName constValue
+schemaToSimpleHaskellType (ConstSchema (ParsedSchemaConstant _constValue)) = Just "String"
 schemaToSimpleHaskellType (RawTypeSchema (ParsedSchemaRawType rawType)) = case rawType of
     "string" -> Just "String"
     "number" -> Just "Integer"
