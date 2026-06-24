@@ -239,8 +239,8 @@ flattenSchema name sch@(ArraySchema (ParsedSchemaArray items minItems maxItems))
     | otherwise =
         -- For arrays, flatten every child schema - then replace the items in the main
         -- schema with a reference to the new generated child ref.
-            let accWithFlattenedItems = flattenSchema (name ++ "ArrayElement") items acc
-            in snd $ insertDeduplicate name (ArraySchema (ParsedSchemaArray (RefSchema (ParsedSchemaRef (name ++ "ArrayElement"))) minItems maxItems)) accWithFlattenedItems
+            let accWithFlattenedItems = flattenSchema (name ++ "Item") items acc
+            in snd $ insertDeduplicate name (ArraySchema (ParsedSchemaArray (RefSchema (ParsedSchemaRef (name ++ "Item"))) minItems maxItems)) accWithFlattenedItems
 -- For objects, flatten every property schema except if they are refs already,
 -- then replace the main schema with references to them.
 flattenSchema name (ObjectSchema (ParsedSchemaObject properties required)) acc =
