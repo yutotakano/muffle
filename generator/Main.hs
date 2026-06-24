@@ -296,6 +296,10 @@ isRefSchema :: ParsedSchema -> Bool
 isRefSchema (RefSchema _) = True
 isRefSchema _ = False
 
+isConstSchema :: ParsedSchema -> Bool
+isConstSchema (ConstSchema _) = True
+isConstSchema _ = False
+
 isRawTypeNullSchema :: ParsedSchema -> Bool
 isRawTypeNullSchema (RawTypeSchema (ParsedSchemaRawType "null")) = True
 isRawTypeNullSchema _ = False
@@ -341,7 +345,7 @@ capitalize (x:xs) = toUpper x : xs
 schemaToHaskellDeclaration :: String -> ParsedSchema -> String
 schemaToHaskellDeclaration _ (RefSchema _) = error "Only way this can happen is if the original OpenAPI doc has a top-level ref schema"
 schemaToHaskellDeclaration name (NullableSchema flattish) = "newtype " ++ name ++ " = " ++ name ++ " (Maybe " ++ fromJust (schemaToSimpleHaskellType flattish) ++ ")"
-schemaToHaskellDeclaration name (ConstSchema (ParsedSchemaConstant constValue)) = name ++ " :: String\n" ++ name ++ " = \"" ++ constValue ++ "\""
+schemaToHaskellDeclaration name (ConstSchema (ParsedSchemaConstant constValue)) = "newtype " ++ name ++ " = " ++ name ++ " " ++ newValidName constValue
 schemaToHaskellDeclaration name flattish@(RawTypeSchema _) = "newtype " ++ name ++ " = " ++ name ++ " " ++ fromJust (schemaToSimpleHaskellType flattish)
 schemaToHaskellDeclaration name (EnumSchema (ParsedSchemaEnum (Left values))) =
     "data " ++ name ++ " = " ++ intercalate " | " (map capitalize values)
@@ -355,18 +359,26 @@ schemaToHaskellDeclaration name (ObjectSchema (ParsedSchemaObject properties _))
     "data " ++ name ++ " = " ++ name ++ "\n    { " ++ intercalate "\n    , " (map (\(propName, propSchema) -> apostrophizeIfKeyword propName ++ " :: " ++ case schemaToSimpleHaskellType propSchema of
         Just t -> t
         Nothing -> error "Input was not flatted enough...!") properties) ++ "\n    }"
-schemaToHaskellDeclaration name (AnyOfSchema schemas) = "data " ++ name ++ " = " ++ intercalate " | " (zipWith (\i schema
-  -> (case schemaToSimpleHaskellType schema of
-        Just t -> name ++ show i ++ " " ++ t
-        Nothing -> error "Input was not flatted enough...!")) [(0 :: Integer)..] (map snd schemas))
+schemaToHaskellDeclaration name (AnyOfSchema schemas)
+    | all (isConstSchema . snd) schemas = "data " ++ name ++ " = " ++ intercalate " | " (map (\schema -> case snd schema of
+        sch@(ConstSchema _) -> (name ++ ) $ fromJust $ schemaToSimpleHaskellType sch
+        _ -> error "Input was not flatted enough...!") schemas)
+    | otherwise = "data " ++ name ++ " = " ++ intercalate " | " (zipWith (\i schema -> (
+        case schemaToSimpleHaskellType schema of
+            Just t -> name ++ show i ++ " " ++ t
+            Nothing -> error "Input was not flatted enough...!")) [(0 :: Integer)..] (map snd schemas))
 schemaToHaskellDeclaration name (AllOfSchema schemas) = "data " ++ name ++ " = " ++ name ++"\n    { " ++ intercalate "\n    , " (zipWith (\_i schema
   -> (case schemaToSimpleHaskellType schema of
         Just t -> t
         Nothing -> error "Input was not flatted enough...!")) [(0 :: Integer)..] (map snd schemas)) ++ "\n    }"
-schemaToHaskellDeclaration name (OneOfSchema schemas) = "data " ++ name ++ " = " ++ intercalate " | " (zipWith (\i schema
-  -> (case schemaToSimpleHaskellType schema of
-        Just t -> name ++ show i ++ " " ++ t
-        Nothing -> error "Input was not flatted enough...!")) [(0 :: Integer)..] (map snd schemas))
+schemaToHaskellDeclaration name (OneOfSchema schemas)
+    | all (isConstSchema . snd) schemas = "data " ++ name ++ " = " ++ intercalate " | " (map (\schema -> case snd schema of
+        sch@(ConstSchema _) -> (name ++ ) $ fromJust $ schemaToSimpleHaskellType sch
+        _ -> error "Input was not flatted enough...!") schemas)
+    | otherwise = "data " ++ name ++ " = " ++ intercalate " | " (zipWith (\i schema -> (
+        case schemaToSimpleHaskellType schema of
+            Just t -> name ++ show i ++ " " ++ t
+            Nothing -> error "Input was not flatted enough...!")) [(0 :: Integer)..] (map snd schemas))
 schemaToHaskellDeclaration name EmptySchema = "data " ++ name ++ " = " ++ name
 
 haskellKeywords :: [String]
@@ -392,7 +404,7 @@ newValidName name = replaceInvalidChars $ apostrophizeIfKeyword $ capitalize nam
 schemaToSimpleHaskellType :: ParsedSchema -> Maybe String
 schemaToSimpleHaskellType (RefSchema (ParsedSchemaRef ref)) = Just ref
 schemaToSimpleHaskellType (NullableSchema (RefSchema (ParsedSchemaRef ref))) = Just $ "Maybe " ++ ref
-schemaToSimpleHaskellType (ConstSchema (ParsedSchemaConstant _constValue)) = Just "String"
+schemaToSimpleHaskellType (ConstSchema (ParsedSchemaConstant _constValue)) = Just $ newValidName _constValue
 schemaToSimpleHaskellType (RawTypeSchema (ParsedSchemaRawType rawType)) = case rawType of
     "string" -> Just "String"
     "number" -> Just "Integer"
