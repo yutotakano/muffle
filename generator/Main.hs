@@ -12,7 +12,8 @@ import Control.Monad (forM)
 import Control.Applicative ((<|>))
 import Data.Aeson.Key (toString, fromString)
 import qualified Data.Text as T
-import Text.Pretty.Simple (pPrint)
+import qualified Data.Text.Lazy.IO as TLIO
+import Text.Pretty.Simple (pPrint, pShowNoColor)
 import qualified Data.Map.Strict as StrictMap
 import Data.Char (toUpper, isAlphaNum, isAlpha, toLower)
 import Data.List.NonEmpty (head)
@@ -451,5 +452,8 @@ main = do
     let haskellDeclarations = map (uncurry schemaToHaskellDeclaration) (StrictMap.toList flattenedSchemas)
 
     let outputFile = "lib/Muffle/Discord/Generated/Schemas.hs"
+    let intermediateOutputFile = "lib/Muffle/Discord/Generated/Schema.hs.txt"
+
     let moduleHeader = "{-# LANGUAGE DuplicateRecordFields #-}\nmodule Muffle.Discord.Generated.Schemas where\n\nimport Data.Int (Int32, Int64)\n\n"
     writeFile outputFile (moduleHeader ++ unlines haskellDeclarations)
+    TLIO.writeFile intermediateOutputFile $ pShowNoColor flattenedSchemas
