@@ -1,0 +1,11 @@
+version = 1
+created_at = "2026-06-24T22:41:20.363706Z"
+packages = []
+
+[toolchain]
+ghc = "9.12.2"
+cabal = "3.14.200"
+
+[plan]
+platform = "x86_64-windows"
+hash = "sha256:1a391af49d0549d6ecf2a571fe4e315619e8190b46887cff1b108d16ac271353"
