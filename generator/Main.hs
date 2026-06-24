@@ -183,10 +183,21 @@ parseSchema obj
             [] -> fail "Expected 'type' field to be a non-empty array of strings"
             _ -> pure ()
 
-        AnyOfSchema <$> forM types (\t -> flip (<?>) (Key $ fromString t) $ do
-            let schemaObj = insert "type" (Data.Aeson.Types.String (T.pack t)) o
-            parsedSchema <- parseSchema schemaObj
-            return ("", parsedSchema))
+        if "null" `elem` types then do
+            let nonNullTypes = filter (/= "null") types
+            case nonNullTypes of
+                [t] -> do
+                    let schemaObj = insert "type" (Data.Aeson.Types.String (T.pack t)) o
+                    NullableSchema <$> parseSchema schemaObj
+                _ -> NullableSchema . AnyOfSchema <$> forM nonNullTypes (\t -> flip (<?>) (Key $ fromString t) $ do
+                    let schemaObj = insert "type" (Data.Aeson.Types.String (T.pack t)) o
+                    parsedSchema <- parseSchema schemaObj
+                    return ("", parsedSchema))
+        else do
+            AnyOfSchema <$> forM types (\t -> flip (<?>) (Key $ fromString t) $ do
+                let schemaObj = insert "type" (Data.Aeson.Types.String (T.pack t)) o
+                parsedSchema <- parseSchema schemaObj
+                return ("", parsedSchema))
 
 parseSchemas :: Object -> Parser [(String, ParsedSchema)]
 parseSchemas obj = do
