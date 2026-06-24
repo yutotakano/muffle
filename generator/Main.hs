@@ -15,6 +15,9 @@ import qualified Data.Text as T
 import Text.Pretty.Simple (pPrint)
 import qualified Data.Map.Strict as StrictMap
 import Data.Char (toUpper)
+import Data.List.NonEmpty (head)
+import qualified Data.List.NonEmpty as NE
+import Prelude hiding (head)
 
 
 data ParsedSchemaConstant = ParsedSchemaConstant
@@ -246,7 +249,7 @@ flattenSchema name (OneOfSchema schemas) acc =
 insertDeduplicate :: String -> ParsedSchema -> StrictMap.Map String ParsedSchema -> (String, StrictMap.Map String ParsedSchema)
 insertDeduplicate name schema acc =
     let newName = if StrictMap.member name acc
-                    then head [name ++ "_" ++ show i | i <- [(1 :: Integer)..], not (StrictMap.member (name ++ "_" ++ show i) acc)]
+                    then head $ NE.fromList [name ++ "_" ++ show i | i <- [(1 :: Integer)..], not (StrictMap.member (name ++ "_" ++ show i) acc)]
                     else name
     in (newName, StrictMap.insert newName schema acc)
 
