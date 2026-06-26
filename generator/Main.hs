@@ -372,6 +372,9 @@ capitalize :: String -> String
 capitalize [] = []
 capitalize (x : xs) = toUpper x : xs
 
+derivings :: String
+derivings = "\n    deriving (Show, Eq, Generic)"
+
 schemaToHaskellDeclaration :: String -> ParsedSchema -> String
 schemaToHaskellDeclaration _ (RefSchema _) = error "Only way this can happen is if the original OpenAPI doc has a top-level ref schema"
 schemaToHaskellDeclaration name (NullableSchema flattish) = "newtype " ++ name ++ " = " ++ newValidConstructorName name ++ " (Maybe " ++ fromJust (schemaToSimpleHaskellType flattish) ++ ")"
@@ -609,7 +612,7 @@ main = do
         -- All top-level items should not be ref schemas
         pPrint $ not (any isRefSchema (StrictMap.elems flattenedSchemas))
 
-        let haskellDeclarations = map (uncurry schemaToHaskellDeclaration) (StrictMap.toList flattenedSchemas)
+        let haskellDeclarations = map ((++ derivings) . uncurry schemaToHaskellDeclaration) (StrictMap.toList flattenedSchemas)
 
         let outputFile = "lib/Muffle/Discord/Generated/Schemas/" ++ name ++ ".hs"
         let intermediateOutputFile = "lib/Muffle/Discord/Generated/Schemas/" ++ name ++ ".hs.txt"
