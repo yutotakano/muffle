@@ -5,7 +5,7 @@
 module Main where
 
 import Control.Applicative ((<|>))
-import Control.Monad (forM)
+import Control.Monad (forM, forM_)
 import Data.Aeson (eitherDecode)
 import Data.Aeson.Key (fromString, toString)
 import Data.Aeson.KeyMap (insert, keys, lookup, member)
@@ -22,6 +22,7 @@ import qualified Data.Text as T
 import qualified Data.Text.Lazy.IO as TLIO
 import Text.Pretty.Simple (pPrint, pShowNoColor)
 import Prelude hiding (head)
+import System.Directory (createDirectoryIfMissing)
 
 data ParsedSchemaConstant = ParsedSchemaConstant
     { parsedSchemaConst :: String
@@ -569,18 +570,29 @@ main = do
         Left err -> error err
 
     -- We can assume the schemas are unique by name since they are JSON keys
-    let schemaMap = StrictMap.fromList schemas
-    -- Flatten to ensure everything is a "flat" schema, i.e. no nested schemas.
-    let flattenedSchemas = convert schemaMap
+    -- let schemaMap = StrictMap.fromList schemas
 
-    pPrint $ all isFlatishSchema (StrictMap.elems flattenedSchemas)
-    pPrint $ not (any isRefSchema (StrictMap.elems flattenedSchemas))
+    createDirectoryIfMissing True "lib/Muffle/Discord/Generated/Schemas"
 
-    let haskellDeclarations = map (uncurry schemaToHaskellDeclaration) (StrictMap.toList flattenedSchemas)
+    forM_ schemas $ \(name, topLevelSchema) -> do
+        let flattenedSchemas = convert (StrictMap.fromList [(name, topLevelSchema)])
 
-    let outputFile = "lib/Muffle/Discord/Generated/Schemas.hs"
-    let intermediateOutputFile = "lib/Muffle/Discord/Generated/Schema.hs.txt"
+        -- All items should be flat-ish
+        pPrint $ all isFlatishSchema (StrictMap.elems flattenedSchemas)
 
-    let moduleHeader = "{-# LANGUAGE DuplicateRecordFields #-}\nmodule Muffle.Discord.Generated.Schemas where\n\nimport Data.Int (Int32, Int64)\n\n"
-    writeFile outputFile (moduleHeader ++ unlines haskellDeclarations)
-    TLIO.writeFile intermediateOutputFile $ pShowNoColor flattenedSchemas
+        -- All top-level items should not be ref schemas
+        pPrint $ not (any isRefSchema (StrictMap.elems flattenedSchemas))
+
+        let haskellDeclarations = map (uncurry schemaToHaskellDeclaration) (StrictMap.toList flattenedSchemas)
+
+        let outputFile = "lib/Muffle/Discord/Generated/Schemas/" ++ name ++ ".hs"
+        let intermediateOutputFile = "lib/Muffle/Discord/Generated/Schemas/" ++ name ++ ".hs.txt"
+
+        let moduleHeader = "{-# LANGUAGE DuplicateRecordFields #-}\nmodule Muffle.Discord.Generated.Schemas." ++ name ++ " where\n\nimport Data.Int (Int32, Int64)\n\n"
+        writeFile outputFile (moduleHeader ++ unlines haskellDeclarations)
+        TLIO.writeFile intermediateOutputFile $ pShowNoColor flattenedSchemas
+
+    let importStatements = intercalate "\n" $ map (\(name, _) -> "import Muffle.Discord.Generated.Schemas." ++ name) schemas
+    let moduleStatements = intercalate "\n" $ map (\(name, _) -> "    module Muffle.Discord.Generated.Schemas." ++ name ++ ",") schemas
+    let allSchemasModuleContent = "module Muffle.Discord.Generated.Schemas (\n" ++ moduleStatements ++ "\n) where\n\n" ++ importStatements ++ "\n"
+    writeFile "lib/Muffle/Discord/Generated/Schemas.hs" allSchemasModuleContent

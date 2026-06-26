@@ -55,6 +55,7 @@ executable generator
       , text ^>=2.1.1
       , pretty-simple ^>=4.1.4.0
       , containers ^>=0.8
+      , directory ^>=1.3.11.0
 
     hs-source-dirs:   generator
     default-language: Haskell2010
