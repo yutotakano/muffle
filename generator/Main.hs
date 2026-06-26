@@ -607,10 +607,10 @@ main = do
         let flattenedSchemas = convert (StrictMap.fromList [(name, topLevelSchema)])
 
         -- All items should be flat-ish
-        pPrint $ all isFlatishSchema (StrictMap.elems flattenedSchemas)
+        -- pPrint $ all isFlatishSchema (StrictMap.elems flattenedSchemas)
 
         -- All top-level items should not be ref schemas
-        pPrint $ not (any isRefSchema (StrictMap.elems flattenedSchemas))
+        -- pPrint $ not (any isRefSchema (StrictMap.elems flattenedSchemas))
 
         let haskellDeclarations = map ((++ derivings) . uncurry schemaToHaskellDeclaration) (StrictMap.toList flattenedSchemas)
 
@@ -626,3 +626,5 @@ main = do
     let moduleStatements = intercalate "\n" $ map (\(name, _) -> "    module Muffle.Discord.Generated.Schemas." ++ name ++ ",") schemas
     let allSchemasModuleContent = "{-# LANGUAGE DuplicateRecordFields #-}\nmodule Muffle.Discord.Generated.Schemas (\n" ++ moduleStatements ++ "\n) where\n\n" ++ importStatements ++ "\n"
     writeFile "lib/Muffle/Discord/Generated/Schemas.hs" allSchemasModuleContent
+
+    putStrLn $ "Add the following to your cabal file:\n\n  exposed-modules:\n" ++ intercalate "\n" (map (\(name, _) -> "    Muffle.Discord.Generated.Schemas." ++ name) schemas) ++ "\n"
