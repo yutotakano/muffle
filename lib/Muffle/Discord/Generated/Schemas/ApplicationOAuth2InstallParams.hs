@@ -7,7 +7,7 @@ import GHC.Generics
 import Muffle.Discord.Generated.Schemas.OAuth2Scopes
 
 data ApplicationOAuth2InstallParams = ApplicationOAuth2InstallParams
-    { permissions :: Maybe Integer
-    , scopes :: [OAuth2Scopes]
+    { permissions :: Maybe (Maybe Integer)
+    , scopes :: Maybe [OAuth2Scopes]
     }
     deriving (Show, Eq, Generic)

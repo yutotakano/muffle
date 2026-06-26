@@ -9,13 +9,13 @@ import Muffle.Discord.Generated.Schemas.SnowflakeType
 import Muffle.Discord.Generated.Schemas.ApplicationTypes
 
 data BasicApplicationResponseWithBot = BasicApplicationResponseWithBot
-    { bot :: UserResponse
-    , coverImage :: String
+    { bot :: Maybe UserResponse
+    , coverImage :: Maybe String
     , description :: String
     , icon :: Maybe String
     , id :: SnowflakeType
     , name :: String
-    , primarySkuId :: SnowflakeType
+    , primarySkuId :: Maybe SnowflakeType
     , type' :: Maybe ApplicationTypes
     }
     deriving (Show, Eq, Generic)

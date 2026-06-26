@@ -9,18 +9,18 @@ import Muffle.Discord.Generated.Schemas.SnowflakeType
 import Muffle.Discord.Generated.Schemas.WidgetUserDiscriminator
 
 data WidgetMember = WidgetMember
-    { activity :: WidgetActivity
+    { activity :: Maybe WidgetActivity
     , avatar :: Maybe ()
     , avatarUrl :: String
-    , channelId :: SnowflakeType
-    , deaf :: Bool
+    , channelId :: Maybe SnowflakeType
+    , deaf :: Maybe Bool
     , discriminator :: WidgetUserDiscriminator
     , id :: String
-    , mute :: Bool
-    , selfDeaf :: Bool
-    , selfMute :: Bool
+    , mute :: Maybe Bool
+    , selfDeaf :: Maybe Bool
+    , selfMute :: Maybe Bool
     , status :: String
-    , suppress :: Bool
+    , suppress :: Maybe Bool
     , username :: String
     }
     deriving (Show, Eq, Generic)

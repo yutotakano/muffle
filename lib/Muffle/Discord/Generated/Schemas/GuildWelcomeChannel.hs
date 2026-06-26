@@ -9,7 +9,7 @@ import Muffle.Discord.Generated.Schemas.SnowflakeType
 data GuildWelcomeChannel = GuildWelcomeChannel
     { channelId :: SnowflakeType
     , description :: String
-    , emojiId :: Maybe SnowflakeType
-    , emojiName :: Maybe String
+    , emojiId :: Maybe (Maybe SnowflakeType)
+    , emojiName :: Maybe (Maybe String)
     }
     deriving (Show, Eq, Generic)

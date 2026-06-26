@@ -10,15 +10,17 @@ import Muffle.Discord.Generated.Schemas.UserSelectDefaultValue
 
 data MentionableSelectComponentForModalRequest = MentionableSelectComponentForModalRequest
     { customId :: String
-    , defaultValues :: [MentionableSelectComponentForModalRequestDefaultValuesItem]
-    , disabled :: Maybe Bool
-    , id :: Maybe Int32
-    , maxValues :: Maybe Integer
-    , minValues :: Maybe Integer
-    , placeholder :: Maybe String
-    , required :: Maybe Bool
+    , defaultValues :: Maybe MentionableSelectComponentForModalRequestDefaultValuesNullableInner
+    , disabled :: Maybe (Maybe Bool)
+    , id :: Maybe (Maybe Int32)
+    , maxValues :: Maybe (Maybe Integer)
+    , minValues :: Maybe (Maybe Integer)
+    , placeholder :: Maybe (Maybe String)
+    , required :: Maybe (Maybe Bool)
     , type' :: MessageComponentTypes
     }
     deriving (Show, Eq, Generic)
-data MentionableSelectComponentForModalRequestDefaultValuesItem = MentionableSelectComponentForModalRequestDefaultValuesItem0 RoleSelectDefaultValue | MentionableSelectComponentForModalRequestDefaultValuesItem1 UserSelectDefaultValue
+newtype MentionableSelectComponentForModalRequestDefaultValuesNullableInner = MentionableSelectComponentForModalRequestDefaultValuesNullableInner [MentionableSelectComponentForModalRequestDefaultValuesNullableInnerItem]
+    deriving (Show, Eq, Generic)
+data MentionableSelectComponentForModalRequestDefaultValuesNullableInnerItem = MentionableSelectComponentForModalRequestDefaultValuesNullableInnerItem0 RoleSelectDefaultValue | MentionableSelectComponentForModalRequestDefaultValuesNullableInnerItem1 UserSelectDefaultValue
     deriving (Show, Eq, Generic)

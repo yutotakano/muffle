@@ -12,10 +12,10 @@ data ApplicationIncomingWebhookResponse = ApplicationIncomingWebhookResponse
     { applicationId :: Maybe SnowflakeType
     , avatar :: Maybe String
     , channelId :: Maybe SnowflakeType
-    , guildId :: Maybe SnowflakeType
+    , guildId :: Maybe (Maybe SnowflakeType)
     , id :: SnowflakeType
     , name :: String
     , type' :: WebhookTypes
-    , user :: UserResponse
+    , user :: Maybe UserResponse
     }
     deriving (Show, Eq, Generic)

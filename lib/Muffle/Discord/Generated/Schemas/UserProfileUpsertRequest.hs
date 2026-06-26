@@ -14,15 +14,17 @@ import Muffle.Discord.Generated.Schemas.QuarantineUserAction
 import Muffle.Discord.Generated.Schemas.UserCommunicationDisabledAction
 
 data UserProfileUpsertRequest = UserProfileUpsertRequest
-    { actions :: [UserProfileUpsertRequestActionsItem]
-    , enabled :: Maybe Bool
+    { actions :: Maybe UserProfileUpsertRequestActionsNullableInner
+    , enabled :: Maybe (Maybe Bool)
     , eventType :: AutomodEventType
-    , exemptChannels :: [SnowflakeType]
-    , exemptRoles :: [SnowflakeType]
+    , exemptChannels :: Maybe [SnowflakeType]
+    , exemptRoles :: Maybe [SnowflakeType]
     , name :: String
     , triggerMetadata :: UserProfileMetadata
     , triggerType :: AutomodTriggerType
     }
     deriving (Show, Eq, Generic)
-data UserProfileUpsertRequestActionsItem = UserProfileUpsertRequestActionsItem0 BlockMessageAction | UserProfileUpsertRequestActionsItem1 FlagToChannelAction | UserProfileUpsertRequestActionsItem2 QuarantineUserAction | UserProfileUpsertRequestActionsItem3 UserCommunicationDisabledAction
+newtype UserProfileUpsertRequestActionsNullableInner = UserProfileUpsertRequestActionsNullableInner [UserProfileUpsertRequestActionsNullableInnerItem]
+    deriving (Show, Eq, Generic)
+data UserProfileUpsertRequestActionsNullableInnerItem = UserProfileUpsertRequestActionsNullableInnerItem0 BlockMessageAction | UserProfileUpsertRequestActionsNullableInnerItem1 FlagToChannelAction | UserProfileUpsertRequestActionsNullableInnerItem2 QuarantineUserAction | UserProfileUpsertRequestActionsNullableInnerItem3 UserCommunicationDisabledAction
     deriving (Show, Eq, Generic)

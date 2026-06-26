@@ -7,7 +7,7 @@ import GHC.Generics
 import Muffle.Discord.Generated.Schemas.SnowflakeType
 
 data ComponentEmojiForRequest = ComponentEmojiForRequest
-    { id :: Maybe SnowflakeType
+    { id :: Maybe (Maybe SnowflakeType)
     , name :: String
     }
     deriving (Show, Eq, Generic)

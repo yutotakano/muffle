@@ -9,24 +9,24 @@ import Muffle.Discord.Generated.Schemas.UserResponse
 import Muffle.Discord.Generated.Schemas.SnowflakeType
 
 data AttachmentResponse = AttachmentResponse
-    { application :: ApplicationResponse
-    , clipCreatedAt :: String
-    , clipParticipants :: [UserResponse]
-    , contentType :: String
-    , description :: String
-    , durationSecs :: Integer
-    , ephemeral :: Bool
+    { application :: Maybe ApplicationResponse
+    , clipCreatedAt :: Maybe String
+    , clipParticipants :: Maybe [UserResponse]
+    , contentType :: Maybe String
+    , description :: Maybe String
+    , durationSecs :: Maybe Integer
+    , ephemeral :: Maybe Bool
     , filename :: String
-    , flags :: Int32
-    , height :: Int32
+    , flags :: Maybe Int32
+    , height :: Maybe Int32
     , id :: SnowflakeType
-    , placeholder :: String
-    , placeholderVersion :: Int32
+    , placeholder :: Maybe String
+    , placeholderVersion :: Maybe Int32
     , proxyUrl :: String
     , size :: Int32
-    , title :: Maybe String
+    , title :: Maybe (Maybe String)
     , url :: String
-    , waveform :: String
-    , width :: Int32
+    , waveform :: Maybe String
+    , width :: Maybe Int32
     }
     deriving (Show, Eq, Generic)

@@ -8,20 +8,24 @@ import Muffle.Discord.Generated.Schemas.ChannelTypes
 import Muffle.Discord.Generated.Schemas.ApplicationCommandOptionType
 
 data ApplicationCommandChannelOption = ApplicationCommandChannelOption
-    { channelTypes :: [ChannelTypes]
+    { channelTypes :: Maybe [ChannelTypes]
     , description :: String
     , descriptionLocalizations :: Maybe ApplicationCommandChannelOptionDescriptionLocalizationsNullableInner
     , name :: String
     , nameLocalizations :: Maybe ApplicationCommandChannelOptionNameLocalizationsNullableInner
-    , required :: Maybe Bool
+    , required :: Maybe (Maybe Bool)
     , type' :: ApplicationCommandOptionType
     }
     deriving (Show, Eq, Generic)
-data ApplicationCommandChannelOptionDescriptionLocalizationsNullableInner = ApplicationCommandChannelOptionDescriptionLocalizationsNullableInner
+newtype ApplicationCommandChannelOptionDescriptionLocalizationsNullableInner = ApplicationCommandChannelOptionDescriptionLocalizationsNullableInner (Maybe ApplicationCommandChannelOptionDescriptionLocalizationsNullableInnerNullableInner)
+    deriving (Show, Eq, Generic)
+data ApplicationCommandChannelOptionDescriptionLocalizationsNullableInnerNullableInner = ApplicationCommandChannelOptionDescriptionLocalizationsNullableInnerNullableInner
     { 
     }
     deriving (Show, Eq, Generic)
-data ApplicationCommandChannelOptionNameLocalizationsNullableInner = ApplicationCommandChannelOptionNameLocalizationsNullableInner
+newtype ApplicationCommandChannelOptionNameLocalizationsNullableInner = ApplicationCommandChannelOptionNameLocalizationsNullableInner (Maybe ApplicationCommandChannelOptionNameLocalizationsNullableInnerNullableInner)
+    deriving (Show, Eq, Generic)
+data ApplicationCommandChannelOptionNameLocalizationsNullableInnerNullableInner = ApplicationCommandChannelOptionNameLocalizationsNullableInnerNullableInner
     { 
     }
     deriving (Show, Eq, Generic)

@@ -8,12 +8,12 @@ import GHC.Generics
 
 data ProvisionalTokenResponse = ProvisionalTokenResponse
     { accessToken :: String
-    , expiresAtS :: Maybe Int32
+    , expiresAtS :: Maybe (Maybe Int32)
     , expiresIn :: Int32
     , idToken :: String
-    , refreshToken :: Maybe String
+    , refreshToken :: Maybe (Maybe String)
     , scope :: String
-    , scopes :: [String]
+    , scopes :: Maybe [String]
     , tokenType :: String
     }
     deriving (Show, Eq, Generic)

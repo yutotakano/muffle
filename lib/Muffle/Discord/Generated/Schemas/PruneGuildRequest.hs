@@ -7,10 +7,12 @@ import GHC.Generics
 import Muffle.Discord.Generated.Schemas.SnowflakeType
 
 data PruneGuildRequest = PruneGuildRequest
-    { computePruneCount :: Maybe Bool
-    , days :: Maybe Integer
+    { computePruneCount :: Maybe (Maybe Bool)
+    , days :: Maybe (Maybe Integer)
     , includeRoles :: Maybe PruneGuildRequestIncludeRolesNullableInner
     }
     deriving (Show, Eq, Generic)
-data PruneGuildRequestIncludeRolesNullableInner = PruneGuildRequestIncludeRolesNullableInner0 String | PruneGuildRequestIncludeRolesNullableInner1 [SnowflakeType]
+newtype PruneGuildRequestIncludeRolesNullableInner = PruneGuildRequestIncludeRolesNullableInner (Maybe PruneGuildRequestIncludeRolesNullableInnerNullableInner)
+    deriving (Show, Eq, Generic)
+data PruneGuildRequestIncludeRolesNullableInnerNullableInner = PruneGuildRequestIncludeRolesNullableInnerNullableInner0 String | PruneGuildRequestIncludeRolesNullableInnerNullableInner1 [SnowflakeType]
     deriving (Show, Eq, Generic)

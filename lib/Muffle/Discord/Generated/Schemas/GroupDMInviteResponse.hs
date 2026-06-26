@@ -9,13 +9,13 @@ import Muffle.Discord.Generated.Schemas.UserResponse
 import Muffle.Discord.Generated.Schemas.InviteTypes
 
 data GroupDMInviteResponse = GroupDMInviteResponse
-    { approximateMemberCount :: Maybe Int32
+    { approximateMemberCount :: Maybe (Maybe Int32)
     , channel :: InviteChannelResponse
     , code :: String
-    , createdAt :: String
+    , createdAt :: Maybe String
     , expiresAt :: Maybe String
-    , inviter :: UserResponse
-    , maxAge :: Int32
+    , inviter :: Maybe UserResponse
+    , maxAge :: Maybe Int32
     , type' :: InviteTypes
     }
     deriving (Show, Eq, Generic)

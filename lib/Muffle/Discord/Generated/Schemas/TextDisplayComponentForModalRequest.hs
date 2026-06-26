@@ -8,7 +8,7 @@ import Muffle.Discord.Generated.Schemas.MessageComponentTypes
 
 data TextDisplayComponentForModalRequest = TextDisplayComponentForModalRequest
     { content :: String
-    , id :: Maybe Int32
+    , id :: Maybe (Maybe Int32)
     , type' :: MessageComponentTypes
     }
     deriving (Show, Eq, Generic)

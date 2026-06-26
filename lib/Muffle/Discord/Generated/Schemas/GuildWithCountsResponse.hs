@@ -23,8 +23,8 @@ data GuildWithCountsResponse = GuildWithCountsResponse
     { afkChannelId :: Maybe SnowflakeType
     , afkTimeout :: AfkTimeouts
     , applicationId :: Maybe SnowflakeType
-    , approximateMemberCount :: Maybe Int32
-    , approximatePresenceCount :: Maybe Int32
+    , approximateMemberCount :: Maybe (Maybe Int32)
+    , approximatePresenceCount :: Maybe (Maybe Int32)
     , banner :: Maybe String
     , defaultMessageNotifications :: UserNotificationSettings
     , description :: Maybe String
@@ -47,7 +47,7 @@ data GuildWithCountsResponse = GuildWithCountsResponse
     , ownerId :: SnowflakeType
     , preferredLocale :: AvailableLocalesEnum
     , premiumProgressBarEnabled :: Bool
-    , premiumProgressBarEnabledUserUpdatedAt :: Maybe String
+    , premiumProgressBarEnabledUserUpdatedAt :: Maybe (Maybe String)
     , premiumSubscriptionCount :: Int32
     , premiumTier :: PremiumGuildTiers
     , publicUpdatesChannelId :: Maybe SnowflakeType

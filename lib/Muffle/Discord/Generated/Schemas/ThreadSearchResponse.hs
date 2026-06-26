@@ -9,7 +9,7 @@ import Muffle.Discord.Generated.Schemas.ThreadMemberResponse
 import Muffle.Discord.Generated.Schemas.ThreadResponse
 
 data ThreadSearchResponse = ThreadSearchResponse
-    { firstMessages :: [MessageResponse]
+    { firstMessages :: Maybe [MessageResponse]
     , hasMore :: Bool
     , members :: [ThreadMemberResponse]
     , threads :: [ThreadResponse]

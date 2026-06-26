@@ -7,6 +7,6 @@ import GHC.Generics
 
 
 data CreateGroupDMInviteRequest = CreateGroupDMInviteRequest
-    { maxAge :: Maybe Integer
+    { maxAge :: Maybe (Maybe Integer)
     }
     deriving (Show, Eq, Generic)

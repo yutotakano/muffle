@@ -8,10 +8,10 @@ import Muffle.Discord.Generated.Schemas.MessageComponentTypes
 
 data FileUploadComponentForModalRequest = FileUploadComponentForModalRequest
     { customId :: String
-    , id :: Maybe Int32
-    , maxValues :: Maybe Integer
-    , minValues :: Maybe Integer
-    , required :: Maybe Bool
+    , id :: Maybe (Maybe Int32)
+    , maxValues :: Maybe (Maybe Integer)
+    , minValues :: Maybe (Maybe Integer)
+    , required :: Maybe (Maybe Bool)
     , type' :: MessageComponentTypes
     }
     deriving (Show, Eq, Generic)

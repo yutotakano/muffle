@@ -8,10 +8,10 @@ import Muffle.Discord.Generated.Schemas.UnfurledMediaRequest
 import Muffle.Discord.Generated.Schemas.MessageComponentTypes
 
 data ThumbnailComponentForMessageRequest = ThumbnailComponentForMessageRequest
-    { description :: Maybe String
-    , id :: Maybe Int32
+    { description :: Maybe (Maybe String)
+    , id :: Maybe (Maybe Int32)
     , media :: UnfurledMediaRequest
-    , spoiler :: Maybe Bool
+    , spoiler :: Maybe (Maybe Bool)
     , type' :: MessageComponentTypes
     }
     deriving (Show, Eq, Generic)

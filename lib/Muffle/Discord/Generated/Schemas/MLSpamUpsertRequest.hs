@@ -14,15 +14,17 @@ import Muffle.Discord.Generated.Schemas.QuarantineUserAction
 import Muffle.Discord.Generated.Schemas.UserCommunicationDisabledAction
 
 data MLSpamUpsertRequest = MLSpamUpsertRequest
-    { actions :: [MLSpamUpsertRequestActionsItem]
-    , enabled :: Maybe Bool
+    { actions :: Maybe MLSpamUpsertRequestActionsNullableInner
+    , enabled :: Maybe (Maybe Bool)
     , eventType :: AutomodEventType
-    , exemptChannels :: [SnowflakeType]
-    , exemptRoles :: [SnowflakeType]
+    , exemptChannels :: Maybe [SnowflakeType]
+    , exemptRoles :: Maybe [SnowflakeType]
     , name :: String
-    , triggerMetadata :: Maybe MLSpamTriggerMetadata
+    , triggerMetadata :: Maybe (Maybe MLSpamTriggerMetadata)
     , triggerType :: AutomodTriggerType
     }
     deriving (Show, Eq, Generic)
-data MLSpamUpsertRequestActionsItem = MLSpamUpsertRequestActionsItem0 BlockMessageAction | MLSpamUpsertRequestActionsItem1 FlagToChannelAction | MLSpamUpsertRequestActionsItem2 QuarantineUserAction | MLSpamUpsertRequestActionsItem3 UserCommunicationDisabledAction
+newtype MLSpamUpsertRequestActionsNullableInner = MLSpamUpsertRequestActionsNullableInner [MLSpamUpsertRequestActionsNullableInnerItem]
+    deriving (Show, Eq, Generic)
+data MLSpamUpsertRequestActionsNullableInnerItem = MLSpamUpsertRequestActionsNullableInnerItem0 BlockMessageAction | MLSpamUpsertRequestActionsNullableInnerItem1 FlagToChannelAction | MLSpamUpsertRequestActionsNullableInnerItem2 QuarantineUserAction | MLSpamUpsertRequestActionsNullableInnerItem3 UserCommunicationDisabledAction
     deriving (Show, Eq, Generic)

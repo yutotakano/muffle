@@ -10,9 +10,9 @@ import Muffle.Discord.Generated.Schemas.SnowflakeType
 
 data BasicGuildMemberResponse = BasicGuildMemberResponse
     { avatar :: Maybe String
-    , avatarDecorationData :: Maybe UserAvatarDecorationResponse
+    , avatarDecorationData :: Maybe (Maybe UserAvatarDecorationResponse)
     , banner :: Maybe String
-    , collectibles :: Maybe UserCollectiblesResponse
+    , collectibles :: Maybe (Maybe UserCollectiblesResponse)
     , communicationDisabledUntil :: Maybe String
     , flags :: Int32
     , joinedAt :: String

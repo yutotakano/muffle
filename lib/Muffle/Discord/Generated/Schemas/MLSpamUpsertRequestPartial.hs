@@ -14,15 +14,17 @@ import Muffle.Discord.Generated.Schemas.QuarantineUserAction
 import Muffle.Discord.Generated.Schemas.UserCommunicationDisabledAction
 
 data MLSpamUpsertRequestPartial = MLSpamUpsertRequestPartial
-    { actions :: [MLSpamUpsertRequestPartialActionsItem]
-    , enabled :: Maybe Bool
-    , eventType :: AutomodEventType
-    , exemptChannels :: [SnowflakeType]
-    , exemptRoles :: [SnowflakeType]
-    , name :: String
-    , triggerMetadata :: Maybe MLSpamTriggerMetadata
-    , triggerType :: AutomodTriggerType
+    { actions :: Maybe MLSpamUpsertRequestPartialActionsNullableInner
+    , enabled :: Maybe (Maybe Bool)
+    , eventType :: Maybe AutomodEventType
+    , exemptChannels :: Maybe [SnowflakeType]
+    , exemptRoles :: Maybe [SnowflakeType]
+    , name :: Maybe String
+    , triggerMetadata :: Maybe (Maybe MLSpamTriggerMetadata)
+    , triggerType :: Maybe AutomodTriggerType
     }
     deriving (Show, Eq, Generic)
-data MLSpamUpsertRequestPartialActionsItem = MLSpamUpsertRequestPartialActionsItem0 BlockMessageAction | MLSpamUpsertRequestPartialActionsItem1 FlagToChannelAction | MLSpamUpsertRequestPartialActionsItem2 QuarantineUserAction | MLSpamUpsertRequestPartialActionsItem3 UserCommunicationDisabledAction
+newtype MLSpamUpsertRequestPartialActionsNullableInner = MLSpamUpsertRequestPartialActionsNullableInner [MLSpamUpsertRequestPartialActionsNullableInnerItem]
+    deriving (Show, Eq, Generic)
+data MLSpamUpsertRequestPartialActionsNullableInnerItem = MLSpamUpsertRequestPartialActionsNullableInnerItem0 BlockMessageAction | MLSpamUpsertRequestPartialActionsNullableInnerItem1 FlagToChannelAction | MLSpamUpsertRequestPartialActionsNullableInnerItem2 QuarantineUserAction | MLSpamUpsertRequestPartialActionsNullableInnerItem3 UserCommunicationDisabledAction
     deriving (Show, Eq, Generic)

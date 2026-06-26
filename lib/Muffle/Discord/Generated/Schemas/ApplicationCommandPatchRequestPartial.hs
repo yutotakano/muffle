@@ -20,25 +20,31 @@ import Muffle.Discord.Generated.Schemas.ApplicationCommandSubcommandOption
 import Muffle.Discord.Generated.Schemas.ApplicationCommandUserOption
 
 data ApplicationCommandPatchRequestPartial = ApplicationCommandPatchRequestPartial
-    { contexts :: [InteractionContextType]
-    , defaultMemberPermissions :: Maybe Integer
-    , description :: Maybe String
+    { contexts :: Maybe [InteractionContextType]
+    , defaultMemberPermissions :: Maybe (Maybe Integer)
+    , description :: Maybe (Maybe String)
     , descriptionLocalizations :: Maybe ApplicationCommandPatchRequestPartialDescriptionLocalizationsNullableInner
-    , dmPermission :: Maybe Bool
-    , handler :: Maybe ApplicationCommandHandler
-    , integrationTypes :: [ApplicationIntegrationType]
-    , name :: String
+    , dmPermission :: Maybe (Maybe Bool)
+    , handler :: Maybe (Maybe ApplicationCommandHandler)
+    , integrationTypes :: Maybe [ApplicationIntegrationType]
+    , name :: Maybe String
     , nameLocalizations :: Maybe ApplicationCommandPatchRequestPartialNameLocalizationsNullableInner
-    , options :: [ApplicationCommandPatchRequestPartialOptionsItem]
+    , options :: Maybe ApplicationCommandPatchRequestPartialOptionsNullableInner
     }
     deriving (Show, Eq, Generic)
-data ApplicationCommandPatchRequestPartialDescriptionLocalizationsNullableInner = ApplicationCommandPatchRequestPartialDescriptionLocalizationsNullableInner
+newtype ApplicationCommandPatchRequestPartialDescriptionLocalizationsNullableInner = ApplicationCommandPatchRequestPartialDescriptionLocalizationsNullableInner (Maybe ApplicationCommandPatchRequestPartialDescriptionLocalizationsNullableInnerNullableInner)
+    deriving (Show, Eq, Generic)
+data ApplicationCommandPatchRequestPartialDescriptionLocalizationsNullableInnerNullableInner = ApplicationCommandPatchRequestPartialDescriptionLocalizationsNullableInnerNullableInner
     { 
     }
     deriving (Show, Eq, Generic)
-data ApplicationCommandPatchRequestPartialNameLocalizationsNullableInner = ApplicationCommandPatchRequestPartialNameLocalizationsNullableInner
+newtype ApplicationCommandPatchRequestPartialNameLocalizationsNullableInner = ApplicationCommandPatchRequestPartialNameLocalizationsNullableInner (Maybe ApplicationCommandPatchRequestPartialNameLocalizationsNullableInnerNullableInner)
+    deriving (Show, Eq, Generic)
+data ApplicationCommandPatchRequestPartialNameLocalizationsNullableInnerNullableInner = ApplicationCommandPatchRequestPartialNameLocalizationsNullableInnerNullableInner
     { 
     }
     deriving (Show, Eq, Generic)
-data ApplicationCommandPatchRequestPartialOptionsItem = ApplicationCommandPatchRequestPartialOptionsItem0 ApplicationCommandAttachmentOption | ApplicationCommandPatchRequestPartialOptionsItem1 ApplicationCommandBooleanOption | ApplicationCommandPatchRequestPartialOptionsItem2 ApplicationCommandChannelOption | ApplicationCommandPatchRequestPartialOptionsItem3 ApplicationCommandIntegerOption | ApplicationCommandPatchRequestPartialOptionsItem4 ApplicationCommandMentionableOption | ApplicationCommandPatchRequestPartialOptionsItem5 ApplicationCommandNumberOption | ApplicationCommandPatchRequestPartialOptionsItem6 ApplicationCommandRoleOption | ApplicationCommandPatchRequestPartialOptionsItem7 ApplicationCommandStringOption | ApplicationCommandPatchRequestPartialOptionsItem8 ApplicationCommandSubcommandGroupOption | ApplicationCommandPatchRequestPartialOptionsItem9 ApplicationCommandSubcommandOption | ApplicationCommandPatchRequestPartialOptionsItem10 ApplicationCommandUserOption
+newtype ApplicationCommandPatchRequestPartialOptionsNullableInner = ApplicationCommandPatchRequestPartialOptionsNullableInner [ApplicationCommandPatchRequestPartialOptionsNullableInnerItem]
+    deriving (Show, Eq, Generic)
+data ApplicationCommandPatchRequestPartialOptionsNullableInnerItem = ApplicationCommandPatchRequestPartialOptionsNullableInnerItem0 ApplicationCommandAttachmentOption | ApplicationCommandPatchRequestPartialOptionsNullableInnerItem1 ApplicationCommandBooleanOption | ApplicationCommandPatchRequestPartialOptionsNullableInnerItem2 ApplicationCommandChannelOption | ApplicationCommandPatchRequestPartialOptionsNullableInnerItem3 ApplicationCommandIntegerOption | ApplicationCommandPatchRequestPartialOptionsNullableInnerItem4 ApplicationCommandMentionableOption | ApplicationCommandPatchRequestPartialOptionsNullableInnerItem5 ApplicationCommandNumberOption | ApplicationCommandPatchRequestPartialOptionsNullableInnerItem6 ApplicationCommandRoleOption | ApplicationCommandPatchRequestPartialOptionsNullableInnerItem7 ApplicationCommandStringOption | ApplicationCommandPatchRequestPartialOptionsNullableInnerItem8 ApplicationCommandSubcommandGroupOption | ApplicationCommandPatchRequestPartialOptionsNullableInnerItem9 ApplicationCommandSubcommandOption | ApplicationCommandPatchRequestPartialOptionsNullableInnerItem10 ApplicationCommandUserOption
     deriving (Show, Eq, Generic)

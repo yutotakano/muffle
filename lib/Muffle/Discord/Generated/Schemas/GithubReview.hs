@@ -7,7 +7,7 @@ import GHC.Generics
 import Muffle.Discord.Generated.Schemas.GithubUser
 
 data GithubReview = GithubReview
-    { body :: Maybe String
+    { body :: Maybe (Maybe String)
     , htmlUrl :: String
     , state :: String
     , user :: GithubUser

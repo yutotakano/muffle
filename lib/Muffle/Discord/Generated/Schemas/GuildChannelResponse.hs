@@ -16,30 +16,30 @@ import Muffle.Discord.Generated.Schemas.ChannelTypes
 import Muffle.Discord.Generated.Schemas.VideoQualityModes
 
 data GuildChannelResponse = GuildChannelResponse
-    { availableTags :: [ForumTagResponse]
-    , bitrate :: Int32
-    , defaultAutoArchiveDuration :: ThreadAutoArchiveDuration
-    , defaultForumLayout :: ForumLayout
-    , defaultReactionEmoji :: Maybe DefaultReactionEmojiResponse
-    , defaultSortOrder :: Maybe ThreadSortOrder
-    , defaultTagSetting :: Maybe ThreadSearchTagSetting
-    , defaultThreadRateLimitPerUser :: Int32
+    { availableTags :: Maybe [ForumTagResponse]
+    , bitrate :: Maybe Int32
+    , defaultAutoArchiveDuration :: Maybe ThreadAutoArchiveDuration
+    , defaultForumLayout :: Maybe ForumLayout
+    , defaultReactionEmoji :: Maybe (Maybe DefaultReactionEmojiResponse)
+    , defaultSortOrder :: Maybe (Maybe ThreadSortOrder)
+    , defaultTagSetting :: Maybe (Maybe ThreadSearchTagSetting)
+    , defaultThreadRateLimitPerUser :: Maybe Int32
     , flags :: Int32
     , guildId :: SnowflakeType
     , id :: SnowflakeType
-    , lastMessageId :: Maybe SnowflakeType
-    , lastPinTimestamp :: Maybe String
+    , lastMessageId :: Maybe (Maybe SnowflakeType)
+    , lastPinTimestamp :: Maybe (Maybe String)
     , name :: String
-    , nsfw :: Bool
-    , parentId :: Maybe SnowflakeType
-    , permissionOverwrites :: [ChannelPermissionOverwriteResponse]
-    , permissions :: String
+    , nsfw :: Maybe Bool
+    , parentId :: Maybe (Maybe SnowflakeType)
+    , permissionOverwrites :: Maybe [ChannelPermissionOverwriteResponse]
+    , permissions :: Maybe String
     , position :: Int32
-    , rateLimitPerUser :: Int32
-    , rtcRegion :: Maybe String
-    , topic :: Maybe String
+    , rateLimitPerUser :: Maybe Int32
+    , rtcRegion :: Maybe (Maybe String)
+    , topic :: Maybe (Maybe String)
     , type' :: ChannelTypes
-    , userLimit :: Int32
-    , videoQualityMode :: VideoQualityModes
+    , userLimit :: Maybe Int32
+    , videoQualityMode :: Maybe VideoQualityModes
     }
     deriving (Show, Eq, Generic)

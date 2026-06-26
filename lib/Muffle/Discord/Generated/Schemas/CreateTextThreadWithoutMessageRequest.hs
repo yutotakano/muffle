@@ -8,10 +8,10 @@ import Muffle.Discord.Generated.Schemas.ThreadAutoArchiveDuration
 import Muffle.Discord.Generated.Schemas.ChannelTypes
 
 data CreateTextThreadWithoutMessageRequest = CreateTextThreadWithoutMessageRequest
-    { autoArchiveDuration :: Maybe ThreadAutoArchiveDuration
-    , invitable :: Maybe Bool
+    { autoArchiveDuration :: Maybe (Maybe ThreadAutoArchiveDuration)
+    , invitable :: Maybe (Maybe Bool)
     , name :: String
-    , rateLimitPerUser :: Maybe Integer
-    , type' :: Maybe ChannelTypes
+    , rateLimitPerUser :: Maybe (Maybe Integer)
+    , type' :: Maybe (Maybe ChannelTypes)
     }
     deriving (Show, Eq, Generic)

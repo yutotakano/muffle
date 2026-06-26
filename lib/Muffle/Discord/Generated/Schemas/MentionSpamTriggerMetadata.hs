@@ -7,7 +7,7 @@ import GHC.Generics
 
 
 data MentionSpamTriggerMetadata = MentionSpamTriggerMetadata
-    { mentionRaidProtectionEnabled :: Maybe Bool
-    , mentionTotalLimit :: Maybe Integer
+    { mentionRaidProtectionEnabled :: Maybe (Maybe Bool)
+    , mentionTotalLimit :: Maybe (Maybe Integer)
     }
     deriving (Show, Eq, Generic)

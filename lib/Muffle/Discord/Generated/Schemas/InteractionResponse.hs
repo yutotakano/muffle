@@ -8,13 +8,13 @@ import Muffle.Discord.Generated.Schemas.SnowflakeType
 import Muffle.Discord.Generated.Schemas.InteractionTypes
 
 data InteractionResponse = InteractionResponse
-    { activityInstanceId :: Maybe String
-    , channelId :: SnowflakeType
-    , guildId :: SnowflakeType
+    { activityInstanceId :: Maybe (Maybe String)
+    , channelId :: Maybe SnowflakeType
+    , guildId :: Maybe SnowflakeType
     , id :: SnowflakeType
-    , responseMessageEphemeral :: Bool
-    , responseMessageId :: SnowflakeType
-    , responseMessageLoading :: Bool
+    , responseMessageEphemeral :: Maybe Bool
+    , responseMessageId :: Maybe SnowflakeType
+    , responseMessageLoading :: Maybe Bool
     , type' :: InteractionTypes
     }
     deriving (Show, Eq, Generic)

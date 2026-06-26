@@ -7,11 +7,11 @@ import GHC.Generics
 import Muffle.Discord.Generated.Schemas.GuildMemberVerificationFormFieldType
 
 data TextInputFormFieldResponse = TextInputFormFieldResponse
-    { description :: String
+    { description :: Maybe String
     , fieldType :: GuildMemberVerificationFormFieldType
-    , label :: String
-    , placeholder :: String
-    , required :: Bool
-    , response :: String
+    , label :: Maybe String
+    , placeholder :: Maybe String
+    , required :: Maybe Bool
+    , response :: Maybe String
     }
     deriving (Show, Eq, Generic)

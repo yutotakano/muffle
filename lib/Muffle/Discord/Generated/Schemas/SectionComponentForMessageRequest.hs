@@ -12,7 +12,7 @@ import Muffle.Discord.Generated.Schemas.ThumbnailComponentForMessageRequest
 data SectionComponentForMessageRequest = SectionComponentForMessageRequest
     { accessory :: SectionComponentForMessageRequestAccessory
     , components :: [TextDisplayComponentForMessageRequest]
-    , id :: Maybe Int32
+    , id :: Maybe (Maybe Int32)
     , type' :: MessageComponentTypes
     }
     deriving (Show, Eq, Generic)

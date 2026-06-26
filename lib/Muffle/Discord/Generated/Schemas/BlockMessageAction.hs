@@ -8,7 +8,7 @@ import Muffle.Discord.Generated.Schemas.BlockMessageActionMetadata
 import Muffle.Discord.Generated.Schemas.AutomodActionType
 
 data BlockMessageAction = BlockMessageAction
-    { metadata :: Maybe BlockMessageActionMetadata
+    { metadata :: Maybe (Maybe BlockMessageActionMetadata)
     , type' :: AutomodActionType
     }
     deriving (Show, Eq, Generic)

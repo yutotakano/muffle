@@ -29,13 +29,15 @@ data MinimalContentMessageResponse = MinimalContentMessageResponse
     , flags :: Int32
     , mentionRoles :: [SnowflakeType]
     , mentions :: [UserResponse]
-    , stickerItems :: [MessageStickerItemResponse]
-    , stickers :: [MinimalContentMessageResponseStickersItem]
+    , stickerItems :: Maybe [MessageStickerItemResponse]
+    , stickers :: Maybe MinimalContentMessageResponseStickersNullableInner
     , timestamp :: String
     , type' :: MessageType
     }
     deriving (Show, Eq, Generic)
 data MinimalContentMessageResponseComponentsItem = MinimalContentMessageResponseComponentsItem0 ActionRowComponentResponse | MinimalContentMessageResponseComponentsItem1 ContainerComponentResponse | MinimalContentMessageResponseComponentsItem2 FileComponentResponse | MinimalContentMessageResponseComponentsItem3 MediaGalleryComponentResponse | MinimalContentMessageResponseComponentsItem4 SectionComponentResponse | MinimalContentMessageResponseComponentsItem5 SeparatorComponentResponse | MinimalContentMessageResponseComponentsItem6 TextDisplayComponentResponse
     deriving (Show, Eq, Generic)
-data MinimalContentMessageResponseStickersItem = MinimalContentMessageResponseStickersItem0 GuildStickerResponse | MinimalContentMessageResponseStickersItem1 StandardStickerResponse
+newtype MinimalContentMessageResponseStickersNullableInner = MinimalContentMessageResponseStickersNullableInner [MinimalContentMessageResponseStickersNullableInnerItem]
+    deriving (Show, Eq, Generic)
+data MinimalContentMessageResponseStickersNullableInnerItem = MinimalContentMessageResponseStickersNullableInnerItem0 GuildStickerResponse | MinimalContentMessageResponseStickersNullableInnerItem1 StandardStickerResponse
     deriving (Show, Eq, Generic)

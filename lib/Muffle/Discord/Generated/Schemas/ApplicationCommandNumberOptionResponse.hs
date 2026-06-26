@@ -8,25 +8,29 @@ import Muffle.Discord.Generated.Schemas.ApplicationCommandOptionNumberChoiceResp
 import Muffle.Discord.Generated.Schemas.ApplicationCommandOptionType
 
 data ApplicationCommandNumberOptionResponse = ApplicationCommandNumberOptionResponse
-    { autocomplete :: Bool
-    , choices :: [ApplicationCommandOptionNumberChoiceResponse]
+    { autocomplete :: Maybe Bool
+    , choices :: Maybe [ApplicationCommandOptionNumberChoiceResponse]
     , description :: String
     , descriptionLocalizations :: Maybe ApplicationCommandNumberOptionResponseDescriptionLocalizationsNullableInner
-    , descriptionLocalized :: String
-    , maxValue :: Integer
-    , minValue :: Integer
+    , descriptionLocalized :: Maybe String
+    , maxValue :: Maybe Integer
+    , minValue :: Maybe Integer
     , name :: String
     , nameLocalizations :: Maybe ApplicationCommandNumberOptionResponseNameLocalizationsNullableInner
-    , nameLocalized :: String
-    , required :: Bool
+    , nameLocalized :: Maybe String
+    , required :: Maybe Bool
     , type' :: ApplicationCommandOptionType
     }
     deriving (Show, Eq, Generic)
-data ApplicationCommandNumberOptionResponseDescriptionLocalizationsNullableInner = ApplicationCommandNumberOptionResponseDescriptionLocalizationsNullableInner
+newtype ApplicationCommandNumberOptionResponseDescriptionLocalizationsNullableInner = ApplicationCommandNumberOptionResponseDescriptionLocalizationsNullableInner (Maybe ApplicationCommandNumberOptionResponseDescriptionLocalizationsNullableInnerNullableInner)
+    deriving (Show, Eq, Generic)
+data ApplicationCommandNumberOptionResponseDescriptionLocalizationsNullableInnerNullableInner = ApplicationCommandNumberOptionResponseDescriptionLocalizationsNullableInnerNullableInner
     { 
     }
     deriving (Show, Eq, Generic)
-data ApplicationCommandNumberOptionResponseNameLocalizationsNullableInner = ApplicationCommandNumberOptionResponseNameLocalizationsNullableInner
+newtype ApplicationCommandNumberOptionResponseNameLocalizationsNullableInner = ApplicationCommandNumberOptionResponseNameLocalizationsNullableInner (Maybe ApplicationCommandNumberOptionResponseNameLocalizationsNullableInnerNullableInner)
+    deriving (Show, Eq, Generic)
+data ApplicationCommandNumberOptionResponseNameLocalizationsNullableInnerNullableInner = ApplicationCommandNumberOptionResponseNameLocalizationsNullableInnerNullableInner
     { 
     }
     deriving (Show, Eq, Generic)

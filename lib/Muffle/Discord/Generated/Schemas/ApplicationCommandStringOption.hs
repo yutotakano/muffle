@@ -8,23 +8,27 @@ import Muffle.Discord.Generated.Schemas.ApplicationCommandOptionStringChoice
 import Muffle.Discord.Generated.Schemas.ApplicationCommandOptionType
 
 data ApplicationCommandStringOption = ApplicationCommandStringOption
-    { autocomplete :: Maybe Bool
-    , choices :: [ApplicationCommandOptionStringChoice]
+    { autocomplete :: Maybe (Maybe Bool)
+    , choices :: Maybe [ApplicationCommandOptionStringChoice]
     , description :: String
     , descriptionLocalizations :: Maybe ApplicationCommandStringOptionDescriptionLocalizationsNullableInner
-    , maxLength :: Maybe Integer
-    , minLength :: Maybe Integer
+    , maxLength :: Maybe (Maybe Integer)
+    , minLength :: Maybe (Maybe Integer)
     , name :: String
     , nameLocalizations :: Maybe ApplicationCommandStringOptionNameLocalizationsNullableInner
-    , required :: Maybe Bool
+    , required :: Maybe (Maybe Bool)
     , type' :: ApplicationCommandOptionType
     }
     deriving (Show, Eq, Generic)
-data ApplicationCommandStringOptionDescriptionLocalizationsNullableInner = ApplicationCommandStringOptionDescriptionLocalizationsNullableInner
+newtype ApplicationCommandStringOptionDescriptionLocalizationsNullableInner = ApplicationCommandStringOptionDescriptionLocalizationsNullableInner (Maybe ApplicationCommandStringOptionDescriptionLocalizationsNullableInnerNullableInner)
+    deriving (Show, Eq, Generic)
+data ApplicationCommandStringOptionDescriptionLocalizationsNullableInnerNullableInner = ApplicationCommandStringOptionDescriptionLocalizationsNullableInnerNullableInner
     { 
     }
     deriving (Show, Eq, Generic)
-data ApplicationCommandStringOptionNameLocalizationsNullableInner = ApplicationCommandStringOptionNameLocalizationsNullableInner
+newtype ApplicationCommandStringOptionNameLocalizationsNullableInner = ApplicationCommandStringOptionNameLocalizationsNullableInner (Maybe ApplicationCommandStringOptionNameLocalizationsNullableInnerNullableInner)
+    deriving (Show, Eq, Generic)
+data ApplicationCommandStringOptionNameLocalizationsNullableInnerNullableInner = ApplicationCommandStringOptionNameLocalizationsNullableInnerNullableInner
     { 
     }
     deriving (Show, Eq, Generic)

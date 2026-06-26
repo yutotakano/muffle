@@ -7,7 +7,7 @@ import GHC.Generics
 import Muffle.Discord.Generated.Schemas.ActivityActionTypes
 
 data MessageActivityResponse = MessageActivityResponse
-    { partyId :: String
+    { partyId :: Maybe String
     , type' :: ActivityActionTypes
     }
     deriving (Show, Eq, Generic)

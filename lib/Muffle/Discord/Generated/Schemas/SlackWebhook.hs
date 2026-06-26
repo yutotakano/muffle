@@ -7,9 +7,9 @@ import GHC.Generics
 import Muffle.Discord.Generated.Schemas.WebhookSlackEmbed
 
 data SlackWebhook = SlackWebhook
-    { attachments :: [WebhookSlackEmbed]
-    , iconUrl :: Maybe String
-    , text :: Maybe String
-    , username :: Maybe String
+    { attachments :: Maybe [WebhookSlackEmbed]
+    , iconUrl :: Maybe (Maybe String)
+    , text :: Maybe (Maybe String)
+    , username :: Maybe (Maybe String)
     }
     deriving (Show, Eq, Generic)

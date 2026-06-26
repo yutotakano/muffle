@@ -18,8 +18,8 @@ import Muffle.Discord.Generated.Schemas.UserSelectComponentForModalRequest
 
 data LabelComponentForModalRequest = LabelComponentForModalRequest
     { component :: LabelComponentForModalRequestComponent
-    , description :: Maybe String
-    , id :: Maybe Int32
+    , description :: Maybe (Maybe String)
+    , id :: Maybe (Maybe Int32)
     , label :: String
     , type' :: MessageComponentTypes
     }

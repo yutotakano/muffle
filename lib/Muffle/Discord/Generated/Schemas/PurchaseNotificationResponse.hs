@@ -8,7 +8,7 @@ import Muffle.Discord.Generated.Schemas.GuildProductPurchaseResponse
 import Muffle.Discord.Generated.Schemas.PurchaseType
 
 data PurchaseNotificationResponse = PurchaseNotificationResponse
-    { guildProductPurchase :: GuildProductPurchaseResponse
+    { guildProductPurchase :: Maybe GuildProductPurchaseResponse
     , type' :: PurchaseType
     }
     deriving (Show, Eq, Generic)

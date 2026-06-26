@@ -7,12 +7,12 @@ import GHC.Generics
 
 
 data ApplicationUserRoleConnectionResponse = ApplicationUserRoleConnectionResponse
-    { metadata :: ApplicationUserRoleConnectionResponseMetadata
-    , platformName :: String
-    , platformUsername :: Maybe String
+    { metadata :: Maybe ApplicationUserRoleConnectionResponseMetadataNullableInner
+    , platformName :: Maybe String
+    , platformUsername :: Maybe (Maybe String)
     }
     deriving (Show, Eq, Generic)
-data ApplicationUserRoleConnectionResponseMetadata = ApplicationUserRoleConnectionResponseMetadata
+data ApplicationUserRoleConnectionResponseMetadataNullableInner = ApplicationUserRoleConnectionResponseMetadataNullableInner
     { 
     }
     deriving (Show, Eq, Generic)

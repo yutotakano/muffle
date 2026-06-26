@@ -7,8 +7,8 @@ import GHC.Generics
 
 
 data RoleColors = RoleColors
-    { primaryColor :: Maybe Integer
-    , secondaryColor :: Maybe Integer
-    , tertiaryColor :: Maybe Integer
+    { primaryColor :: Maybe (Maybe Integer)
+    , secondaryColor :: Maybe (Maybe Integer)
+    , tertiaryColor :: Maybe (Maybe Integer)
     }
     deriving (Show, Eq, Generic)

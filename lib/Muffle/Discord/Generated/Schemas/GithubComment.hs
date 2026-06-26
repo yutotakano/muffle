@@ -8,7 +8,7 @@ import Muffle.Discord.Generated.Schemas.GithubUser
 
 data GithubComment = GithubComment
     { body :: String
-    , commitId :: Maybe String
+    , commitId :: Maybe (Maybe String)
     , htmlUrl :: String
     , id :: Integer
     , user :: GithubUser

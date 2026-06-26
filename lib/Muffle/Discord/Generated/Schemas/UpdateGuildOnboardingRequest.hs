@@ -9,9 +9,9 @@ import Muffle.Discord.Generated.Schemas.GuildOnboardingMode
 import Muffle.Discord.Generated.Schemas.UpdateOnboardingPromptRequest
 
 data UpdateGuildOnboardingRequest = UpdateGuildOnboardingRequest
-    { defaultChannelIds :: [SnowflakeType]
-    , enabled :: Maybe Bool
-    , mode :: Maybe GuildOnboardingMode
-    , prompts :: [UpdateOnboardingPromptRequest]
+    { defaultChannelIds :: Maybe [SnowflakeType]
+    , enabled :: Maybe (Maybe Bool)
+    , mode :: Maybe (Maybe GuildOnboardingMode)
+    , prompts :: Maybe [UpdateOnboardingPromptRequest]
     }
     deriving (Show, Eq, Generic)

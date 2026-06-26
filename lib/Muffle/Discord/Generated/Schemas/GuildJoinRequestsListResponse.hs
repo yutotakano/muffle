@@ -7,7 +7,7 @@ import GHC.Generics
 import Muffle.Discord.Generated.Schemas.GuildJoinRequestResponse
 
 data GuildJoinRequestsListResponse = GuildJoinRequestsListResponse
-    { guildJoinRequests :: [GuildJoinRequestResponse]
-    , total :: Int32
+    { guildJoinRequests :: Maybe [GuildJoinRequestResponse]
+    , total :: Maybe Int32
     }
     deriving (Show, Eq, Generic)

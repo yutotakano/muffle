@@ -8,6 +8,6 @@ import Muffle.Discord.Generated.Schemas.SnowflakeType
 
 data SoundboardSoundSendRequest = SoundboardSoundSendRequest
     { soundId :: SnowflakeType
-    , sourceGuildId :: Maybe SnowflakeType
+    , sourceGuildId :: Maybe (Maybe SnowflakeType)
     }
     deriving (Show, Eq, Generic)

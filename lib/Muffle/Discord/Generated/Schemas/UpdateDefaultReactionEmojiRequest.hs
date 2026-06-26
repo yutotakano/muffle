@@ -7,7 +7,7 @@ import GHC.Generics
 import Muffle.Discord.Generated.Schemas.SnowflakeType
 
 data UpdateDefaultReactionEmojiRequest = UpdateDefaultReactionEmojiRequest
-    { emojiId :: Maybe SnowflakeType
-    , emojiName :: Maybe String
+    { emojiId :: Maybe (Maybe SnowflakeType)
+    , emojiName :: Maybe (Maybe String)
     }
     deriving (Show, Eq, Generic)

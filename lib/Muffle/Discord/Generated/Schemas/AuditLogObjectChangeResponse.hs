@@ -8,11 +8,11 @@ import GHC.Generics
 
 data AuditLogObjectChangeResponse = AuditLogObjectChangeResponse
     { key :: Maybe String
-    , newValue :: AuditLogObjectChangeResponseNewValue
-    , oldValue :: AuditLogObjectChangeResponseOldValue
+    , newValue :: Maybe AuditLogObjectChangeResponseNewValueNullableInner
+    , oldValue :: Maybe AuditLogObjectChangeResponseOldValueNullableInner
     }
     deriving (Show, Eq, Generic)
-data AuditLogObjectChangeResponseNewValue = AuditLogObjectChangeResponseNewValue
+data AuditLogObjectChangeResponseNewValueNullableInner = AuditLogObjectChangeResponseNewValueNullableInner
     deriving (Show, Eq, Generic)
-data AuditLogObjectChangeResponseOldValue = AuditLogObjectChangeResponseOldValue
+data AuditLogObjectChangeResponseOldValueNullableInner = AuditLogObjectChangeResponseOldValueNullableInner
     deriving (Show, Eq, Generic)

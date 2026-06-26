@@ -11,8 +11,8 @@ import Muffle.Discord.Generated.Schemas.UpdateMessageInteractionCallbackResponse
 
 data InteractionCallbackResponse = InteractionCallbackResponse
     { interaction :: InteractionResponse
-    , resource :: InteractionCallbackResponseResource
+    , resource :: Maybe InteractionCallbackResponseResourceNullableInner
     }
     deriving (Show, Eq, Generic)
-data InteractionCallbackResponseResource = InteractionCallbackResponseResource0 CreateMessageInteractionCallbackResponse | InteractionCallbackResponseResource1 LaunchActivityInteractionCallbackResponse | InteractionCallbackResponseResource2 UpdateMessageInteractionCallbackResponse
+data InteractionCallbackResponseResourceNullableInner = InteractionCallbackResponseResourceNullableInner0 CreateMessageInteractionCallbackResponse | InteractionCallbackResponseResourceNullableInner1 LaunchActivityInteractionCallbackResponse | InteractionCallbackResponseResourceNullableInner2 UpdateMessageInteractionCallbackResponse
     deriving (Show, Eq, Generic)

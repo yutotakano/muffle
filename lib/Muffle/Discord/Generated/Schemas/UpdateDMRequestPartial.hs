@@ -7,6 +7,6 @@ import GHC.Generics
 
 
 data UpdateDMRequestPartial = UpdateDMRequestPartial
-    { name :: Maybe String
+    { name :: Maybe (Maybe String)
     }
     deriving (Show, Eq, Generic)

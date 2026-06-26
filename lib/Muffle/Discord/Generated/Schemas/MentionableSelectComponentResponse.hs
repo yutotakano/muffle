@@ -10,14 +10,16 @@ import Muffle.Discord.Generated.Schemas.UserSelectDefaultValueResponse
 
 data MentionableSelectComponentResponse = MentionableSelectComponentResponse
     { customId :: String
-    , defaultValues :: [MentionableSelectComponentResponseDefaultValuesItem]
-    , disabled :: Bool
+    , defaultValues :: Maybe MentionableSelectComponentResponseDefaultValuesNullableInner
+    , disabled :: Maybe Bool
     , id :: Int32
     , maxValues :: Int32
     , minValues :: Int32
-    , placeholder :: String
+    , placeholder :: Maybe String
     , type' :: MessageComponentTypes
     }
     deriving (Show, Eq, Generic)
-data MentionableSelectComponentResponseDefaultValuesItem = MentionableSelectComponentResponseDefaultValuesItem0 RoleSelectDefaultValueResponse | MentionableSelectComponentResponseDefaultValuesItem1 UserSelectDefaultValueResponse
+newtype MentionableSelectComponentResponseDefaultValuesNullableInner = MentionableSelectComponentResponseDefaultValuesNullableInner [MentionableSelectComponentResponseDefaultValuesNullableInnerItem]
+    deriving (Show, Eq, Generic)
+data MentionableSelectComponentResponseDefaultValuesNullableInnerItem = MentionableSelectComponentResponseDefaultValuesNullableInnerItem0 RoleSelectDefaultValueResponse | MentionableSelectComponentResponseDefaultValuesNullableInnerItem1 UserSelectDefaultValueResponse
     deriving (Show, Eq, Generic)

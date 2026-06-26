@@ -13,20 +13,20 @@ import Muffle.Discord.Generated.Schemas.MessageEmbedProviderResponse
 import Muffle.Discord.Generated.Schemas.MessageEmbedVideoResponse
 
 data MessageEmbedResponse = MessageEmbedResponse
-    { author :: MessageEmbedAuthorResponse
-    , color :: Int32
-    , components :: [ContainerComponentResponse]
-    , description :: String
-    , fields :: [MessageEmbedFieldResponse]
-    , flags :: Maybe Int32
-    , footer :: MessageEmbedFooterResponse
-    , image :: MessageEmbedImageResponse
-    , provider :: MessageEmbedProviderResponse
-    , thumbnail :: MessageEmbedImageResponse
-    , timestamp :: String
-    , title :: String
+    { author :: Maybe MessageEmbedAuthorResponse
+    , color :: Maybe Int32
+    , components :: Maybe [ContainerComponentResponse]
+    , description :: Maybe String
+    , fields :: Maybe [MessageEmbedFieldResponse]
+    , flags :: Maybe (Maybe Int32)
+    , footer :: Maybe MessageEmbedFooterResponse
+    , image :: Maybe MessageEmbedImageResponse
+    , provider :: Maybe MessageEmbedProviderResponse
+    , thumbnail :: Maybe MessageEmbedImageResponse
+    , timestamp :: Maybe String
+    , title :: Maybe String
     , type' :: String
-    , url :: String
-    , video :: MessageEmbedVideoResponse
+    , url :: Maybe String
+    , video :: Maybe MessageEmbedVideoResponse
     }
     deriving (Show, Eq, Generic)

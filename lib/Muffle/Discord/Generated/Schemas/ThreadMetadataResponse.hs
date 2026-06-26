@@ -10,8 +10,8 @@ data ThreadMetadataResponse = ThreadMetadataResponse
     { archiveTimestamp :: Maybe String
     , archived :: Bool
     , autoArchiveDuration :: ThreadAutoArchiveDuration
-    , createTimestamp :: String
-    , invitable :: Bool
+    , createTimestamp :: Maybe String
+    , invitable :: Maybe Bool
     , locked :: Bool
     }
     deriving (Show, Eq, Generic)

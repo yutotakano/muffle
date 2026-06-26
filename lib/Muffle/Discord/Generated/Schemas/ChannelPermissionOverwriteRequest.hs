@@ -8,9 +8,9 @@ import Muffle.Discord.Generated.Schemas.SnowflakeType
 import Muffle.Discord.Generated.Schemas.ChannelPermissionOverwrites
 
 data ChannelPermissionOverwriteRequest = ChannelPermissionOverwriteRequest
-    { allow :: Maybe Integer
-    , deny :: Maybe Integer
+    { allow :: Maybe (Maybe Integer)
+    , deny :: Maybe (Maybe Integer)
     , id :: SnowflakeType
-    , type' :: Maybe ChannelPermissionOverwrites
+    , type' :: Maybe (Maybe ChannelPermissionOverwrites)
     }
     deriving (Show, Eq, Generic)

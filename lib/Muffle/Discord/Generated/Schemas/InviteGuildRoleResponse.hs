@@ -13,7 +13,7 @@ data InviteGuildRoleResponse = InviteGuildRoleResponse
     , icon :: Maybe String
     , id :: SnowflakeType
     , name :: String
-    , permissions :: String
+    , permissions :: Maybe String
     , position :: Int32
     , unicodeEmoji :: Maybe String
     }

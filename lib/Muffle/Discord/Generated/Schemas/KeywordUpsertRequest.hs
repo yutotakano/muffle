@@ -14,15 +14,17 @@ import Muffle.Discord.Generated.Schemas.QuarantineUserAction
 import Muffle.Discord.Generated.Schemas.UserCommunicationDisabledAction
 
 data KeywordUpsertRequest = KeywordUpsertRequest
-    { actions :: [KeywordUpsertRequestActionsItem]
-    , enabled :: Maybe Bool
+    { actions :: Maybe KeywordUpsertRequestActionsNullableInner
+    , enabled :: Maybe (Maybe Bool)
     , eventType :: AutomodEventType
-    , exemptChannels :: [SnowflakeType]
-    , exemptRoles :: [SnowflakeType]
+    , exemptChannels :: Maybe [SnowflakeType]
+    , exemptRoles :: Maybe [SnowflakeType]
     , name :: String
-    , triggerMetadata :: Maybe KeywordTriggerMetadata
+    , triggerMetadata :: Maybe (Maybe KeywordTriggerMetadata)
     , triggerType :: AutomodTriggerType
     }
     deriving (Show, Eq, Generic)
-data KeywordUpsertRequestActionsItem = KeywordUpsertRequestActionsItem0 BlockMessageAction | KeywordUpsertRequestActionsItem1 FlagToChannelAction | KeywordUpsertRequestActionsItem2 QuarantineUserAction | KeywordUpsertRequestActionsItem3 UserCommunicationDisabledAction
+newtype KeywordUpsertRequestActionsNullableInner = KeywordUpsertRequestActionsNullableInner [KeywordUpsertRequestActionsNullableInnerItem]
+    deriving (Show, Eq, Generic)
+data KeywordUpsertRequestActionsNullableInnerItem = KeywordUpsertRequestActionsNullableInnerItem0 BlockMessageAction | KeywordUpsertRequestActionsNullableInnerItem1 FlagToChannelAction | KeywordUpsertRequestActionsNullableInnerItem2 QuarantineUserAction | KeywordUpsertRequestActionsNullableInnerItem3 UserCommunicationDisabledAction
     deriving (Show, Eq, Generic)

@@ -12,16 +12,20 @@ data ApplicationCommandSubcommandGroupOption = ApplicationCommandSubcommandGroup
     , descriptionLocalizations :: Maybe ApplicationCommandSubcommandGroupOptionDescriptionLocalizationsNullableInner
     , name :: String
     , nameLocalizations :: Maybe ApplicationCommandSubcommandGroupOptionNameLocalizationsNullableInner
-    , options :: [ApplicationCommandSubcommandOption]
-    , required :: Maybe Bool
+    , options :: Maybe [ApplicationCommandSubcommandOption]
+    , required :: Maybe (Maybe Bool)
     , type' :: ApplicationCommandOptionType
     }
     deriving (Show, Eq, Generic)
-data ApplicationCommandSubcommandGroupOptionDescriptionLocalizationsNullableInner = ApplicationCommandSubcommandGroupOptionDescriptionLocalizationsNullableInner
+newtype ApplicationCommandSubcommandGroupOptionDescriptionLocalizationsNullableInner = ApplicationCommandSubcommandGroupOptionDescriptionLocalizationsNullableInner (Maybe ApplicationCommandSubcommandGroupOptionDescriptionLocalizationsNullableInnerNullableInner)
+    deriving (Show, Eq, Generic)
+data ApplicationCommandSubcommandGroupOptionDescriptionLocalizationsNullableInnerNullableInner = ApplicationCommandSubcommandGroupOptionDescriptionLocalizationsNullableInnerNullableInner
     { 
     }
     deriving (Show, Eq, Generic)
-data ApplicationCommandSubcommandGroupOptionNameLocalizationsNullableInner = ApplicationCommandSubcommandGroupOptionNameLocalizationsNullableInner
+newtype ApplicationCommandSubcommandGroupOptionNameLocalizationsNullableInner = ApplicationCommandSubcommandGroupOptionNameLocalizationsNullableInner (Maybe ApplicationCommandSubcommandGroupOptionNameLocalizationsNullableInnerNullableInner)
+    deriving (Show, Eq, Generic)
+data ApplicationCommandSubcommandGroupOptionNameLocalizationsNullableInnerNullableInner = ApplicationCommandSubcommandGroupOptionNameLocalizationsNullableInnerNullableInner
     { 
     }
     deriving (Show, Eq, Generic)

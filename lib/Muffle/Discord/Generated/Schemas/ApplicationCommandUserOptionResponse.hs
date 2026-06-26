@@ -9,19 +9,23 @@ import Muffle.Discord.Generated.Schemas.ApplicationCommandOptionType
 data ApplicationCommandUserOptionResponse = ApplicationCommandUserOptionResponse
     { description :: String
     , descriptionLocalizations :: Maybe ApplicationCommandUserOptionResponseDescriptionLocalizationsNullableInner
-    , descriptionLocalized :: String
+    , descriptionLocalized :: Maybe String
     , name :: String
     , nameLocalizations :: Maybe ApplicationCommandUserOptionResponseNameLocalizationsNullableInner
-    , nameLocalized :: String
-    , required :: Bool
+    , nameLocalized :: Maybe String
+    , required :: Maybe Bool
     , type' :: ApplicationCommandOptionType
     }
     deriving (Show, Eq, Generic)
-data ApplicationCommandUserOptionResponseDescriptionLocalizationsNullableInner = ApplicationCommandUserOptionResponseDescriptionLocalizationsNullableInner
+newtype ApplicationCommandUserOptionResponseDescriptionLocalizationsNullableInner = ApplicationCommandUserOptionResponseDescriptionLocalizationsNullableInner (Maybe ApplicationCommandUserOptionResponseDescriptionLocalizationsNullableInnerNullableInner)
+    deriving (Show, Eq, Generic)
+data ApplicationCommandUserOptionResponseDescriptionLocalizationsNullableInnerNullableInner = ApplicationCommandUserOptionResponseDescriptionLocalizationsNullableInnerNullableInner
     { 
     }
     deriving (Show, Eq, Generic)
-data ApplicationCommandUserOptionResponseNameLocalizationsNullableInner = ApplicationCommandUserOptionResponseNameLocalizationsNullableInner
+newtype ApplicationCommandUserOptionResponseNameLocalizationsNullableInner = ApplicationCommandUserOptionResponseNameLocalizationsNullableInner (Maybe ApplicationCommandUserOptionResponseNameLocalizationsNullableInnerNullableInner)
+    deriving (Show, Eq, Generic)
+data ApplicationCommandUserOptionResponseNameLocalizationsNullableInnerNullableInner = ApplicationCommandUserOptionResponseNameLocalizationsNullableInnerNullableInner
     { 
     }
     deriving (Show, Eq, Generic)

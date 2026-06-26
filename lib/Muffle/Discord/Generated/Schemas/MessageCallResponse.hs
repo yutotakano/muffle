@@ -7,7 +7,7 @@ import GHC.Generics
 import Muffle.Discord.Generated.Schemas.SnowflakeType
 
 data MessageCallResponse = MessageCallResponse
-    { endedTimestamp :: Maybe String
+    { endedTimestamp :: Maybe (Maybe String)
     , participants :: [SnowflakeType]
     }
     deriving (Show, Eq, Generic)

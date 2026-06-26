@@ -12,9 +12,13 @@ data LobbyMemberRequest = LobbyMemberRequest
     , metadata :: Maybe LobbyMemberRequestMetadataNullableInner
     }
     deriving (Show, Eq, Generic)
-data LobbyMemberRequestFlagsNullableInner = LobbyMemberRequestFlagsNullableInnerEnum1
+newtype LobbyMemberRequestFlagsNullableInner = LobbyMemberRequestFlagsNullableInner (Maybe LobbyMemberRequestFlagsNullableInnerNullableInner)
     deriving (Show, Eq, Generic)
-data LobbyMemberRequestMetadataNullableInner = LobbyMemberRequestMetadataNullableInner
+data LobbyMemberRequestFlagsNullableInnerNullableInner = LobbyMemberRequestFlagsNullableInnerNullableInnerEnum1
+    deriving (Show, Eq, Generic)
+newtype LobbyMemberRequestMetadataNullableInner = LobbyMemberRequestMetadataNullableInner (Maybe LobbyMemberRequestMetadataNullableInnerNullableInner)
+    deriving (Show, Eq, Generic)
+data LobbyMemberRequestMetadataNullableInnerNullableInner = LobbyMemberRequestMetadataNullableInnerNullableInner
     { 
     }
     deriving (Show, Eq, Generic)

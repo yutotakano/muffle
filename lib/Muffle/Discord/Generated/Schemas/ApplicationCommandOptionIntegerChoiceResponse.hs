@@ -9,11 +9,13 @@ import Muffle.Discord.Generated.Schemas.Int53Type
 data ApplicationCommandOptionIntegerChoiceResponse = ApplicationCommandOptionIntegerChoiceResponse
     { name :: String
     , nameLocalizations :: Maybe ApplicationCommandOptionIntegerChoiceResponseNameLocalizationsNullableInner
-    , nameLocalized :: String
+    , nameLocalized :: Maybe String
     , value :: Int53Type
     }
     deriving (Show, Eq, Generic)
-data ApplicationCommandOptionIntegerChoiceResponseNameLocalizationsNullableInner = ApplicationCommandOptionIntegerChoiceResponseNameLocalizationsNullableInner
+newtype ApplicationCommandOptionIntegerChoiceResponseNameLocalizationsNullableInner = ApplicationCommandOptionIntegerChoiceResponseNameLocalizationsNullableInner (Maybe ApplicationCommandOptionIntegerChoiceResponseNameLocalizationsNullableInnerNullableInner)
+    deriving (Show, Eq, Generic)
+data ApplicationCommandOptionIntegerChoiceResponseNameLocalizationsNullableInnerNullableInner = ApplicationCommandOptionIntegerChoiceResponseNameLocalizationsNullableInnerNullableInner
     { 
     }
     deriving (Show, Eq, Generic)

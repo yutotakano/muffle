@@ -8,11 +8,13 @@ import GHC.Generics
 
 data UpdateApplicationUserRoleConnectionRequest = UpdateApplicationUserRoleConnectionRequest
     { metadata :: Maybe UpdateApplicationUserRoleConnectionRequestMetadataNullableInner
-    , platformName :: Maybe String
-    , platformUsername :: Maybe String
+    , platformName :: Maybe (Maybe String)
+    , platformUsername :: Maybe (Maybe String)
     }
     deriving (Show, Eq, Generic)
-data UpdateApplicationUserRoleConnectionRequestMetadataNullableInner = UpdateApplicationUserRoleConnectionRequestMetadataNullableInner
+newtype UpdateApplicationUserRoleConnectionRequestMetadataNullableInner = UpdateApplicationUserRoleConnectionRequestMetadataNullableInner (Maybe UpdateApplicationUserRoleConnectionRequestMetadataNullableInnerNullableInner)
+    deriving (Show, Eq, Generic)
+data UpdateApplicationUserRoleConnectionRequestMetadataNullableInnerNullableInner = UpdateApplicationUserRoleConnectionRequestMetadataNullableInnerNullableInner
     { 
     }
     deriving (Show, Eq, Generic)

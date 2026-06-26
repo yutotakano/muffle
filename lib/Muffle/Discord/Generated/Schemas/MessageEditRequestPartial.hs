@@ -17,14 +17,16 @@ import Muffle.Discord.Generated.Schemas.SeparatorComponentForMessageRequest
 import Muffle.Discord.Generated.Schemas.TextDisplayComponentForMessageRequest
 
 data MessageEditRequestPartial = MessageEditRequestPartial
-    { allowedMentions :: Maybe MessageAllowedMentionsRequest
-    , attachments :: [MessageAttachmentRequest]
-    , components :: [MessageEditRequestPartialComponentsItem]
-    , content :: Maybe String
-    , embeds :: [RichEmbed]
-    , flags :: Maybe Integer
-    , stickerIds :: [SnowflakeType]
+    { allowedMentions :: Maybe (Maybe MessageAllowedMentionsRequest)
+    , attachments :: Maybe [MessageAttachmentRequest]
+    , components :: Maybe MessageEditRequestPartialComponentsNullableInner
+    , content :: Maybe (Maybe String)
+    , embeds :: Maybe [RichEmbed]
+    , flags :: Maybe (Maybe Integer)
+    , stickerIds :: Maybe [SnowflakeType]
     }
     deriving (Show, Eq, Generic)
-data MessageEditRequestPartialComponentsItem = MessageEditRequestPartialComponentsItem0 ActionRowComponentForMessageRequest | MessageEditRequestPartialComponentsItem1 ContainerComponentForMessageRequest | MessageEditRequestPartialComponentsItem2 FileComponentForMessageRequest | MessageEditRequestPartialComponentsItem3 MediaGalleryComponentForMessageRequest | MessageEditRequestPartialComponentsItem4 SectionComponentForMessageRequest | MessageEditRequestPartialComponentsItem5 SeparatorComponentForMessageRequest | MessageEditRequestPartialComponentsItem6 TextDisplayComponentForMessageRequest
+newtype MessageEditRequestPartialComponentsNullableInner = MessageEditRequestPartialComponentsNullableInner [MessageEditRequestPartialComponentsNullableInnerItem]
+    deriving (Show, Eq, Generic)
+data MessageEditRequestPartialComponentsNullableInnerItem = MessageEditRequestPartialComponentsNullableInnerItem0 ActionRowComponentForMessageRequest | MessageEditRequestPartialComponentsNullableInnerItem1 ContainerComponentForMessageRequest | MessageEditRequestPartialComponentsNullableInnerItem2 FileComponentForMessageRequest | MessageEditRequestPartialComponentsNullableInnerItem3 MediaGalleryComponentForMessageRequest | MessageEditRequestPartialComponentsNullableInnerItem4 SectionComponentForMessageRequest | MessageEditRequestPartialComponentsNullableInnerItem5 SeparatorComponentForMessageRequest | MessageEditRequestPartialComponentsNullableInnerItem6 TextDisplayComponentForMessageRequest
     deriving (Show, Eq, Generic)

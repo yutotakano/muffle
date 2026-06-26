@@ -10,32 +10,32 @@ import Muffle.Discord.Generated.Schemas.ApplicationOAuth2InstallParamsResponse
 import Muffle.Discord.Generated.Schemas.ApplicationTypes
 
 data ApplicationResponse = ApplicationResponse
-    { bot :: UserResponse
-    , botPublic :: Bool
-    , botRequireCodeGrant :: Bool
-    , coverImage :: String
-    , customInstallUrl :: String
+    { bot :: Maybe UserResponse
+    , botPublic :: Maybe Bool
+    , botRequireCodeGrant :: Maybe Bool
+    , coverImage :: Maybe String
+    , customInstallUrl :: Maybe String
     , description :: String
     , flags :: Int32
     , flagsNew :: String
-    , guildId :: SnowflakeType
+    , guildId :: Maybe SnowflakeType
     , icon :: Maybe String
     , id :: SnowflakeType
-    , installParams :: ApplicationOAuth2InstallParamsResponse
-    , integrationTypesConfig :: ApplicationResponseIntegrationTypesConfig
-    , maxParticipants :: Maybe Int32
+    , installParams :: Maybe ApplicationOAuth2InstallParamsResponse
+    , integrationTypesConfig :: Maybe ApplicationResponseIntegrationTypesConfigNullableInner
+    , maxParticipants :: Maybe (Maybe Int32)
     , name :: String
-    , primarySkuId :: SnowflakeType
-    , privacyPolicyUrl :: String
-    , rpcOrigins :: [String]
-    , slug :: String
-    , tags :: [String]
-    , termsOfServiceUrl :: String
+    , primarySkuId :: Maybe SnowflakeType
+    , privacyPolicyUrl :: Maybe String
+    , rpcOrigins :: Maybe [String]
+    , slug :: Maybe String
+    , tags :: Maybe [String]
+    , termsOfServiceUrl :: Maybe String
     , type' :: Maybe ApplicationTypes
     , verifyKey :: String
     }
     deriving (Show, Eq, Generic)
-data ApplicationResponseIntegrationTypesConfig = ApplicationResponseIntegrationTypesConfig
+data ApplicationResponseIntegrationTypesConfigNullableInner = ApplicationResponseIntegrationTypesConfigNullableInner
     { 
     }
     deriving (Show, Eq, Generic)

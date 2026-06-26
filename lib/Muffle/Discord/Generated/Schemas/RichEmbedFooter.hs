@@ -7,7 +7,7 @@ import GHC.Generics
 
 
 data RichEmbedFooter = RichEmbedFooter
-    { iconUrl :: Maybe String
-    , text :: Maybe String
+    { iconUrl :: Maybe (Maybe String)
+    , text :: Maybe (Maybe String)
     }
     deriving (Show, Eq, Generic)

@@ -11,15 +11,15 @@ import Muffle.Discord.Generated.Schemas.GuildScheduledEventPrivacyLevels
 import Muffle.Discord.Generated.Schemas.RecurrenceRule
 
 data VoiceScheduledEventCreateRequest = VoiceScheduledEventCreateRequest
-    { channelId :: Maybe SnowflakeType
-    , description :: Maybe String
-    , entityMetadata :: Maybe EntityMetadataVoice
+    { channelId :: Maybe (Maybe SnowflakeType)
+    , description :: Maybe (Maybe String)
+    , entityMetadata :: Maybe (Maybe EntityMetadataVoice)
     , entityType :: GuildScheduledEventEntityTypes
-    , image :: Maybe String
+    , image :: Maybe (Maybe String)
     , name :: String
     , privacyLevel :: GuildScheduledEventPrivacyLevels
-    , recurrenceRule :: Maybe RecurrenceRule
-    , scheduledEndTime :: Maybe String
+    , recurrenceRule :: Maybe (Maybe RecurrenceRule)
+    , scheduledEndTime :: Maybe (Maybe String)
     , scheduledStartTime :: String
     }
     deriving (Show, Eq, Generic)

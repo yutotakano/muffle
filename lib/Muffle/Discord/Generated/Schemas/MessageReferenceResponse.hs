@@ -9,8 +9,8 @@ import Muffle.Discord.Generated.Schemas.MessageReferenceType
 
 data MessageReferenceResponse = MessageReferenceResponse
     { channelId :: SnowflakeType
-    , guildId :: SnowflakeType
-    , messageId :: SnowflakeType
+    , guildId :: Maybe SnowflakeType
+    , messageId :: Maybe SnowflakeType
     , type' :: MessageReferenceType
     }
     deriving (Show, Eq, Generic)

@@ -23,32 +23,38 @@ import Muffle.Discord.Generated.Schemas.ApplicationCommandUserOptionResponse
 
 data ApplicationCommandResponse = ApplicationCommandResponse
     { applicationId :: SnowflakeType
-    , contexts :: [InteractionContextType]
+    , contexts :: Maybe [InteractionContextType]
     , defaultMemberPermissions :: Maybe String
     , description :: String
     , descriptionLocalizations :: Maybe ApplicationCommandResponseDescriptionLocalizationsNullableInner
-    , descriptionLocalized :: String
-    , dmPermission :: Bool
-    , guildId :: SnowflakeType
-    , handler :: ApplicationCommandHandler
+    , descriptionLocalized :: Maybe String
+    , dmPermission :: Maybe Bool
+    , guildId :: Maybe SnowflakeType
+    , handler :: Maybe ApplicationCommandHandler
     , id :: SnowflakeType
-    , integrationTypes :: [ApplicationIntegrationType]
+    , integrationTypes :: Maybe [ApplicationIntegrationType]
     , name :: String
     , nameLocalizations :: Maybe ApplicationCommandResponseNameLocalizationsNullableInner
-    , nameLocalized :: String
-    , nsfw :: Bool
-    , options :: [ApplicationCommandResponseOptionsItem]
+    , nameLocalized :: Maybe String
+    , nsfw :: Maybe Bool
+    , options :: Maybe ApplicationCommandResponseOptionsNullableInner
     , type' :: ApplicationCommandType
     , version :: SnowflakeType
     }
     deriving (Show, Eq, Generic)
-data ApplicationCommandResponseDescriptionLocalizationsNullableInner = ApplicationCommandResponseDescriptionLocalizationsNullableInner
+newtype ApplicationCommandResponseDescriptionLocalizationsNullableInner = ApplicationCommandResponseDescriptionLocalizationsNullableInner (Maybe ApplicationCommandResponseDescriptionLocalizationsNullableInnerNullableInner)
+    deriving (Show, Eq, Generic)
+data ApplicationCommandResponseDescriptionLocalizationsNullableInnerNullableInner = ApplicationCommandResponseDescriptionLocalizationsNullableInnerNullableInner
     { 
     }
     deriving (Show, Eq, Generic)
-data ApplicationCommandResponseNameLocalizationsNullableInner = ApplicationCommandResponseNameLocalizationsNullableInner
+newtype ApplicationCommandResponseNameLocalizationsNullableInner = ApplicationCommandResponseNameLocalizationsNullableInner (Maybe ApplicationCommandResponseNameLocalizationsNullableInnerNullableInner)
+    deriving (Show, Eq, Generic)
+data ApplicationCommandResponseNameLocalizationsNullableInnerNullableInner = ApplicationCommandResponseNameLocalizationsNullableInnerNullableInner
     { 
     }
     deriving (Show, Eq, Generic)
-data ApplicationCommandResponseOptionsItem = ApplicationCommandResponseOptionsItem0 ApplicationCommandAttachmentOptionResponse | ApplicationCommandResponseOptionsItem1 ApplicationCommandBooleanOptionResponse | ApplicationCommandResponseOptionsItem2 ApplicationCommandChannelOptionResponse | ApplicationCommandResponseOptionsItem3 ApplicationCommandIntegerOptionResponse | ApplicationCommandResponseOptionsItem4 ApplicationCommandMentionableOptionResponse | ApplicationCommandResponseOptionsItem5 ApplicationCommandNumberOptionResponse | ApplicationCommandResponseOptionsItem6 ApplicationCommandRoleOptionResponse | ApplicationCommandResponseOptionsItem7 ApplicationCommandStringOptionResponse | ApplicationCommandResponseOptionsItem8 ApplicationCommandSubcommandGroupOptionResponse | ApplicationCommandResponseOptionsItem9 ApplicationCommandSubcommandOptionResponse | ApplicationCommandResponseOptionsItem10 ApplicationCommandUserOptionResponse
+newtype ApplicationCommandResponseOptionsNullableInner = ApplicationCommandResponseOptionsNullableInner [ApplicationCommandResponseOptionsNullableInnerItem]
+    deriving (Show, Eq, Generic)
+data ApplicationCommandResponseOptionsNullableInnerItem = ApplicationCommandResponseOptionsNullableInnerItem0 ApplicationCommandAttachmentOptionResponse | ApplicationCommandResponseOptionsNullableInnerItem1 ApplicationCommandBooleanOptionResponse | ApplicationCommandResponseOptionsNullableInnerItem2 ApplicationCommandChannelOptionResponse | ApplicationCommandResponseOptionsNullableInnerItem3 ApplicationCommandIntegerOptionResponse | ApplicationCommandResponseOptionsNullableInnerItem4 ApplicationCommandMentionableOptionResponse | ApplicationCommandResponseOptionsNullableInnerItem5 ApplicationCommandNumberOptionResponse | ApplicationCommandResponseOptionsNullableInnerItem6 ApplicationCommandRoleOptionResponse | ApplicationCommandResponseOptionsNullableInnerItem7 ApplicationCommandStringOptionResponse | ApplicationCommandResponseOptionsNullableInnerItem8 ApplicationCommandSubcommandGroupOptionResponse | ApplicationCommandResponseOptionsNullableInnerItem9 ApplicationCommandSubcommandOptionResponse | ApplicationCommandResponseOptionsNullableInnerItem10 ApplicationCommandUserOptionResponse
     deriving (Show, Eq, Generic)

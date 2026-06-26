@@ -7,8 +7,8 @@ import GHC.Generics
 
 
 data RichEmbedAuthor = RichEmbedAuthor
-    { iconUrl :: Maybe String
-    , name :: Maybe String
-    , url :: Maybe String
+    { iconUrl :: Maybe (Maybe String)
+    , name :: Maybe (Maybe String)
+    , url :: Maybe (Maybe String)
     }
     deriving (Show, Eq, Generic)

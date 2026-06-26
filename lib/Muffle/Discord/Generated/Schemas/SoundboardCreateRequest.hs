@@ -7,10 +7,10 @@ import GHC.Generics
 import Muffle.Discord.Generated.Schemas.SnowflakeType
 
 data SoundboardCreateRequest = SoundboardCreateRequest
-    { emojiId :: Maybe SnowflakeType
-    , emojiName :: Maybe String
+    { emojiId :: Maybe (Maybe SnowflakeType)
+    , emojiName :: Maybe (Maybe String)
     , name :: String
     , sound :: String
-    , volume :: Maybe Integer
+    , volume :: Maybe (Maybe Integer)
     }
     deriving (Show, Eq, Generic)

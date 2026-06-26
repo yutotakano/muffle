@@ -14,6 +14,6 @@ data GuildHomeSettingsResponse = GuildHomeSettingsResponse
     , guildId :: SnowflakeType
     , newMemberActions :: [NewMemberActionResponse]
     , resourceChannels :: [ResourceChannelResponse]
-    , welcomeMessage :: WelcomeMessageResponse
+    , welcomeMessage :: Maybe WelcomeMessageResponse
     }
     deriving (Show, Eq, Generic)

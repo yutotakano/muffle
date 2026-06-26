@@ -10,15 +10,15 @@ import Muffle.Discord.Generated.Schemas.EntitlementTypes
 
 data EntitlementResponse = EntitlementResponse
     { applicationId :: SnowflakeType
-    , consumed :: Bool
+    , consumed :: Maybe Bool
     , deleted :: Bool
     , endsAt :: Maybe String
-    , fulfilledAt :: Maybe String
-    , fulfillmentStatus :: Maybe EntitlementTenantFulfillmentStatusResponse
-    , gifterUserId :: Maybe SnowflakeType
-    , guildId :: Maybe SnowflakeType
+    , fulfilledAt :: Maybe (Maybe String)
+    , fulfillmentStatus :: Maybe (Maybe EntitlementTenantFulfillmentStatusResponse)
+    , gifterUserId :: Maybe (Maybe SnowflakeType)
+    , guildId :: Maybe (Maybe SnowflakeType)
     , id :: SnowflakeType
-    , parentId :: Maybe SnowflakeType
+    , parentId :: Maybe (Maybe SnowflakeType)
     , skuId :: SnowflakeType
     , startsAt :: Maybe String
     , type' :: EntitlementTypes

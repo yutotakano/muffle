@@ -15,29 +15,29 @@ import Muffle.Discord.Generated.Schemas.InviteTargetTypes
 import Muffle.Discord.Generated.Schemas.InviteTypes
 
 data GuildInviteResponse = GuildInviteResponse
-    { approximateMemberCount :: Maybe Int32
-    , approximatePresenceCount :: Maybe Int32
+    { approximateMemberCount :: Maybe (Maybe Int32)
+    , approximatePresenceCount :: Maybe (Maybe Int32)
     , channel :: InviteChannelResponse
     , code :: String
-    , createdAt :: String
+    , createdAt :: Maybe String
     , expiresAt :: Maybe String
-    , flags :: Int32
+    , flags :: Maybe Int32
     , guild :: InviteGuildResponse
     , guildId :: SnowflakeType
-    , guildScheduledEvent :: ScheduledEventResponse
-    , inviter :: UserResponse
-    , isContact :: Bool
-    , isNicknameChangeable :: Bool
-    , maxAge :: Int32
-    , maxUses :: Int32
-    , roles :: [InviteGuildRoleResponse]
-    , targetApplication :: InviteApplicationResponse
-    , targetChannelId :: SnowflakeType
-    , targetMessageId :: SnowflakeType
-    , targetType :: InviteTargetTypes
-    , targetUser :: UserResponse
-    , temporary :: Bool
+    , guildScheduledEvent :: Maybe ScheduledEventResponse
+    , inviter :: Maybe UserResponse
+    , isContact :: Maybe Bool
+    , isNicknameChangeable :: Maybe Bool
+    , maxAge :: Maybe Int32
+    , maxUses :: Maybe Int32
+    , roles :: Maybe [InviteGuildRoleResponse]
+    , targetApplication :: Maybe InviteApplicationResponse
+    , targetChannelId :: Maybe SnowflakeType
+    , targetMessageId :: Maybe SnowflakeType
+    , targetType :: Maybe InviteTargetTypes
+    , targetUser :: Maybe UserResponse
+    , temporary :: Maybe Bool
     , type' :: InviteTypes
-    , uses :: Int32
+    , uses :: Maybe Int32
     }
     deriving (Show, Eq, Generic)

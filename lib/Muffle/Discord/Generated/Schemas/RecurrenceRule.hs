@@ -10,15 +10,15 @@ import Muffle.Discord.Generated.Schemas.RecurrenceRuleWeekdays
 import Muffle.Discord.Generated.Schemas.RecurrenceRuleFrequencies
 
 data RecurrenceRule = RecurrenceRule
-    { byMonth :: [RecurrenceRuleMonths]
-    , byMonthDay :: [Int32]
-    , byNWeekday :: [ByNWeekday]
-    , byWeekday :: [RecurrenceRuleWeekdays]
-    , byYearDay :: [Int32]
-    , count :: Maybe Int32
-    , end :: Maybe String
+    { byMonth :: Maybe [RecurrenceRuleMonths]
+    , byMonthDay :: Maybe [Int32]
+    , byNWeekday :: Maybe [ByNWeekday]
+    , byWeekday :: Maybe [RecurrenceRuleWeekdays]
+    , byYearDay :: Maybe [Int32]
+    , count :: Maybe (Maybe Int32)
+    , end :: Maybe (Maybe String)
     , frequency :: RecurrenceRuleFrequencies
-    , interval :: Maybe Int32
+    , interval :: Maybe (Maybe Int32)
     , start :: String
     }
     deriving (Show, Eq, Generic)

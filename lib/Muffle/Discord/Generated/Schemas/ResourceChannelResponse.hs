@@ -10,8 +10,8 @@ import Muffle.Discord.Generated.Schemas.SettingsEmojiResponse
 data ResourceChannelResponse = ResourceChannelResponse
     { channelId :: SnowflakeType
     , description :: String
-    , emoji :: SettingsEmojiResponse
-    , icon :: String
+    , emoji :: Maybe SettingsEmojiResponse
+    , icon :: Maybe String
     , title :: String
     }
     deriving (Show, Eq, Generic)

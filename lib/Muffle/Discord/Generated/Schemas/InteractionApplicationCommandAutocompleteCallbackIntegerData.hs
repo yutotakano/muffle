@@ -7,6 +7,6 @@ import GHC.Generics
 import Muffle.Discord.Generated.Schemas.ApplicationCommandOptionIntegerChoice
 
 data InteractionApplicationCommandAutocompleteCallbackIntegerData = InteractionApplicationCommandAutocompleteCallbackIntegerData
-    { choices :: [Maybe ApplicationCommandOptionIntegerChoice]
+    { choices :: Maybe ([Maybe ApplicationCommandOptionIntegerChoice])
     }
     deriving (Show, Eq, Generic)

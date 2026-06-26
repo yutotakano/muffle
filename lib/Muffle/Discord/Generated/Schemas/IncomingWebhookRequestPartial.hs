@@ -18,19 +18,21 @@ import Muffle.Discord.Generated.Schemas.SeparatorComponentForMessageRequest
 import Muffle.Discord.Generated.Schemas.TextDisplayComponentForMessageRequest
 
 data IncomingWebhookRequestPartial = IncomingWebhookRequestPartial
-    { allowedMentions :: Maybe MessageAllowedMentionsRequest
-    , appliedTags :: [SnowflakeType]
-    , attachments :: [MessageAttachmentRequest]
-    , avatarUrl :: Maybe String
-    , components :: [IncomingWebhookRequestPartialComponentsItem]
-    , content :: Maybe String
-    , embeds :: [RichEmbed]
-    , flags :: Maybe Integer
-    , poll :: Maybe PollCreateRequest
-    , threadName :: Maybe String
-    , tts :: Maybe Bool
-    , username :: Maybe String
+    { allowedMentions :: Maybe (Maybe MessageAllowedMentionsRequest)
+    , appliedTags :: Maybe [SnowflakeType]
+    , attachments :: Maybe [MessageAttachmentRequest]
+    , avatarUrl :: Maybe (Maybe String)
+    , components :: Maybe IncomingWebhookRequestPartialComponentsNullableInner
+    , content :: Maybe (Maybe String)
+    , embeds :: Maybe [RichEmbed]
+    , flags :: Maybe (Maybe Integer)
+    , poll :: Maybe (Maybe PollCreateRequest)
+    , threadName :: Maybe (Maybe String)
+    , tts :: Maybe (Maybe Bool)
+    , username :: Maybe (Maybe String)
     }
     deriving (Show, Eq, Generic)
-data IncomingWebhookRequestPartialComponentsItem = IncomingWebhookRequestPartialComponentsItem0 ActionRowComponentForMessageRequest | IncomingWebhookRequestPartialComponentsItem1 ContainerComponentForMessageRequest | IncomingWebhookRequestPartialComponentsItem2 FileComponentForMessageRequest | IncomingWebhookRequestPartialComponentsItem3 MediaGalleryComponentForMessageRequest | IncomingWebhookRequestPartialComponentsItem4 SectionComponentForMessageRequest | IncomingWebhookRequestPartialComponentsItem5 SeparatorComponentForMessageRequest | IncomingWebhookRequestPartialComponentsItem6 TextDisplayComponentForMessageRequest
+newtype IncomingWebhookRequestPartialComponentsNullableInner = IncomingWebhookRequestPartialComponentsNullableInner [IncomingWebhookRequestPartialComponentsNullableInnerItem]
+    deriving (Show, Eq, Generic)
+data IncomingWebhookRequestPartialComponentsNullableInnerItem = IncomingWebhookRequestPartialComponentsNullableInnerItem0 ActionRowComponentForMessageRequest | IncomingWebhookRequestPartialComponentsNullableInnerItem1 ContainerComponentForMessageRequest | IncomingWebhookRequestPartialComponentsNullableInnerItem2 FileComponentForMessageRequest | IncomingWebhookRequestPartialComponentsNullableInnerItem3 MediaGalleryComponentForMessageRequest | IncomingWebhookRequestPartialComponentsNullableInnerItem4 SectionComponentForMessageRequest | IncomingWebhookRequestPartialComponentsNullableInnerItem5 SeparatorComponentForMessageRequest | IncomingWebhookRequestPartialComponentsNullableInnerItem6 TextDisplayComponentForMessageRequest
     deriving (Show, Eq, Generic)

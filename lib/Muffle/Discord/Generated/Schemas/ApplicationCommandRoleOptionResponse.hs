@@ -9,19 +9,23 @@ import Muffle.Discord.Generated.Schemas.ApplicationCommandOptionType
 data ApplicationCommandRoleOptionResponse = ApplicationCommandRoleOptionResponse
     { description :: String
     , descriptionLocalizations :: Maybe ApplicationCommandRoleOptionResponseDescriptionLocalizationsNullableInner
-    , descriptionLocalized :: String
+    , descriptionLocalized :: Maybe String
     , name :: String
     , nameLocalizations :: Maybe ApplicationCommandRoleOptionResponseNameLocalizationsNullableInner
-    , nameLocalized :: String
-    , required :: Bool
+    , nameLocalized :: Maybe String
+    , required :: Maybe Bool
     , type' :: ApplicationCommandOptionType
     }
     deriving (Show, Eq, Generic)
-data ApplicationCommandRoleOptionResponseDescriptionLocalizationsNullableInner = ApplicationCommandRoleOptionResponseDescriptionLocalizationsNullableInner
+newtype ApplicationCommandRoleOptionResponseDescriptionLocalizationsNullableInner = ApplicationCommandRoleOptionResponseDescriptionLocalizationsNullableInner (Maybe ApplicationCommandRoleOptionResponseDescriptionLocalizationsNullableInnerNullableInner)
+    deriving (Show, Eq, Generic)
+data ApplicationCommandRoleOptionResponseDescriptionLocalizationsNullableInnerNullableInner = ApplicationCommandRoleOptionResponseDescriptionLocalizationsNullableInnerNullableInner
     { 
     }
     deriving (Show, Eq, Generic)
-data ApplicationCommandRoleOptionResponseNameLocalizationsNullableInner = ApplicationCommandRoleOptionResponseNameLocalizationsNullableInner
+newtype ApplicationCommandRoleOptionResponseNameLocalizationsNullableInner = ApplicationCommandRoleOptionResponseNameLocalizationsNullableInner (Maybe ApplicationCommandRoleOptionResponseNameLocalizationsNullableInnerNullableInner)
+    deriving (Show, Eq, Generic)
+data ApplicationCommandRoleOptionResponseNameLocalizationsNullableInnerNullableInner = ApplicationCommandRoleOptionResponseNameLocalizationsNullableInnerNullableInner
     { 
     }
     deriving (Show, Eq, Generic)

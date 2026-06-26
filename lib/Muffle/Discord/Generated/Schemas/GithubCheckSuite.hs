@@ -9,9 +9,9 @@ import Muffle.Discord.Generated.Schemas.GithubCheckPullRequest
 
 data GithubCheckSuite = GithubCheckSuite
     { app :: GithubCheckApp
-    , conclusion :: Maybe String
-    , headBranch :: Maybe String
+    , conclusion :: Maybe (Maybe String)
+    , headBranch :: Maybe (Maybe String)
     , headSha :: String
-    , pullRequests :: [GithubCheckPullRequest]
+    , pullRequests :: Maybe [GithubCheckPullRequest]
     }
     deriving (Show, Eq, Generic)

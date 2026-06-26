@@ -11,7 +11,7 @@ data ThreadMemberResponse = ThreadMemberResponse
     { flags :: Int32
     , id :: SnowflakeType
     , joinTimestamp :: String
-    , member :: GuildMemberResponse
+    , member :: Maybe GuildMemberResponse
     , userId :: SnowflakeType
     }
     deriving (Show, Eq, Generic)

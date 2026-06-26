@@ -14,12 +14,12 @@ data ChannelFollowerWebhookResponse = ChannelFollowerWebhookResponse
     { applicationId :: Maybe SnowflakeType
     , avatar :: Maybe String
     , channelId :: Maybe SnowflakeType
-    , guildId :: Maybe SnowflakeType
+    , guildId :: Maybe (Maybe SnowflakeType)
     , id :: SnowflakeType
     , name :: String
-    , sourceChannel :: WebhookSourceChannelResponse
-    , sourceGuild :: WebhookSourceGuildResponse
+    , sourceChannel :: Maybe WebhookSourceChannelResponse
+    , sourceGuild :: Maybe WebhookSourceGuildResponse
     , type' :: WebhookTypes
-    , user :: UserResponse
+    , user :: Maybe UserResponse
     }
     deriving (Show, Eq, Generic)

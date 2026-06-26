@@ -19,16 +19,18 @@ import Muffle.Discord.Generated.Schemas.SeparatorComponentForMessageRequest
 import Muffle.Discord.Generated.Schemas.TextDisplayComponentForMessageRequest
 
 data BaseCreateMessageCreateRequest = BaseCreateMessageCreateRequest
-    { allowedMentions :: Maybe MessageAllowedMentionsRequest
-    , attachments :: [MessageAttachmentRequest]
-    , components :: [BaseCreateMessageCreateRequestComponentsItem]
-    , content :: Maybe String
-    , embeds :: [RichEmbed]
-    , flags :: Maybe Integer
-    , poll :: Maybe PollCreateRequest
-    , sharedClientTheme :: Maybe CustomClientThemeShareRequest
-    , stickerIds :: [SnowflakeType]
+    { allowedMentions :: Maybe (Maybe MessageAllowedMentionsRequest)
+    , attachments :: Maybe [MessageAttachmentRequest]
+    , components :: Maybe BaseCreateMessageCreateRequestComponentsNullableInner
+    , content :: Maybe (Maybe String)
+    , embeds :: Maybe [RichEmbed]
+    , flags :: Maybe (Maybe Integer)
+    , poll :: Maybe (Maybe PollCreateRequest)
+    , sharedClientTheme :: Maybe (Maybe CustomClientThemeShareRequest)
+    , stickerIds :: Maybe [SnowflakeType]
     }
     deriving (Show, Eq, Generic)
-data BaseCreateMessageCreateRequestComponentsItem = BaseCreateMessageCreateRequestComponentsItem0 ActionRowComponentForMessageRequest | BaseCreateMessageCreateRequestComponentsItem1 ContainerComponentForMessageRequest | BaseCreateMessageCreateRequestComponentsItem2 FileComponentForMessageRequest | BaseCreateMessageCreateRequestComponentsItem3 MediaGalleryComponentForMessageRequest | BaseCreateMessageCreateRequestComponentsItem4 SectionComponentForMessageRequest | BaseCreateMessageCreateRequestComponentsItem5 SeparatorComponentForMessageRequest | BaseCreateMessageCreateRequestComponentsItem6 TextDisplayComponentForMessageRequest
+newtype BaseCreateMessageCreateRequestComponentsNullableInner = BaseCreateMessageCreateRequestComponentsNullableInner [BaseCreateMessageCreateRequestComponentsNullableInnerItem]
+    deriving (Show, Eq, Generic)
+data BaseCreateMessageCreateRequestComponentsNullableInnerItem = BaseCreateMessageCreateRequestComponentsNullableInnerItem0 ActionRowComponentForMessageRequest | BaseCreateMessageCreateRequestComponentsNullableInnerItem1 ContainerComponentForMessageRequest | BaseCreateMessageCreateRequestComponentsNullableInnerItem2 FileComponentForMessageRequest | BaseCreateMessageCreateRequestComponentsNullableInnerItem3 MediaGalleryComponentForMessageRequest | BaseCreateMessageCreateRequestComponentsNullableInnerItem4 SectionComponentForMessageRequest | BaseCreateMessageCreateRequestComponentsNullableInnerItem5 SeparatorComponentForMessageRequest | BaseCreateMessageCreateRequestComponentsNullableInnerItem6 TextDisplayComponentForMessageRequest
     deriving (Show, Eq, Generic)

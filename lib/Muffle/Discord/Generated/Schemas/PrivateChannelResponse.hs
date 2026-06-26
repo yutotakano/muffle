@@ -11,8 +11,8 @@ import Muffle.Discord.Generated.Schemas.ChannelTypes
 data PrivateChannelResponse = PrivateChannelResponse
     { flags :: Int32
     , id :: SnowflakeType
-    , lastMessageId :: Maybe SnowflakeType
-    , lastPinTimestamp :: Maybe String
+    , lastMessageId :: Maybe (Maybe SnowflakeType)
+    , lastPinTimestamp :: Maybe (Maybe String)
     , recipients :: [UserResponse]
     , type' :: ChannelTypes
     }

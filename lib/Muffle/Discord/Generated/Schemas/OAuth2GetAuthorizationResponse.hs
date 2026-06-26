@@ -12,6 +12,6 @@ data OAuth2GetAuthorizationResponse = OAuth2GetAuthorizationResponse
     { application :: ApplicationResponse
     , expires :: String
     , scopes :: [OAuth2Scopes]
-    , user :: UserResponse
+    , user :: Maybe UserResponse
     }
     deriving (Show, Eq, Generic)

@@ -7,9 +7,9 @@ import GHC.Generics
 
 
 data GuildScheduledEventExceptionCreateRequest = GuildScheduledEventExceptionCreateRequest
-    { isCanceled :: Maybe Bool
+    { isCanceled :: Maybe (Maybe Bool)
     , originalScheduledStartTime :: String
-    , scheduledEndTime :: Maybe String
-    , scheduledStartTime :: Maybe String
+    , scheduledEndTime :: Maybe (Maybe String)
+    , scheduledStartTime :: Maybe (Maybe String)
     }
     deriving (Show, Eq, Generic)

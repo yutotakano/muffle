@@ -14,15 +14,17 @@ import Muffle.Discord.Generated.Schemas.QuarantineUserAction
 import Muffle.Discord.Generated.Schemas.UserCommunicationDisabledAction
 
 data DefaultKeywordListUpsertRequestPartial = DefaultKeywordListUpsertRequestPartial
-    { actions :: [DefaultKeywordListUpsertRequestPartialActionsItem]
-    , enabled :: Maybe Bool
-    , eventType :: AutomodEventType
-    , exemptChannels :: [SnowflakeType]
-    , exemptRoles :: [SnowflakeType]
-    , name :: String
-    , triggerMetadata :: DefaultKeywordListTriggerMetadata
-    , triggerType :: AutomodTriggerType
+    { actions :: Maybe DefaultKeywordListUpsertRequestPartialActionsNullableInner
+    , enabled :: Maybe (Maybe Bool)
+    , eventType :: Maybe AutomodEventType
+    , exemptChannels :: Maybe [SnowflakeType]
+    , exemptRoles :: Maybe [SnowflakeType]
+    , name :: Maybe String
+    , triggerMetadata :: Maybe DefaultKeywordListTriggerMetadata
+    , triggerType :: Maybe AutomodTriggerType
     }
     deriving (Show, Eq, Generic)
-data DefaultKeywordListUpsertRequestPartialActionsItem = DefaultKeywordListUpsertRequestPartialActionsItem0 BlockMessageAction | DefaultKeywordListUpsertRequestPartialActionsItem1 FlagToChannelAction | DefaultKeywordListUpsertRequestPartialActionsItem2 QuarantineUserAction | DefaultKeywordListUpsertRequestPartialActionsItem3 UserCommunicationDisabledAction
+newtype DefaultKeywordListUpsertRequestPartialActionsNullableInner = DefaultKeywordListUpsertRequestPartialActionsNullableInner [DefaultKeywordListUpsertRequestPartialActionsNullableInnerItem]
+    deriving (Show, Eq, Generic)
+data DefaultKeywordListUpsertRequestPartialActionsNullableInnerItem = DefaultKeywordListUpsertRequestPartialActionsNullableInnerItem0 BlockMessageAction | DefaultKeywordListUpsertRequestPartialActionsNullableInnerItem1 FlagToChannelAction | DefaultKeywordListUpsertRequestPartialActionsNullableInnerItem2 QuarantineUserAction | DefaultKeywordListUpsertRequestPartialActionsNullableInnerItem3 UserCommunicationDisabledAction
     deriving (Show, Eq, Generic)

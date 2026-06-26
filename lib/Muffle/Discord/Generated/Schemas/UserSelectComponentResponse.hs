@@ -9,12 +9,12 @@ import Muffle.Discord.Generated.Schemas.MessageComponentTypes
 
 data UserSelectComponentResponse = UserSelectComponentResponse
     { customId :: String
-    , defaultValues :: [UserSelectDefaultValueResponse]
-    , disabled :: Bool
+    , defaultValues :: Maybe [UserSelectDefaultValueResponse]
+    , disabled :: Maybe Bool
     , id :: Int32
     , maxValues :: Int32
     , minValues :: Int32
-    , placeholder :: String
+    , placeholder :: Maybe String
     , type' :: MessageComponentTypes
     }
     deriving (Show, Eq, Generic)

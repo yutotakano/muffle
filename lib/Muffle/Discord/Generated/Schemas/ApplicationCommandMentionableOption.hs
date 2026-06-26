@@ -11,15 +11,19 @@ data ApplicationCommandMentionableOption = ApplicationCommandMentionableOption
     , descriptionLocalizations :: Maybe ApplicationCommandMentionableOptionDescriptionLocalizationsNullableInner
     , name :: String
     , nameLocalizations :: Maybe ApplicationCommandMentionableOptionNameLocalizationsNullableInner
-    , required :: Maybe Bool
+    , required :: Maybe (Maybe Bool)
     , type' :: ApplicationCommandOptionType
     }
     deriving (Show, Eq, Generic)
-data ApplicationCommandMentionableOptionDescriptionLocalizationsNullableInner = ApplicationCommandMentionableOptionDescriptionLocalizationsNullableInner
+newtype ApplicationCommandMentionableOptionDescriptionLocalizationsNullableInner = ApplicationCommandMentionableOptionDescriptionLocalizationsNullableInner (Maybe ApplicationCommandMentionableOptionDescriptionLocalizationsNullableInnerNullableInner)
+    deriving (Show, Eq, Generic)
+data ApplicationCommandMentionableOptionDescriptionLocalizationsNullableInnerNullableInner = ApplicationCommandMentionableOptionDescriptionLocalizationsNullableInnerNullableInner
     { 
     }
     deriving (Show, Eq, Generic)
-data ApplicationCommandMentionableOptionNameLocalizationsNullableInner = ApplicationCommandMentionableOptionNameLocalizationsNullableInner
+newtype ApplicationCommandMentionableOptionNameLocalizationsNullableInner = ApplicationCommandMentionableOptionNameLocalizationsNullableInner (Maybe ApplicationCommandMentionableOptionNameLocalizationsNullableInnerNullableInner)
+    deriving (Show, Eq, Generic)
+data ApplicationCommandMentionableOptionNameLocalizationsNullableInnerNullableInner = ApplicationCommandMentionableOptionNameLocalizationsNullableInnerNullableInner
     { 
     }
     deriving (Show, Eq, Generic)

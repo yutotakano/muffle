@@ -10,11 +10,11 @@ import Muffle.Discord.Generated.Schemas.GuildScheduledEventUserResponses
 import Muffle.Discord.Generated.Schemas.UserResponse
 
 data ScheduledEventUserResponse = ScheduledEventUserResponse
-    { guildScheduledEventExceptionId :: Maybe SnowflakeType
+    { guildScheduledEventExceptionId :: Maybe (Maybe SnowflakeType)
     , guildScheduledEventId :: SnowflakeType
-    , member :: GuildMemberResponse
+    , member :: Maybe GuildMemberResponse
     , response :: GuildScheduledEventUserResponses
-    , user :: UserResponse
+    , user :: Maybe UserResponse
     , userId :: SnowflakeType
     }
     deriving (Show, Eq, Generic)

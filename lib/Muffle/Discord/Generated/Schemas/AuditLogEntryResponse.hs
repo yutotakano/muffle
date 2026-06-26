@@ -10,15 +10,15 @@ import Muffle.Discord.Generated.Schemas.SnowflakeType
 
 data AuditLogEntryResponse = AuditLogEntryResponse
     { actionType :: AuditLogActionTypes
-    , changes :: [AuditLogObjectChangeResponse]
+    , changes :: Maybe [AuditLogObjectChangeResponse]
     , id :: SnowflakeType
-    , options :: AuditLogEntryResponseOptions
-    , reason :: String
+    , options :: Maybe AuditLogEntryResponseOptionsNullableInner
+    , reason :: Maybe String
     , targetId :: Maybe SnowflakeType
     , userId :: Maybe SnowflakeType
     }
     deriving (Show, Eq, Generic)
-data AuditLogEntryResponseOptions = AuditLogEntryResponseOptions
+data AuditLogEntryResponseOptionsNullableInner = AuditLogEntryResponseOptionsNullableInner
     { 
     }
     deriving (Show, Eq, Generic)

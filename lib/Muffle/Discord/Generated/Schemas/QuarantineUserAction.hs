@@ -8,7 +8,7 @@ import Muffle.Discord.Generated.Schemas.QuarantineUserActionMetadata
 import Muffle.Discord.Generated.Schemas.AutomodActionType
 
 data QuarantineUserAction = QuarantineUserAction
-    { metadata :: Maybe QuarantineUserActionMetadata
+    { metadata :: Maybe (Maybe QuarantineUserActionMetadata)
     , type' :: AutomodActionType
     }
     deriving (Show, Eq, Generic)

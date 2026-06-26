@@ -8,9 +8,9 @@ import Muffle.Discord.Generated.Schemas.AllowedMentionTypes
 import Muffle.Discord.Generated.Schemas.SnowflakeType
 
 data MessageAllowedMentionsRequest = MessageAllowedMentionsRequest
-    { parse :: [Maybe AllowedMentionTypes]
-    , repliedUser :: Maybe Bool
-    , roles :: [Maybe SnowflakeType]
-    , users :: [Maybe SnowflakeType]
+    { parse :: Maybe ([Maybe AllowedMentionTypes])
+    , repliedUser :: Maybe (Maybe Bool)
+    , roles :: Maybe ([Maybe SnowflakeType])
+    , users :: Maybe ([Maybe SnowflakeType])
     }
     deriving (Show, Eq, Generic)

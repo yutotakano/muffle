@@ -21,26 +21,32 @@ import Muffle.Discord.Generated.Schemas.ApplicationCommandSubcommandOption
 import Muffle.Discord.Generated.Schemas.ApplicationCommandUserOption
 
 data ApplicationCommandCreateRequest = ApplicationCommandCreateRequest
-    { contexts :: [InteractionContextType]
-    , defaultMemberPermissions :: Maybe Integer
-    , description :: Maybe String
+    { contexts :: Maybe [InteractionContextType]
+    , defaultMemberPermissions :: Maybe (Maybe Integer)
+    , description :: Maybe (Maybe String)
     , descriptionLocalizations :: Maybe ApplicationCommandCreateRequestDescriptionLocalizationsNullableInner
-    , dmPermission :: Maybe Bool
-    , handler :: Maybe ApplicationCommandHandler
-    , integrationTypes :: [ApplicationIntegrationType]
+    , dmPermission :: Maybe (Maybe Bool)
+    , handler :: Maybe (Maybe ApplicationCommandHandler)
+    , integrationTypes :: Maybe [ApplicationIntegrationType]
     , name :: String
     , nameLocalizations :: Maybe ApplicationCommandCreateRequestNameLocalizationsNullableInner
-    , options :: [ApplicationCommandCreateRequestOptionsItem]
-    , type' :: Maybe ApplicationCommandType
+    , options :: Maybe ApplicationCommandCreateRequestOptionsNullableInner
+    , type' :: Maybe (Maybe ApplicationCommandType)
     }
     deriving (Show, Eq, Generic)
-data ApplicationCommandCreateRequestDescriptionLocalizationsNullableInner = ApplicationCommandCreateRequestDescriptionLocalizationsNullableInner
+newtype ApplicationCommandCreateRequestDescriptionLocalizationsNullableInner = ApplicationCommandCreateRequestDescriptionLocalizationsNullableInner (Maybe ApplicationCommandCreateRequestDescriptionLocalizationsNullableInnerNullableInner)
+    deriving (Show, Eq, Generic)
+data ApplicationCommandCreateRequestDescriptionLocalizationsNullableInnerNullableInner = ApplicationCommandCreateRequestDescriptionLocalizationsNullableInnerNullableInner
     { 
     }
     deriving (Show, Eq, Generic)
-data ApplicationCommandCreateRequestNameLocalizationsNullableInner = ApplicationCommandCreateRequestNameLocalizationsNullableInner
+newtype ApplicationCommandCreateRequestNameLocalizationsNullableInner = ApplicationCommandCreateRequestNameLocalizationsNullableInner (Maybe ApplicationCommandCreateRequestNameLocalizationsNullableInnerNullableInner)
+    deriving (Show, Eq, Generic)
+data ApplicationCommandCreateRequestNameLocalizationsNullableInnerNullableInner = ApplicationCommandCreateRequestNameLocalizationsNullableInnerNullableInner
     { 
     }
     deriving (Show, Eq, Generic)
-data ApplicationCommandCreateRequestOptionsItem = ApplicationCommandCreateRequestOptionsItem0 ApplicationCommandAttachmentOption | ApplicationCommandCreateRequestOptionsItem1 ApplicationCommandBooleanOption | ApplicationCommandCreateRequestOptionsItem2 ApplicationCommandChannelOption | ApplicationCommandCreateRequestOptionsItem3 ApplicationCommandIntegerOption | ApplicationCommandCreateRequestOptionsItem4 ApplicationCommandMentionableOption | ApplicationCommandCreateRequestOptionsItem5 ApplicationCommandNumberOption | ApplicationCommandCreateRequestOptionsItem6 ApplicationCommandRoleOption | ApplicationCommandCreateRequestOptionsItem7 ApplicationCommandStringOption | ApplicationCommandCreateRequestOptionsItem8 ApplicationCommandSubcommandGroupOption | ApplicationCommandCreateRequestOptionsItem9 ApplicationCommandSubcommandOption | ApplicationCommandCreateRequestOptionsItem10 ApplicationCommandUserOption
+newtype ApplicationCommandCreateRequestOptionsNullableInner = ApplicationCommandCreateRequestOptionsNullableInner [ApplicationCommandCreateRequestOptionsNullableInnerItem]
+    deriving (Show, Eq, Generic)
+data ApplicationCommandCreateRequestOptionsNullableInnerItem = ApplicationCommandCreateRequestOptionsNullableInnerItem0 ApplicationCommandAttachmentOption | ApplicationCommandCreateRequestOptionsNullableInnerItem1 ApplicationCommandBooleanOption | ApplicationCommandCreateRequestOptionsNullableInnerItem2 ApplicationCommandChannelOption | ApplicationCommandCreateRequestOptionsNullableInnerItem3 ApplicationCommandIntegerOption | ApplicationCommandCreateRequestOptionsNullableInnerItem4 ApplicationCommandMentionableOption | ApplicationCommandCreateRequestOptionsNullableInnerItem5 ApplicationCommandNumberOption | ApplicationCommandCreateRequestOptionsNullableInnerItem6 ApplicationCommandRoleOption | ApplicationCommandCreateRequestOptionsNullableInnerItem7 ApplicationCommandStringOption | ApplicationCommandCreateRequestOptionsNullableInnerItem8 ApplicationCommandSubcommandGroupOption | ApplicationCommandCreateRequestOptionsNullableInnerItem9 ApplicationCommandSubcommandOption | ApplicationCommandCreateRequestOptionsNullableInnerItem10 ApplicationCommandUserOption
     deriving (Show, Eq, Generic)

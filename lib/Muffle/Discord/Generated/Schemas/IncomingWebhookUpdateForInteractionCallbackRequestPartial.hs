@@ -16,13 +16,15 @@ import Muffle.Discord.Generated.Schemas.SeparatorComponentForMessageRequest
 import Muffle.Discord.Generated.Schemas.TextDisplayComponentForMessageRequest
 
 data IncomingWebhookUpdateForInteractionCallbackRequestPartial = IncomingWebhookUpdateForInteractionCallbackRequestPartial
-    { allowedMentions :: Maybe MessageAllowedMentionsRequest
-    , attachments :: [MessageAttachmentRequest]
-    , components :: [IncomingWebhookUpdateForInteractionCallbackRequestPartialComponentsItem]
-    , content :: Maybe String
-    , embeds :: [RichEmbed]
-    , flags :: Maybe Integer
+    { allowedMentions :: Maybe (Maybe MessageAllowedMentionsRequest)
+    , attachments :: Maybe [MessageAttachmentRequest]
+    , components :: Maybe IncomingWebhookUpdateForInteractionCallbackRequestPartialComponentsNullableInner
+    , content :: Maybe (Maybe String)
+    , embeds :: Maybe [RichEmbed]
+    , flags :: Maybe (Maybe Integer)
     }
     deriving (Show, Eq, Generic)
-data IncomingWebhookUpdateForInteractionCallbackRequestPartialComponentsItem = IncomingWebhookUpdateForInteractionCallbackRequestPartialComponentsItem0 ActionRowComponentForMessageRequest | IncomingWebhookUpdateForInteractionCallbackRequestPartialComponentsItem1 ContainerComponentForMessageRequest | IncomingWebhookUpdateForInteractionCallbackRequestPartialComponentsItem2 FileComponentForMessageRequest | IncomingWebhookUpdateForInteractionCallbackRequestPartialComponentsItem3 MediaGalleryComponentForMessageRequest | IncomingWebhookUpdateForInteractionCallbackRequestPartialComponentsItem4 SectionComponentForMessageRequest | IncomingWebhookUpdateForInteractionCallbackRequestPartialComponentsItem5 SeparatorComponentForMessageRequest | IncomingWebhookUpdateForInteractionCallbackRequestPartialComponentsItem6 TextDisplayComponentForMessageRequest
+newtype IncomingWebhookUpdateForInteractionCallbackRequestPartialComponentsNullableInner = IncomingWebhookUpdateForInteractionCallbackRequestPartialComponentsNullableInner [IncomingWebhookUpdateForInteractionCallbackRequestPartialComponentsNullableInnerItem]
+    deriving (Show, Eq, Generic)
+data IncomingWebhookUpdateForInteractionCallbackRequestPartialComponentsNullableInnerItem = IncomingWebhookUpdateForInteractionCallbackRequestPartialComponentsNullableInnerItem0 ActionRowComponentForMessageRequest | IncomingWebhookUpdateForInteractionCallbackRequestPartialComponentsNullableInnerItem1 ContainerComponentForMessageRequest | IncomingWebhookUpdateForInteractionCallbackRequestPartialComponentsNullableInnerItem2 FileComponentForMessageRequest | IncomingWebhookUpdateForInteractionCallbackRequestPartialComponentsNullableInnerItem3 MediaGalleryComponentForMessageRequest | IncomingWebhookUpdateForInteractionCallbackRequestPartialComponentsNullableInnerItem4 SectionComponentForMessageRequest | IncomingWebhookUpdateForInteractionCallbackRequestPartialComponentsNullableInnerItem5 SeparatorComponentForMessageRequest | IncomingWebhookUpdateForInteractionCallbackRequestPartialComponentsNullableInnerItem6 TextDisplayComponentForMessageRequest
     deriving (Show, Eq, Generic)

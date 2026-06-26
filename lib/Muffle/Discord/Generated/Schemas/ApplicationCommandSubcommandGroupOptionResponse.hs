@@ -10,20 +10,24 @@ import Muffle.Discord.Generated.Schemas.ApplicationCommandOptionType
 data ApplicationCommandSubcommandGroupOptionResponse = ApplicationCommandSubcommandGroupOptionResponse
     { description :: String
     , descriptionLocalizations :: Maybe ApplicationCommandSubcommandGroupOptionResponseDescriptionLocalizationsNullableInner
-    , descriptionLocalized :: String
+    , descriptionLocalized :: Maybe String
     , name :: String
     , nameLocalizations :: Maybe ApplicationCommandSubcommandGroupOptionResponseNameLocalizationsNullableInner
-    , nameLocalized :: String
-    , options :: [ApplicationCommandSubcommandOptionResponse]
-    , required :: Bool
+    , nameLocalized :: Maybe String
+    , options :: Maybe [ApplicationCommandSubcommandOptionResponse]
+    , required :: Maybe Bool
     , type' :: ApplicationCommandOptionType
     }
     deriving (Show, Eq, Generic)
-data ApplicationCommandSubcommandGroupOptionResponseDescriptionLocalizationsNullableInner = ApplicationCommandSubcommandGroupOptionResponseDescriptionLocalizationsNullableInner
+newtype ApplicationCommandSubcommandGroupOptionResponseDescriptionLocalizationsNullableInner = ApplicationCommandSubcommandGroupOptionResponseDescriptionLocalizationsNullableInner (Maybe ApplicationCommandSubcommandGroupOptionResponseDescriptionLocalizationsNullableInnerNullableInner)
+    deriving (Show, Eq, Generic)
+data ApplicationCommandSubcommandGroupOptionResponseDescriptionLocalizationsNullableInnerNullableInner = ApplicationCommandSubcommandGroupOptionResponseDescriptionLocalizationsNullableInnerNullableInner
     { 
     }
     deriving (Show, Eq, Generic)
-data ApplicationCommandSubcommandGroupOptionResponseNameLocalizationsNullableInner = ApplicationCommandSubcommandGroupOptionResponseNameLocalizationsNullableInner
+newtype ApplicationCommandSubcommandGroupOptionResponseNameLocalizationsNullableInner = ApplicationCommandSubcommandGroupOptionResponseNameLocalizationsNullableInner (Maybe ApplicationCommandSubcommandGroupOptionResponseNameLocalizationsNullableInnerNullableInner)
+    deriving (Show, Eq, Generic)
+data ApplicationCommandSubcommandGroupOptionResponseNameLocalizationsNullableInnerNullableInner = ApplicationCommandSubcommandGroupOptionResponseNameLocalizationsNullableInnerNullableInner
     { 
     }
     deriving (Show, Eq, Generic)

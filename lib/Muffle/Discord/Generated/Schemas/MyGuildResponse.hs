@@ -8,8 +8,8 @@ import Muffle.Discord.Generated.Schemas.GuildFeatures
 import Muffle.Discord.Generated.Schemas.SnowflakeType
 
 data MyGuildResponse = MyGuildResponse
-    { approximateMemberCount :: Maybe Int32
-    , approximatePresenceCount :: Maybe Int32
+    { approximateMemberCount :: Maybe (Maybe Int32)
+    , approximatePresenceCount :: Maybe (Maybe Int32)
     , banner :: Maybe String
     , features :: [GuildFeatures]
     , icon :: Maybe String

@@ -7,8 +7,8 @@ import GHC.Generics
 
 
 data BotAccountPatchRequest = BotAccountPatchRequest
-    { avatar :: Maybe String
-    , banner :: Maybe String
+    { avatar :: Maybe (Maybe String)
+    , banner :: Maybe (Maybe String)
     , username :: String
     }
     deriving (Show, Eq, Generic)

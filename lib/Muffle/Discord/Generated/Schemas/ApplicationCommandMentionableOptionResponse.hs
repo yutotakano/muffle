@@ -9,19 +9,23 @@ import Muffle.Discord.Generated.Schemas.ApplicationCommandOptionType
 data ApplicationCommandMentionableOptionResponse = ApplicationCommandMentionableOptionResponse
     { description :: String
     , descriptionLocalizations :: Maybe ApplicationCommandMentionableOptionResponseDescriptionLocalizationsNullableInner
-    , descriptionLocalized :: String
+    , descriptionLocalized :: Maybe String
     , name :: String
     , nameLocalizations :: Maybe ApplicationCommandMentionableOptionResponseNameLocalizationsNullableInner
-    , nameLocalized :: String
-    , required :: Bool
+    , nameLocalized :: Maybe String
+    , required :: Maybe Bool
     , type' :: ApplicationCommandOptionType
     }
     deriving (Show, Eq, Generic)
-data ApplicationCommandMentionableOptionResponseDescriptionLocalizationsNullableInner = ApplicationCommandMentionableOptionResponseDescriptionLocalizationsNullableInner
+newtype ApplicationCommandMentionableOptionResponseDescriptionLocalizationsNullableInner = ApplicationCommandMentionableOptionResponseDescriptionLocalizationsNullableInner (Maybe ApplicationCommandMentionableOptionResponseDescriptionLocalizationsNullableInnerNullableInner)
+    deriving (Show, Eq, Generic)
+data ApplicationCommandMentionableOptionResponseDescriptionLocalizationsNullableInnerNullableInner = ApplicationCommandMentionableOptionResponseDescriptionLocalizationsNullableInnerNullableInner
     { 
     }
     deriving (Show, Eq, Generic)
-data ApplicationCommandMentionableOptionResponseNameLocalizationsNullableInner = ApplicationCommandMentionableOptionResponseNameLocalizationsNullableInner
+newtype ApplicationCommandMentionableOptionResponseNameLocalizationsNullableInner = ApplicationCommandMentionableOptionResponseNameLocalizationsNullableInner (Maybe ApplicationCommandMentionableOptionResponseNameLocalizationsNullableInnerNullableInner)
+    deriving (Show, Eq, Generic)
+data ApplicationCommandMentionableOptionResponseNameLocalizationsNullableInnerNullableInner = ApplicationCommandMentionableOptionResponseNameLocalizationsNullableInnerNullableInner
     { 
     }
     deriving (Show, Eq, Generic)

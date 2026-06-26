@@ -7,8 +7,8 @@ import GHC.Generics
 import Muffle.Discord.Generated.Schemas.UnfurledMediaRequest
 
 data MediaGalleryItemRequest = MediaGalleryItemRequest
-    { description :: Maybe String
+    { description :: Maybe (Maybe String)
     , media :: UnfurledMediaRequest
-    , spoiler :: Maybe Bool
+    , spoiler :: Maybe (Maybe Bool)
     }
     deriving (Show, Eq, Generic)

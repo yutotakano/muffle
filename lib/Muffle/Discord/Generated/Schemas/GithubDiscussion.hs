@@ -7,8 +7,8 @@ import GHC.Generics
 import Muffle.Discord.Generated.Schemas.GithubUser
 
 data GithubDiscussion = GithubDiscussion
-    { answerHtmlUrl :: Maybe String
-    , body :: Maybe String
+    { answerHtmlUrl :: Maybe (Maybe String)
+    , body :: Maybe (Maybe String)
     , htmlUrl :: String
     , number :: Integer
     , title :: String

@@ -7,7 +7,7 @@ import GHC.Generics
 import Muffle.Discord.Generated.Schemas.SnowflakeType
 
 data UpdateRolePositionsRequest = UpdateRolePositionsRequest
-    { id :: Maybe SnowflakeType
-    , position :: Maybe Int32
+    { id :: Maybe (Maybe SnowflakeType)
+    , position :: Maybe (Maybe Int32)
     }
     deriving (Show, Eq, Generic)

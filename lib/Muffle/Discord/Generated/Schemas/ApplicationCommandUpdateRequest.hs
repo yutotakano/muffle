@@ -22,27 +22,33 @@ import Muffle.Discord.Generated.Schemas.ApplicationCommandSubcommandOption
 import Muffle.Discord.Generated.Schemas.ApplicationCommandUserOption
 
 data ApplicationCommandUpdateRequest = ApplicationCommandUpdateRequest
-    { contexts :: [InteractionContextType]
-    , defaultMemberPermissions :: Maybe Integer
-    , description :: Maybe String
+    { contexts :: Maybe [InteractionContextType]
+    , defaultMemberPermissions :: Maybe (Maybe Integer)
+    , description :: Maybe (Maybe String)
     , descriptionLocalizations :: Maybe ApplicationCommandUpdateRequestDescriptionLocalizationsNullableInner
-    , dmPermission :: Maybe Bool
-    , handler :: Maybe ApplicationCommandHandler
-    , id :: Maybe SnowflakeType
-    , integrationTypes :: [ApplicationIntegrationType]
+    , dmPermission :: Maybe (Maybe Bool)
+    , handler :: Maybe (Maybe ApplicationCommandHandler)
+    , id :: Maybe (Maybe SnowflakeType)
+    , integrationTypes :: Maybe [ApplicationIntegrationType]
     , name :: String
     , nameLocalizations :: Maybe ApplicationCommandUpdateRequestNameLocalizationsNullableInner
-    , options :: [ApplicationCommandUpdateRequestOptionsItem]
-    , type' :: Maybe ApplicationCommandType
+    , options :: Maybe ApplicationCommandUpdateRequestOptionsNullableInner
+    , type' :: Maybe (Maybe ApplicationCommandType)
     }
     deriving (Show, Eq, Generic)
-data ApplicationCommandUpdateRequestDescriptionLocalizationsNullableInner = ApplicationCommandUpdateRequestDescriptionLocalizationsNullableInner
+newtype ApplicationCommandUpdateRequestDescriptionLocalizationsNullableInner = ApplicationCommandUpdateRequestDescriptionLocalizationsNullableInner (Maybe ApplicationCommandUpdateRequestDescriptionLocalizationsNullableInnerNullableInner)
+    deriving (Show, Eq, Generic)
+data ApplicationCommandUpdateRequestDescriptionLocalizationsNullableInnerNullableInner = ApplicationCommandUpdateRequestDescriptionLocalizationsNullableInnerNullableInner
     { 
     }
     deriving (Show, Eq, Generic)
-data ApplicationCommandUpdateRequestNameLocalizationsNullableInner = ApplicationCommandUpdateRequestNameLocalizationsNullableInner
+newtype ApplicationCommandUpdateRequestNameLocalizationsNullableInner = ApplicationCommandUpdateRequestNameLocalizationsNullableInner (Maybe ApplicationCommandUpdateRequestNameLocalizationsNullableInnerNullableInner)
+    deriving (Show, Eq, Generic)
+data ApplicationCommandUpdateRequestNameLocalizationsNullableInnerNullableInner = ApplicationCommandUpdateRequestNameLocalizationsNullableInnerNullableInner
     { 
     }
     deriving (Show, Eq, Generic)
-data ApplicationCommandUpdateRequestOptionsItem = ApplicationCommandUpdateRequestOptionsItem0 ApplicationCommandAttachmentOption | ApplicationCommandUpdateRequestOptionsItem1 ApplicationCommandBooleanOption | ApplicationCommandUpdateRequestOptionsItem2 ApplicationCommandChannelOption | ApplicationCommandUpdateRequestOptionsItem3 ApplicationCommandIntegerOption | ApplicationCommandUpdateRequestOptionsItem4 ApplicationCommandMentionableOption | ApplicationCommandUpdateRequestOptionsItem5 ApplicationCommandNumberOption | ApplicationCommandUpdateRequestOptionsItem6 ApplicationCommandRoleOption | ApplicationCommandUpdateRequestOptionsItem7 ApplicationCommandStringOption | ApplicationCommandUpdateRequestOptionsItem8 ApplicationCommandSubcommandGroupOption | ApplicationCommandUpdateRequestOptionsItem9 ApplicationCommandSubcommandOption | ApplicationCommandUpdateRequestOptionsItem10 ApplicationCommandUserOption
+newtype ApplicationCommandUpdateRequestOptionsNullableInner = ApplicationCommandUpdateRequestOptionsNullableInner [ApplicationCommandUpdateRequestOptionsNullableInnerItem]
+    deriving (Show, Eq, Generic)
+data ApplicationCommandUpdateRequestOptionsNullableInnerItem = ApplicationCommandUpdateRequestOptionsNullableInnerItem0 ApplicationCommandAttachmentOption | ApplicationCommandUpdateRequestOptionsNullableInnerItem1 ApplicationCommandBooleanOption | ApplicationCommandUpdateRequestOptionsNullableInnerItem2 ApplicationCommandChannelOption | ApplicationCommandUpdateRequestOptionsNullableInnerItem3 ApplicationCommandIntegerOption | ApplicationCommandUpdateRequestOptionsNullableInnerItem4 ApplicationCommandMentionableOption | ApplicationCommandUpdateRequestOptionsNullableInnerItem5 ApplicationCommandNumberOption | ApplicationCommandUpdateRequestOptionsNullableInnerItem6 ApplicationCommandRoleOption | ApplicationCommandUpdateRequestOptionsNullableInnerItem7 ApplicationCommandStringOption | ApplicationCommandUpdateRequestOptionsNullableInnerItem8 ApplicationCommandSubcommandGroupOption | ApplicationCommandUpdateRequestOptionsNullableInnerItem9 ApplicationCommandSubcommandOption | ApplicationCommandUpdateRequestOptionsNullableInnerItem10 ApplicationCommandUserOption
     deriving (Show, Eq, Generic)

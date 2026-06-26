@@ -8,7 +8,7 @@ import Muffle.Discord.Generated.Schemas.MessageShareCustomUserThemeBaseTheme
 
 data CustomClientThemeShareRequest = CustomClientThemeShareRequest
     { baseMix :: Int32
-    , baseTheme :: Maybe MessageShareCustomUserThemeBaseTheme
+    , baseTheme :: Maybe (Maybe MessageShareCustomUserThemeBaseTheme)
     , colors :: [String]
     , gradientAngle :: Int32
     }

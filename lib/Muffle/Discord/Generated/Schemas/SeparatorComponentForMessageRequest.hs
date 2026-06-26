@@ -8,9 +8,9 @@ import Muffle.Discord.Generated.Schemas.MessageComponentSeparatorSpacingSize
 import Muffle.Discord.Generated.Schemas.MessageComponentTypes
 
 data SeparatorComponentForMessageRequest = SeparatorComponentForMessageRequest
-    { divider :: Maybe Bool
-    , id :: Maybe Int32
-    , spacing :: Maybe MessageComponentSeparatorSpacingSize
+    { divider :: Maybe (Maybe Bool)
+    , id :: Maybe (Maybe Int32)
+    , spacing :: Maybe (Maybe MessageComponentSeparatorSpacingSize)
     , type' :: MessageComponentTypes
     }
     deriving (Show, Eq, Generic)

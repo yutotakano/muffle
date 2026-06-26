@@ -13,19 +13,27 @@ data ResolvedObjectsResponse = ResolvedObjectsResponse
     , users :: Maybe ResolvedObjectsResponseUsersNullableInner
     }
     deriving (Show, Eq, Generic)
-data ResolvedObjectsResponseChannelsNullableInner = ResolvedObjectsResponseChannelsNullableInner
+newtype ResolvedObjectsResponseChannelsNullableInner = ResolvedObjectsResponseChannelsNullableInner (Maybe ResolvedObjectsResponseChannelsNullableInnerNullableInner)
+    deriving (Show, Eq, Generic)
+data ResolvedObjectsResponseChannelsNullableInnerNullableInner = ResolvedObjectsResponseChannelsNullableInnerNullableInner
     { 
     }
     deriving (Show, Eq, Generic)
-data ResolvedObjectsResponseMembersNullableInner = ResolvedObjectsResponseMembersNullableInner
+newtype ResolvedObjectsResponseMembersNullableInner = ResolvedObjectsResponseMembersNullableInner (Maybe ResolvedObjectsResponseMembersNullableInnerNullableInner)
+    deriving (Show, Eq, Generic)
+data ResolvedObjectsResponseMembersNullableInnerNullableInner = ResolvedObjectsResponseMembersNullableInnerNullableInner
     { 
     }
     deriving (Show, Eq, Generic)
-data ResolvedObjectsResponseRolesNullableInner = ResolvedObjectsResponseRolesNullableInner
+newtype ResolvedObjectsResponseRolesNullableInner = ResolvedObjectsResponseRolesNullableInner (Maybe ResolvedObjectsResponseRolesNullableInnerNullableInner)
+    deriving (Show, Eq, Generic)
+data ResolvedObjectsResponseRolesNullableInnerNullableInner = ResolvedObjectsResponseRolesNullableInnerNullableInner
     { 
     }
     deriving (Show, Eq, Generic)
-data ResolvedObjectsResponseUsersNullableInner = ResolvedObjectsResponseUsersNullableInner
+newtype ResolvedObjectsResponseUsersNullableInner = ResolvedObjectsResponseUsersNullableInner (Maybe ResolvedObjectsResponseUsersNullableInnerNullableInner)
+    deriving (Show, Eq, Generic)
+data ResolvedObjectsResponseUsersNullableInnerNullableInner = ResolvedObjectsResponseUsersNullableInnerNullableInner
     { 
     }
     deriving (Show, Eq, Generic)

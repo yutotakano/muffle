@@ -290,7 +290,7 @@ flattenSchema name (ObjectSchema (ParsedSchemaObject properties required)) acc =
                         -- Special case for object keys with only type: null
                         -- subschema, this should be treated as
                         -- Nullable (RawType "null") instead of just RawType "null".
-                        processedPropSchema = if isRawTypeNullSchema propSchema then NullableSchema propSchema else propSchema
+                        processedPropSchema = if isRawTypeNullSchema propSchema || propName `notElem` required then NullableSchema propSchema else propSchema
 
                         accWithFlattenedProp = flattenSchema newPropName processedPropSchema accAcc
                         -- Simulate insertion to get de-duplicated name
@@ -543,7 +543,7 @@ isFlatishSchema EmptySchema = True
 schemaToSimpleHaskellType :: ParsedSchema -> Maybe String
 schemaToSimpleHaskellType (RefSchema (ParsedSchemaRef ref)) = Just ref
 schemaToSimpleHaskellType (NullableSchema innerSchema) = case schemaToSimpleHaskellType innerSchema of
-    Just t -> Just $ "Maybe " ++ t
+    Just t -> Just $ if ' ' `elem` t then "Maybe (" ++ t ++ ")" else "Maybe " ++ t
     Nothing -> Nothing
 schemaToSimpleHaskellType (ConstSchema (ParsedSchemaConstant _constValue)) = Just $ newValidConstructorName _constValue
 schemaToSimpleHaskellType (RawTypeSchema (ParsedSchemaRawType rawType)) = case rawType of

@@ -9,19 +9,23 @@ import Muffle.Discord.Generated.Schemas.ApplicationCommandOptionType
 data ApplicationCommandBooleanOptionResponse = ApplicationCommandBooleanOptionResponse
     { description :: String
     , descriptionLocalizations :: Maybe ApplicationCommandBooleanOptionResponseDescriptionLocalizationsNullableInner
-    , descriptionLocalized :: String
+    , descriptionLocalized :: Maybe String
     , name :: String
     , nameLocalizations :: Maybe ApplicationCommandBooleanOptionResponseNameLocalizationsNullableInner
-    , nameLocalized :: String
-    , required :: Bool
+    , nameLocalized :: Maybe String
+    , required :: Maybe Bool
     , type' :: ApplicationCommandOptionType
     }
     deriving (Show, Eq, Generic)
-data ApplicationCommandBooleanOptionResponseDescriptionLocalizationsNullableInner = ApplicationCommandBooleanOptionResponseDescriptionLocalizationsNullableInner
+newtype ApplicationCommandBooleanOptionResponseDescriptionLocalizationsNullableInner = ApplicationCommandBooleanOptionResponseDescriptionLocalizationsNullableInner (Maybe ApplicationCommandBooleanOptionResponseDescriptionLocalizationsNullableInnerNullableInner)
+    deriving (Show, Eq, Generic)
+data ApplicationCommandBooleanOptionResponseDescriptionLocalizationsNullableInnerNullableInner = ApplicationCommandBooleanOptionResponseDescriptionLocalizationsNullableInnerNullableInner
     { 
     }
     deriving (Show, Eq, Generic)
-data ApplicationCommandBooleanOptionResponseNameLocalizationsNullableInner = ApplicationCommandBooleanOptionResponseNameLocalizationsNullableInner
+newtype ApplicationCommandBooleanOptionResponseNameLocalizationsNullableInner = ApplicationCommandBooleanOptionResponseNameLocalizationsNullableInner (Maybe ApplicationCommandBooleanOptionResponseNameLocalizationsNullableInnerNullableInner)
+    deriving (Show, Eq, Generic)
+data ApplicationCommandBooleanOptionResponseNameLocalizationsNullableInnerNullableInner = ApplicationCommandBooleanOptionResponseNameLocalizationsNullableInnerNullableInner
     { 
     }
     deriving (Show, Eq, Generic)

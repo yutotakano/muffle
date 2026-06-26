@@ -14,15 +14,17 @@ import Muffle.Discord.Generated.Schemas.QuarantineUserAction
 import Muffle.Discord.Generated.Schemas.UserCommunicationDisabledAction
 
 data MentionSpamUpsertRequestPartial = MentionSpamUpsertRequestPartial
-    { actions :: [MentionSpamUpsertRequestPartialActionsItem]
-    , enabled :: Maybe Bool
-    , eventType :: AutomodEventType
-    , exemptChannels :: [SnowflakeType]
-    , exemptRoles :: [SnowflakeType]
-    , name :: String
-    , triggerMetadata :: Maybe MentionSpamTriggerMetadata
-    , triggerType :: AutomodTriggerType
+    { actions :: Maybe MentionSpamUpsertRequestPartialActionsNullableInner
+    , enabled :: Maybe (Maybe Bool)
+    , eventType :: Maybe AutomodEventType
+    , exemptChannels :: Maybe [SnowflakeType]
+    , exemptRoles :: Maybe [SnowflakeType]
+    , name :: Maybe String
+    , triggerMetadata :: Maybe (Maybe MentionSpamTriggerMetadata)
+    , triggerType :: Maybe AutomodTriggerType
     }
     deriving (Show, Eq, Generic)
-data MentionSpamUpsertRequestPartialActionsItem = MentionSpamUpsertRequestPartialActionsItem0 BlockMessageAction | MentionSpamUpsertRequestPartialActionsItem1 FlagToChannelAction | MentionSpamUpsertRequestPartialActionsItem2 QuarantineUserAction | MentionSpamUpsertRequestPartialActionsItem3 UserCommunicationDisabledAction
+newtype MentionSpamUpsertRequestPartialActionsNullableInner = MentionSpamUpsertRequestPartialActionsNullableInner [MentionSpamUpsertRequestPartialActionsNullableInnerItem]
+    deriving (Show, Eq, Generic)
+data MentionSpamUpsertRequestPartialActionsNullableInnerItem = MentionSpamUpsertRequestPartialActionsNullableInnerItem0 BlockMessageAction | MentionSpamUpsertRequestPartialActionsNullableInnerItem1 FlagToChannelAction | MentionSpamUpsertRequestPartialActionsNullableInnerItem2 QuarantineUserAction | MentionSpamUpsertRequestPartialActionsNullableInnerItem3 UserCommunicationDisabledAction
     deriving (Show, Eq, Generic)

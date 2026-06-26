@@ -12,7 +12,9 @@ data ApplicationCommandOptionNumberChoice = ApplicationCommandOptionNumberChoice
     , value :: Integer
     }
     deriving (Show, Eq, Generic)
-data ApplicationCommandOptionNumberChoiceNameLocalizationsNullableInner = ApplicationCommandOptionNumberChoiceNameLocalizationsNullableInner
+newtype ApplicationCommandOptionNumberChoiceNameLocalizationsNullableInner = ApplicationCommandOptionNumberChoiceNameLocalizationsNullableInner (Maybe ApplicationCommandOptionNumberChoiceNameLocalizationsNullableInnerNullableInner)
+    deriving (Show, Eq, Generic)
+data ApplicationCommandOptionNumberChoiceNameLocalizationsNullableInnerNullableInner = ApplicationCommandOptionNumberChoiceNameLocalizationsNullableInnerNullableInner
     { 
     }
     deriving (Show, Eq, Generic)

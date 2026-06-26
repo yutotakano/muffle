@@ -13,24 +13,24 @@ import Muffle.Discord.Generated.Schemas.PremiumTypes
 import Muffle.Discord.Generated.Schemas.UserPrimaryGuildResponse
 
 data UserPIIResponse = UserPIIResponse
-    { accentColor :: Maybe Int32
+    { accentColor :: Maybe (Maybe Int32)
     , avatar :: Maybe String
-    , avatarDecorationData :: Maybe UserAvatarDecorationResponse
-    , banner :: Maybe String
-    , bot :: Bool
-    , collectibles :: Maybe UserCollectiblesResponse
+    , avatarDecorationData :: Maybe (Maybe UserAvatarDecorationResponse)
+    , banner :: Maybe (Maybe String)
+    , bot :: Maybe Bool
+    , collectibles :: Maybe (Maybe UserCollectiblesResponse)
     , discriminator :: String
-    , email :: Maybe String
+    , email :: Maybe (Maybe String)
     , flags :: Int53Type
     , globalName :: Maybe String
     , id :: SnowflakeType
     , locale :: AvailableLocalesEnum
     , mfaEnabled :: Bool
-    , premiumType :: PremiumTypes
-    , primaryGuild :: Maybe UserPrimaryGuildResponse
+    , premiumType :: Maybe PremiumTypes
+    , primaryGuild :: Maybe (Maybe UserPrimaryGuildResponse)
     , publicFlags :: Int32
-    , system :: Bool
+    , system :: Maybe Bool
     , username :: String
-    , verified :: Bool
+    , verified :: Maybe Bool
     }
     deriving (Show, Eq, Generic)

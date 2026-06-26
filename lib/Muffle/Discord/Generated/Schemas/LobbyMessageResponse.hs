@@ -9,23 +9,23 @@ import Muffle.Discord.Generated.Schemas.UserResponse
 import Muffle.Discord.Generated.Schemas.MessageType
 
 data LobbyMessageResponse = LobbyMessageResponse
-    { applicationId :: SnowflakeType
+    { applicationId :: Maybe SnowflakeType
     , author :: UserResponse
     , channelId :: SnowflakeType
     , content :: String
     , flags :: Int32
     , id :: SnowflakeType
     , lobbyId :: SnowflakeType
-    , metadata :: LobbyMessageResponseMetadata
-    , moderationMetadata :: LobbyMessageResponseModerationMetadata
+    , metadata :: Maybe LobbyMessageResponseMetadataNullableInner
+    , moderationMetadata :: Maybe LobbyMessageResponseModerationMetadataNullableInner
     , type' :: MessageType
     }
     deriving (Show, Eq, Generic)
-data LobbyMessageResponseMetadata = LobbyMessageResponseMetadata
+data LobbyMessageResponseMetadataNullableInner = LobbyMessageResponseMetadataNullableInner
     { 
     }
     deriving (Show, Eq, Generic)
-data LobbyMessageResponseModerationMetadata = LobbyMessageResponseModerationMetadata
+data LobbyMessageResponseModerationMetadataNullableInner = LobbyMessageResponseModerationMetadataNullableInner
     { 
     }
     deriving (Show, Eq, Generic)

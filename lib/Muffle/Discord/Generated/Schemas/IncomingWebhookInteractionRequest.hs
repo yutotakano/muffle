@@ -17,15 +17,17 @@ import Muffle.Discord.Generated.Schemas.SeparatorComponentForMessageRequest
 import Muffle.Discord.Generated.Schemas.TextDisplayComponentForMessageRequest
 
 data IncomingWebhookInteractionRequest = IncomingWebhookInteractionRequest
-    { allowedMentions :: Maybe MessageAllowedMentionsRequest
-    , attachments :: [MessageAttachmentRequest]
-    , components :: [IncomingWebhookInteractionRequestComponentsItem]
-    , content :: Maybe String
-    , embeds :: [RichEmbed]
-    , flags :: Maybe Integer
-    , poll :: Maybe PollCreateRequest
-    , tts :: Maybe Bool
+    { allowedMentions :: Maybe (Maybe MessageAllowedMentionsRequest)
+    , attachments :: Maybe [MessageAttachmentRequest]
+    , components :: Maybe IncomingWebhookInteractionRequestComponentsNullableInner
+    , content :: Maybe (Maybe String)
+    , embeds :: Maybe [RichEmbed]
+    , flags :: Maybe (Maybe Integer)
+    , poll :: Maybe (Maybe PollCreateRequest)
+    , tts :: Maybe (Maybe Bool)
     }
     deriving (Show, Eq, Generic)
-data IncomingWebhookInteractionRequestComponentsItem = IncomingWebhookInteractionRequestComponentsItem0 ActionRowComponentForMessageRequest | IncomingWebhookInteractionRequestComponentsItem1 ContainerComponentForMessageRequest | IncomingWebhookInteractionRequestComponentsItem2 FileComponentForMessageRequest | IncomingWebhookInteractionRequestComponentsItem3 MediaGalleryComponentForMessageRequest | IncomingWebhookInteractionRequestComponentsItem4 SectionComponentForMessageRequest | IncomingWebhookInteractionRequestComponentsItem5 SeparatorComponentForMessageRequest | IncomingWebhookInteractionRequestComponentsItem6 TextDisplayComponentForMessageRequest
+newtype IncomingWebhookInteractionRequestComponentsNullableInner = IncomingWebhookInteractionRequestComponentsNullableInner [IncomingWebhookInteractionRequestComponentsNullableInnerItem]
+    deriving (Show, Eq, Generic)
+data IncomingWebhookInteractionRequestComponentsNullableInnerItem = IncomingWebhookInteractionRequestComponentsNullableInnerItem0 ActionRowComponentForMessageRequest | IncomingWebhookInteractionRequestComponentsNullableInnerItem1 ContainerComponentForMessageRequest | IncomingWebhookInteractionRequestComponentsNullableInnerItem2 FileComponentForMessageRequest | IncomingWebhookInteractionRequestComponentsNullableInnerItem3 MediaGalleryComponentForMessageRequest | IncomingWebhookInteractionRequestComponentsNullableInnerItem4 SectionComponentForMessageRequest | IncomingWebhookInteractionRequestComponentsNullableInnerItem5 SeparatorComponentForMessageRequest | IncomingWebhookInteractionRequestComponentsNullableInnerItem6 TextDisplayComponentForMessageRequest
     deriving (Show, Eq, Generic)

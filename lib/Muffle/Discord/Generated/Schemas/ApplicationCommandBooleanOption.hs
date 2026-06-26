@@ -11,15 +11,19 @@ data ApplicationCommandBooleanOption = ApplicationCommandBooleanOption
     , descriptionLocalizations :: Maybe ApplicationCommandBooleanOptionDescriptionLocalizationsNullableInner
     , name :: String
     , nameLocalizations :: Maybe ApplicationCommandBooleanOptionNameLocalizationsNullableInner
-    , required :: Maybe Bool
+    , required :: Maybe (Maybe Bool)
     , type' :: ApplicationCommandOptionType
     }
     deriving (Show, Eq, Generic)
-data ApplicationCommandBooleanOptionDescriptionLocalizationsNullableInner = ApplicationCommandBooleanOptionDescriptionLocalizationsNullableInner
+newtype ApplicationCommandBooleanOptionDescriptionLocalizationsNullableInner = ApplicationCommandBooleanOptionDescriptionLocalizationsNullableInner (Maybe ApplicationCommandBooleanOptionDescriptionLocalizationsNullableInnerNullableInner)
+    deriving (Show, Eq, Generic)
+data ApplicationCommandBooleanOptionDescriptionLocalizationsNullableInnerNullableInner = ApplicationCommandBooleanOptionDescriptionLocalizationsNullableInnerNullableInner
     { 
     }
     deriving (Show, Eq, Generic)
-data ApplicationCommandBooleanOptionNameLocalizationsNullableInner = ApplicationCommandBooleanOptionNameLocalizationsNullableInner
+newtype ApplicationCommandBooleanOptionNameLocalizationsNullableInner = ApplicationCommandBooleanOptionNameLocalizationsNullableInner (Maybe ApplicationCommandBooleanOptionNameLocalizationsNullableInnerNullableInner)
+    deriving (Show, Eq, Generic)
+data ApplicationCommandBooleanOptionNameLocalizationsNullableInnerNullableInner = ApplicationCommandBooleanOptionNameLocalizationsNullableInnerNullableInner
     { 
     }
     deriving (Show, Eq, Generic)

@@ -14,15 +14,17 @@ import Muffle.Discord.Generated.Schemas.QuarantineUserAction
 import Muffle.Discord.Generated.Schemas.UserCommunicationDisabledAction
 
 data DefaultKeywordListUpsertRequest = DefaultKeywordListUpsertRequest
-    { actions :: [DefaultKeywordListUpsertRequestActionsItem]
-    , enabled :: Maybe Bool
+    { actions :: Maybe DefaultKeywordListUpsertRequestActionsNullableInner
+    , enabled :: Maybe (Maybe Bool)
     , eventType :: AutomodEventType
-    , exemptChannels :: [SnowflakeType]
-    , exemptRoles :: [SnowflakeType]
+    , exemptChannels :: Maybe [SnowflakeType]
+    , exemptRoles :: Maybe [SnowflakeType]
     , name :: String
     , triggerMetadata :: DefaultKeywordListTriggerMetadata
     , triggerType :: AutomodTriggerType
     }
     deriving (Show, Eq, Generic)
-data DefaultKeywordListUpsertRequestActionsItem = DefaultKeywordListUpsertRequestActionsItem0 BlockMessageAction | DefaultKeywordListUpsertRequestActionsItem1 FlagToChannelAction | DefaultKeywordListUpsertRequestActionsItem2 QuarantineUserAction | DefaultKeywordListUpsertRequestActionsItem3 UserCommunicationDisabledAction
+newtype DefaultKeywordListUpsertRequestActionsNullableInner = DefaultKeywordListUpsertRequestActionsNullableInner [DefaultKeywordListUpsertRequestActionsNullableInnerItem]
+    deriving (Show, Eq, Generic)
+data DefaultKeywordListUpsertRequestActionsNullableInnerItem = DefaultKeywordListUpsertRequestActionsNullableInnerItem0 BlockMessageAction | DefaultKeywordListUpsertRequestActionsNullableInnerItem1 FlagToChannelAction | DefaultKeywordListUpsertRequestActionsNullableInnerItem2 QuarantineUserAction | DefaultKeywordListUpsertRequestActionsNullableInnerItem3 UserCommunicationDisabledAction
     deriving (Show, Eq, Generic)

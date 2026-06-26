@@ -15,11 +15,15 @@ data ApplicationRoleConnectionsMetadataItemRequest = ApplicationRoleConnectionsM
     , type' :: MetadataItemTypes
     }
     deriving (Show, Eq, Generic)
-data ApplicationRoleConnectionsMetadataItemRequestDescriptionLocalizationsNullableInner = ApplicationRoleConnectionsMetadataItemRequestDescriptionLocalizationsNullableInner
+newtype ApplicationRoleConnectionsMetadataItemRequestDescriptionLocalizationsNullableInner = ApplicationRoleConnectionsMetadataItemRequestDescriptionLocalizationsNullableInner (Maybe ApplicationRoleConnectionsMetadataItemRequestDescriptionLocalizationsNullableInnerNullableInner)
+    deriving (Show, Eq, Generic)
+data ApplicationRoleConnectionsMetadataItemRequestDescriptionLocalizationsNullableInnerNullableInner = ApplicationRoleConnectionsMetadataItemRequestDescriptionLocalizationsNullableInnerNullableInner
     { 
     }
     deriving (Show, Eq, Generic)
-data ApplicationRoleConnectionsMetadataItemRequestNameLocalizationsNullableInner = ApplicationRoleConnectionsMetadataItemRequestNameLocalizationsNullableInner
+newtype ApplicationRoleConnectionsMetadataItemRequestNameLocalizationsNullableInner = ApplicationRoleConnectionsMetadataItemRequestNameLocalizationsNullableInner (Maybe ApplicationRoleConnectionsMetadataItemRequestNameLocalizationsNullableInnerNullableInner)
+    deriving (Show, Eq, Generic)
+data ApplicationRoleConnectionsMetadataItemRequestNameLocalizationsNullableInnerNullableInner = ApplicationRoleConnectionsMetadataItemRequestNameLocalizationsNullableInnerNullableInner
     { 
     }
     deriving (Show, Eq, Generic)

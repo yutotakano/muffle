@@ -16,24 +16,24 @@ import Muffle.Discord.Generated.Schemas.ChannelTypes
 import Muffle.Discord.Generated.Schemas.VideoQualityModes
 
 data CreateGuildChannelRequest = CreateGuildChannelRequest
-    { availableTags :: [Maybe CreateOrUpdateThreadTagRequest]
-    , bitrate :: Maybe Int32
-    , defaultAutoArchiveDuration :: Maybe ThreadAutoArchiveDuration
-    , defaultForumLayout :: Maybe ForumLayout
-    , defaultReactionEmoji :: Maybe UpdateDefaultReactionEmojiRequest
-    , defaultSortOrder :: Maybe ThreadSortOrder
-    , defaultTagSetting :: Maybe ThreadSearchTagSetting
-    , defaultThreadRateLimitPerUser :: Maybe Integer
+    { availableTags :: Maybe ([Maybe CreateOrUpdateThreadTagRequest])
+    , bitrate :: Maybe (Maybe Int32)
+    , defaultAutoArchiveDuration :: Maybe (Maybe ThreadAutoArchiveDuration)
+    , defaultForumLayout :: Maybe (Maybe ForumLayout)
+    , defaultReactionEmoji :: Maybe (Maybe UpdateDefaultReactionEmojiRequest)
+    , defaultSortOrder :: Maybe (Maybe ThreadSortOrder)
+    , defaultTagSetting :: Maybe (Maybe ThreadSearchTagSetting)
+    , defaultThreadRateLimitPerUser :: Maybe (Maybe Integer)
     , name :: String
-    , nsfw :: Maybe Bool
-    , parentId :: Maybe SnowflakeType
-    , permissionOverwrites :: [ChannelPermissionOverwriteRequest]
-    , position :: Maybe Int32
-    , rateLimitPerUser :: Maybe Integer
-    , rtcRegion :: Maybe String
-    , topic :: Maybe String
-    , type' :: Maybe ChannelTypes
-    , userLimit :: Maybe Int32
-    , videoQualityMode :: Maybe VideoQualityModes
+    , nsfw :: Maybe (Maybe Bool)
+    , parentId :: Maybe (Maybe SnowflakeType)
+    , permissionOverwrites :: Maybe [ChannelPermissionOverwriteRequest]
+    , position :: Maybe (Maybe Int32)
+    , rateLimitPerUser :: Maybe (Maybe Integer)
+    , rtcRegion :: Maybe (Maybe String)
+    , topic :: Maybe (Maybe String)
+    , type' :: Maybe (Maybe ChannelTypes)
+    , userLimit :: Maybe (Maybe Int32)
+    , videoQualityMode :: Maybe (Maybe VideoQualityModes)
     }
     deriving (Show, Eq, Generic)

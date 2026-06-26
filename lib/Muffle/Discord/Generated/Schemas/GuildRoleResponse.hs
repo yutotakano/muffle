@@ -20,7 +20,7 @@ data GuildRoleResponse = GuildRoleResponse
     , name :: String
     , permissions :: String
     , position :: Int32
-    , tags :: GuildRoleTagsResponse
+    , tags :: Maybe GuildRoleTagsResponse
     , unicodeEmoji :: Maybe String
     }
     deriving (Show, Eq, Generic)

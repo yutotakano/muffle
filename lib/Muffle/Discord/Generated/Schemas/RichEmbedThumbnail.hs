@@ -7,12 +7,12 @@ import GHC.Generics
 
 
 data RichEmbedThumbnail = RichEmbedThumbnail
-    { description :: Maybe String
-    , height :: Maybe Integer
-    , isAnimated :: Maybe Bool
-    , placeholder :: Maybe String
-    , placeholderVersion :: Maybe Integer
-    , url :: Maybe String
-    , width :: Maybe Integer
+    { description :: Maybe (Maybe String)
+    , height :: Maybe (Maybe Integer)
+    , isAnimated :: Maybe (Maybe Bool)
+    , placeholder :: Maybe (Maybe String)
+    , placeholderVersion :: Maybe (Maybe Integer)
+    , url :: Maybe (Maybe String)
+    , width :: Maybe (Maybe Integer)
     }
     deriving (Show, Eq, Generic)

@@ -7,7 +7,7 @@ import GHC.Generics
 import Muffle.Discord.Generated.Schemas.AutomodKeywordPresetType
 
 data DefaultKeywordListTriggerMetadata = DefaultKeywordListTriggerMetadata
-    { allowList :: [String]
-    , presets :: [AutomodKeywordPresetType]
+    { allowList :: Maybe [String]
+    , presets :: Maybe [AutomodKeywordPresetType]
     }
     deriving (Show, Eq, Generic)

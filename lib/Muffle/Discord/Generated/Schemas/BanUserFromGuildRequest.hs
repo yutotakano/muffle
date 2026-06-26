@@ -7,7 +7,7 @@ import GHC.Generics
 
 
 data BanUserFromGuildRequest = BanUserFromGuildRequest
-    { deleteMessageDays :: Maybe Integer
-    , deleteMessageSeconds :: Maybe Integer
+    { deleteMessageDays :: Maybe (Maybe Integer)
+    , deleteMessageSeconds :: Maybe (Maybe Integer)
     }
     deriving (Show, Eq, Generic)

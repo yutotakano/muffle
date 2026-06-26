@@ -7,14 +7,14 @@ import GHC.Generics
 import Muffle.Discord.Generated.Schemas.GithubUser
 
 data GithubIssue = GithubIssue
-    { body :: Maybe String
+    { body :: Maybe (Maybe String)
     , htmlUrl :: String
     , id :: Integer
     , number :: Integer
-    , pullRequest :: GithubIssuePullRequest
+    , pullRequest :: Maybe GithubIssuePullRequestNullableInner
     , title :: String
     , user :: GithubUser
     }
     deriving (Show, Eq, Generic)
-data GithubIssuePullRequest = GithubIssuePullRequest
+data GithubIssuePullRequestNullableInner = GithubIssuePullRequestNullableInner
     deriving (Show, Eq, Generic)

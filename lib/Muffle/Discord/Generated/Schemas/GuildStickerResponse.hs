@@ -18,6 +18,6 @@ data GuildStickerResponse = GuildStickerResponse
     , name :: String
     , tags :: String
     , type' :: StickerTypes
-    , user :: UserResponse
+    , user :: Maybe UserResponse
     }
     deriving (Show, Eq, Generic)

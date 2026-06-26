@@ -11,9 +11,9 @@ import Muffle.Discord.Generated.Schemas.UserResponse
 
 data PrivateGuildMemberResponse = PrivateGuildMemberResponse
     { avatar :: Maybe String
-    , avatarDecorationData :: Maybe UserAvatarDecorationResponse
+    , avatarDecorationData :: Maybe (Maybe UserAvatarDecorationResponse)
     , banner :: Maybe String
-    , collectibles :: Maybe UserCollectiblesResponse
+    , collectibles :: Maybe (Maybe UserCollectiblesResponse)
     , communicationDisabledUntil :: Maybe String
     , deaf :: Bool
     , flags :: Int32
@@ -21,7 +21,7 @@ data PrivateGuildMemberResponse = PrivateGuildMemberResponse
     , mute :: Bool
     , nick :: Maybe String
     , pending :: Bool
-    , permissions :: String
+    , permissions :: Maybe String
     , premiumSince :: Maybe String
     , roles :: [SnowflakeType]
     , user :: UserResponse

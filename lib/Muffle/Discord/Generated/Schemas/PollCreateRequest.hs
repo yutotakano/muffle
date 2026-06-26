@@ -9,10 +9,10 @@ import Muffle.Discord.Generated.Schemas.PollLayoutTypes
 import Muffle.Discord.Generated.Schemas.PollMedia
 
 data PollCreateRequest = PollCreateRequest
-    { allowMultiselect :: Maybe Bool
+    { allowMultiselect :: Maybe (Maybe Bool)
     , answers :: [PollAnswerCreateRequest]
-    , duration :: Maybe Int32
-    , layoutType :: Maybe PollLayoutTypes
+    , duration :: Maybe (Maybe Int32)
+    , layoutType :: Maybe (Maybe PollLayoutTypes)
     , question :: PollMedia
     }
     deriving (Show, Eq, Generic)

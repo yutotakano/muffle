@@ -9,7 +9,7 @@ import Muffle.Discord.Generated.Schemas.MessageComponentTypes
 
 data ActionRowComponentForModalRequest = ActionRowComponentForModalRequest
     { components :: [TextInputComponentForModalRequest]
-    , id :: Maybe Int32
+    , id :: Maybe (Maybe Int32)
     , type' :: MessageComponentTypes
     }
     deriving (Show, Eq, Generic)

@@ -17,41 +17,41 @@ data PrivateApplicationResponse = PrivateApplicationResponse
     { approximateGuildCount :: Int32
     , approximateUserAuthorizationCount :: Int32
     , approximateUserInstallCount :: Int32
-    , bot :: UserResponse
-    , botPublic :: Bool
-    , botRequireCodeGrant :: Bool
-    , coverImage :: String
-    , customInstallUrl :: String
+    , bot :: Maybe UserResponse
+    , botPublic :: Maybe Bool
+    , botRequireCodeGrant :: Maybe Bool
+    , coverImage :: Maybe String
+    , customInstallUrl :: Maybe String
     , description :: String
-    , eventWebhooksStatus :: ApplicationEventWebhooksStatus
-    , eventWebhooksTypes :: [ActionTypes]
-    , eventWebhooksUrl :: Maybe String
+    , eventWebhooksStatus :: Maybe ApplicationEventWebhooksStatus
+    , eventWebhooksTypes :: Maybe [ActionTypes]
+    , eventWebhooksUrl :: Maybe (Maybe String)
     , explicitContentFilter :: ApplicationExplicitContentFilterTypes
     , flags :: Int32
     , flagsNew :: String
-    , guildId :: SnowflakeType
+    , guildId :: Maybe SnowflakeType
     , icon :: Maybe String
     , id :: SnowflakeType
-    , installParams :: ApplicationOAuth2InstallParamsResponse
-    , integrationTypesConfig :: PrivateApplicationResponseIntegrationTypesConfig
+    , installParams :: Maybe ApplicationOAuth2InstallParamsResponse
+    , integrationTypesConfig :: Maybe PrivateApplicationResponseIntegrationTypesConfigNullableInner
     , interactionsEndpointUrl :: Maybe String
-    , maxParticipants :: Maybe Int32
+    , maxParticipants :: Maybe (Maybe Int32)
     , name :: String
     , owner :: UserResponse
-    , primarySkuId :: SnowflakeType
-    , privacyPolicyUrl :: String
+    , primarySkuId :: Maybe SnowflakeType
+    , privacyPolicyUrl :: Maybe String
     , redirectUris :: [String]
     , roleConnectionsVerificationUrl :: Maybe String
-    , rpcOrigins :: [String]
-    , slug :: String
-    , tags :: [String]
+    , rpcOrigins :: Maybe [String]
+    , slug :: Maybe String
+    , tags :: Maybe [String]
     , team :: Maybe TeamResponse
-    , termsOfServiceUrl :: String
+    , termsOfServiceUrl :: Maybe String
     , type' :: Maybe ApplicationTypes
     , verifyKey :: String
     }
     deriving (Show, Eq, Generic)
-data PrivateApplicationResponseIntegrationTypesConfig = PrivateApplicationResponseIntegrationTypesConfig
+data PrivateApplicationResponseIntegrationTypesConfigNullableInner = PrivateApplicationResponseIntegrationTypesConfigNullableInner
     { 
     }
     deriving (Show, Eq, Generic)

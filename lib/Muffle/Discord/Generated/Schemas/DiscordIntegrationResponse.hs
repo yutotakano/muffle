@@ -19,6 +19,6 @@ data DiscordIntegrationResponse = DiscordIntegrationResponse
     , name :: Maybe String
     , scopes :: [OAuth2Scopes]
     , type' :: IntegrationTypes
-    , user :: UserResponse
+    , user :: Maybe UserResponse
     }
     deriving (Show, Eq, Generic)

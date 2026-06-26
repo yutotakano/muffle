@@ -7,8 +7,8 @@ import GHC.Generics
 import Muffle.Discord.Generated.Schemas.SnowflakeType
 
 data UpdateSelfVoiceStateRequestPartial = UpdateSelfVoiceStateRequestPartial
-    { channelId :: Maybe SnowflakeType
-    , requestToSpeakTimestamp :: Maybe String
-    , suppress :: Maybe Bool
+    { channelId :: Maybe (Maybe SnowflakeType)
+    , requestToSpeakTimestamp :: Maybe (Maybe String)
+    , suppress :: Maybe (Maybe Bool)
     }
     deriving (Show, Eq, Generic)

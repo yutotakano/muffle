@@ -15,6 +15,6 @@ data EmojiResponse = EmojiResponse
     , name :: String
     , requireColons :: Bool
     , roles :: [SnowflakeType]
-    , user :: UserResponse
+    , user :: Maybe UserResponse
     }
     deriving (Show, Eq, Generic)

@@ -7,7 +7,7 @@ import GHC.Generics
 
 
 data GuildIncidentActionsRequest = GuildIncidentActionsRequest
-    { dmsDisabledUntil :: Maybe String
-    , invitesDisabledUntil :: Maybe String
+    { dmsDisabledUntil :: Maybe (Maybe String)
+    , invitesDisabledUntil :: Maybe (Maybe String)
     }
     deriving (Show, Eq, Generic)

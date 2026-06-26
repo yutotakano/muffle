@@ -9,10 +9,10 @@ import Muffle.Discord.Generated.Schemas.ThreadAutoArchiveDuration
 import Muffle.Discord.Generated.Schemas.BaseCreateMessageCreateRequest
 
 data CreateForumThreadRequest = CreateForumThreadRequest
-    { appliedTags :: [SnowflakeType]
-    , autoArchiveDuration :: Maybe ThreadAutoArchiveDuration
+    { appliedTags :: Maybe [SnowflakeType]
+    , autoArchiveDuration :: Maybe (Maybe ThreadAutoArchiveDuration)
     , message :: BaseCreateMessageCreateRequest
     , name :: String
-    , rateLimitPerUser :: Maybe Integer
+    , rateLimitPerUser :: Maybe (Maybe Integer)
     }
     deriving (Show, Eq, Generic)

@@ -9,13 +9,13 @@ import Muffle.Discord.Generated.Schemas.UserResponse
 import Muffle.Discord.Generated.Schemas.ChannelTypes
 
 data PrivateGroupChannelResponse = PrivateGroupChannelResponse
-    { applicationId :: SnowflakeType
+    { applicationId :: Maybe SnowflakeType
     , flags :: Int32
     , icon :: Maybe String
     , id :: SnowflakeType
-    , lastMessageId :: Maybe SnowflakeType
-    , lastPinTimestamp :: Maybe String
-    , managed :: Bool
+    , lastMessageId :: Maybe (Maybe SnowflakeType)
+    , lastPinTimestamp :: Maybe (Maybe String)
+    , managed :: Maybe Bool
     , name :: Maybe String
     , ownerId :: SnowflakeType
     , recipients :: [UserResponse]

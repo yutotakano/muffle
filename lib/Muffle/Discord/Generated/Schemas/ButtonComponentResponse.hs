@@ -10,14 +10,14 @@ import Muffle.Discord.Generated.Schemas.ButtonStyleTypes
 import Muffle.Discord.Generated.Schemas.MessageComponentTypes
 
 data ButtonComponentResponse = ButtonComponentResponse
-    { customId :: String
-    , disabled :: Bool
-    , emoji :: ComponentEmojiResponse
+    { customId :: Maybe String
+    , disabled :: Maybe Bool
+    , emoji :: Maybe ComponentEmojiResponse
     , id :: Int32
-    , label :: String
-    , skuId :: SnowflakeType
+    , label :: Maybe String
+    , skuId :: Maybe SnowflakeType
     , style :: ButtonStyleTypes
     , type' :: MessageComponentTypes
-    , url :: Maybe String
+    , url :: Maybe (Maybe String)
     }
     deriving (Show, Eq, Generic)

@@ -11,15 +11,19 @@ data ApplicationCommandAttachmentOption = ApplicationCommandAttachmentOption
     , descriptionLocalizations :: Maybe ApplicationCommandAttachmentOptionDescriptionLocalizationsNullableInner
     , name :: String
     , nameLocalizations :: Maybe ApplicationCommandAttachmentOptionNameLocalizationsNullableInner
-    , required :: Maybe Bool
+    , required :: Maybe (Maybe Bool)
     , type' :: ApplicationCommandOptionType
     }
     deriving (Show, Eq, Generic)
-data ApplicationCommandAttachmentOptionDescriptionLocalizationsNullableInner = ApplicationCommandAttachmentOptionDescriptionLocalizationsNullableInner
+newtype ApplicationCommandAttachmentOptionDescriptionLocalizationsNullableInner = ApplicationCommandAttachmentOptionDescriptionLocalizationsNullableInner (Maybe ApplicationCommandAttachmentOptionDescriptionLocalizationsNullableInnerNullableInner)
+    deriving (Show, Eq, Generic)
+data ApplicationCommandAttachmentOptionDescriptionLocalizationsNullableInnerNullableInner = ApplicationCommandAttachmentOptionDescriptionLocalizationsNullableInnerNullableInner
     { 
     }
     deriving (Show, Eq, Generic)
-data ApplicationCommandAttachmentOptionNameLocalizationsNullableInner = ApplicationCommandAttachmentOptionNameLocalizationsNullableInner
+newtype ApplicationCommandAttachmentOptionNameLocalizationsNullableInner = ApplicationCommandAttachmentOptionNameLocalizationsNullableInner (Maybe ApplicationCommandAttachmentOptionNameLocalizationsNullableInnerNullableInner)
+    deriving (Show, Eq, Generic)
+data ApplicationCommandAttachmentOptionNameLocalizationsNullableInnerNullableInner = ApplicationCommandAttachmentOptionNameLocalizationsNullableInnerNullableInner
     { 
     }
     deriving (Show, Eq, Generic)

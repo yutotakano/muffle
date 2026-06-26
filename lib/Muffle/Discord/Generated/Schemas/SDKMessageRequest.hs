@@ -20,22 +20,26 @@ import Muffle.Discord.Generated.Schemas.SeparatorComponentForMessageRequest
 import Muffle.Discord.Generated.Schemas.TextDisplayComponentForMessageRequest
 
 data SDKMessageRequest = SDKMessageRequest
-    { allowedMentions :: Maybe MessageAllowedMentionsRequest
-    , attachments :: [MessageAttachmentRequest]
-    , components :: [SDKMessageRequestComponentsItem]
-    , content :: Maybe String
-    , embeds :: [RichEmbed]
-    , enforceNonce :: Maybe Bool
-    , flags :: Maybe Integer
-    , messageReference :: Maybe MessageReferenceRequest
+    { allowedMentions :: Maybe (Maybe MessageAllowedMentionsRequest)
+    , attachments :: Maybe [MessageAttachmentRequest]
+    , components :: Maybe SDKMessageRequestComponentsNullableInner
+    , content :: Maybe (Maybe String)
+    , embeds :: Maybe [RichEmbed]
+    , enforceNonce :: Maybe (Maybe Bool)
+    , flags :: Maybe (Maybe Integer)
+    , messageReference :: Maybe (Maybe MessageReferenceRequest)
     , nonce :: Maybe SDKMessageRequestNonceNullableInner
-    , poll :: Maybe PollCreateRequest
-    , sharedClientTheme :: Maybe CustomClientThemeShareRequest
-    , stickerIds :: [SnowflakeType]
-    , tts :: Maybe Bool
+    , poll :: Maybe (Maybe PollCreateRequest)
+    , sharedClientTheme :: Maybe (Maybe CustomClientThemeShareRequest)
+    , stickerIds :: Maybe [SnowflakeType]
+    , tts :: Maybe (Maybe Bool)
     }
     deriving (Show, Eq, Generic)
-data SDKMessageRequestComponentsItem = SDKMessageRequestComponentsItem0 ActionRowComponentForMessageRequest | SDKMessageRequestComponentsItem1 ContainerComponentForMessageRequest | SDKMessageRequestComponentsItem2 FileComponentForMessageRequest | SDKMessageRequestComponentsItem3 MediaGalleryComponentForMessageRequest | SDKMessageRequestComponentsItem4 SectionComponentForMessageRequest | SDKMessageRequestComponentsItem5 SeparatorComponentForMessageRequest | SDKMessageRequestComponentsItem6 TextDisplayComponentForMessageRequest
+newtype SDKMessageRequestComponentsNullableInner = SDKMessageRequestComponentsNullableInner [SDKMessageRequestComponentsNullableInnerItem]
     deriving (Show, Eq, Generic)
-data SDKMessageRequestNonceNullableInner = SDKMessageRequestNonceNullableInner0 Int64 | SDKMessageRequestNonceNullableInner1 String
+data SDKMessageRequestComponentsNullableInnerItem = SDKMessageRequestComponentsNullableInnerItem0 ActionRowComponentForMessageRequest | SDKMessageRequestComponentsNullableInnerItem1 ContainerComponentForMessageRequest | SDKMessageRequestComponentsNullableInnerItem2 FileComponentForMessageRequest | SDKMessageRequestComponentsNullableInnerItem3 MediaGalleryComponentForMessageRequest | SDKMessageRequestComponentsNullableInnerItem4 SectionComponentForMessageRequest | SDKMessageRequestComponentsNullableInnerItem5 SeparatorComponentForMessageRequest | SDKMessageRequestComponentsNullableInnerItem6 TextDisplayComponentForMessageRequest
+    deriving (Show, Eq, Generic)
+newtype SDKMessageRequestNonceNullableInner = SDKMessageRequestNonceNullableInner (Maybe SDKMessageRequestNonceNullableInnerNullableInner)
+    deriving (Show, Eq, Generic)
+data SDKMessageRequestNonceNullableInnerNullableInner = SDKMessageRequestNonceNullableInnerNullableInner0 Int64 | SDKMessageRequestNonceNullableInnerNullableInner1 String
     deriving (Show, Eq, Generic)

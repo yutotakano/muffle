@@ -7,8 +7,8 @@ import GHC.Generics
 import Muffle.Discord.Generated.Schemas.GuildWelcomeChannel
 
 data WelcomeScreenPatchRequestPartial = WelcomeScreenPatchRequestPartial
-    { description :: Maybe String
-    , enabled :: Maybe Bool
-    , welcomeChannels :: [GuildWelcomeChannel]
+    { description :: Maybe (Maybe String)
+    , enabled :: Maybe (Maybe Bool)
+    , welcomeChannels :: Maybe [GuildWelcomeChannel]
     }
     deriving (Show, Eq, Generic)

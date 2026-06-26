@@ -8,10 +8,10 @@ import Muffle.Discord.Generated.Schemas.SnowflakeType
 
 data BotAddGuildMemberRequest = BotAddGuildMemberRequest
     { accessToken :: String
-    , deaf :: Maybe Bool
-    , flags :: Maybe Integer
-    , mute :: Maybe Bool
-    , nick :: Maybe String
-    , roles :: [SnowflakeType]
+    , deaf :: Maybe (Maybe Bool)
+    , flags :: Maybe (Maybe Integer)
+    , mute :: Maybe (Maybe Bool)
+    , nick :: Maybe (Maybe String)
+    , roles :: Maybe [SnowflakeType]
     }
     deriving (Show, Eq, Generic)

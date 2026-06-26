@@ -15,7 +15,7 @@ import Muffle.Discord.Generated.Schemas.ScheduledEventUserResponse
 
 data ScheduledEventResponse = ScheduledEventResponse
     { channelId :: Maybe SnowflakeType
-    , creator :: UserResponse
+    , creator :: Maybe UserResponse
     , creatorId :: Maybe SnowflakeType
     , description :: Maybe String
     , entityId :: Maybe SnowflakeType
@@ -30,7 +30,7 @@ data ScheduledEventResponse = ScheduledEventResponse
     , scheduledEndTime :: Maybe String
     , scheduledStartTime :: String
     , status :: GuildScheduledEventStatuses
-    , userCount :: Int32
-    , userRsvp :: Maybe ScheduledEventUserResponse
+    , userCount :: Maybe Int32
+    , userRsvp :: Maybe (Maybe ScheduledEventUserResponse)
     }
     deriving (Show, Eq, Generic)

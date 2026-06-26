@@ -8,10 +8,10 @@ import Muffle.Discord.Generated.Schemas.GuildMemberVerificationFormFieldType
 
 data MultipleChoiceFormFieldResponse = MultipleChoiceFormFieldResponse
     { choices :: [String]
-    , description :: String
+    , description :: Maybe String
     , fieldType :: GuildMemberVerificationFormFieldType
-    , label :: String
-    , required :: Bool
-    , response :: Int32
+    , label :: Maybe String
+    , required :: Maybe Bool
+    , response :: Maybe Int32
     }
     deriving (Show, Eq, Generic)

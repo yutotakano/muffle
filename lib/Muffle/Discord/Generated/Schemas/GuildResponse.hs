@@ -45,7 +45,7 @@ data GuildResponse = GuildResponse
     , ownerId :: SnowflakeType
     , preferredLocale :: AvailableLocalesEnum
     , premiumProgressBarEnabled :: Bool
-    , premiumProgressBarEnabledUserUpdatedAt :: Maybe String
+    , premiumProgressBarEnabledUserUpdatedAt :: Maybe (Maybe String)
     , premiumSubscriptionCount :: Int32
     , premiumTier :: PremiumGuildTiers
     , publicUpdatesChannelId :: Maybe SnowflakeType

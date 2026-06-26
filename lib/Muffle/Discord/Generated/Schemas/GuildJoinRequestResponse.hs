@@ -13,17 +13,19 @@ import Muffle.Discord.Generated.Schemas.TermsFormFieldResponse
 import Muffle.Discord.Generated.Schemas.TextInputFormFieldResponse
 
 data GuildJoinRequestResponse = GuildJoinRequestResponse
-    { actionedByUser :: Maybe UserResponse
+    { actionedByUser :: Maybe (Maybe UserResponse)
     , applicationStatus :: Maybe GuildJoinRequestApplicationStatus
     , createdAt :: String
-    , formResponses :: [GuildJoinRequestResponseFormResponsesItem]
+    , formResponses :: Maybe GuildJoinRequestResponseFormResponsesNullableInner
     , guildId :: SnowflakeType
     , id :: SnowflakeType
     , rejectionReason :: Maybe String
     , reviewedAt :: Maybe String
-    , user :: Maybe UserResponse
+    , user :: Maybe (Maybe UserResponse)
     , userId :: SnowflakeType
     }
     deriving (Show, Eq, Generic)
-data GuildJoinRequestResponseFormResponsesItem = GuildJoinRequestResponseFormResponsesItem0 MultipleChoiceFormFieldResponse | GuildJoinRequestResponseFormResponsesItem1 ParagraphFormFieldResponse | GuildJoinRequestResponseFormResponsesItem2 TermsFormFieldResponse | GuildJoinRequestResponseFormResponsesItem3 TextInputFormFieldResponse
+newtype GuildJoinRequestResponseFormResponsesNullableInner = GuildJoinRequestResponseFormResponsesNullableInner [GuildJoinRequestResponseFormResponsesNullableInnerItem]
+    deriving (Show, Eq, Generic)
+data GuildJoinRequestResponseFormResponsesNullableInnerItem = GuildJoinRequestResponseFormResponsesNullableInnerItem0 MultipleChoiceFormFieldResponse | GuildJoinRequestResponseFormResponsesNullableInnerItem1 ParagraphFormFieldResponse | GuildJoinRequestResponseFormResponsesNullableInnerItem2 TermsFormFieldResponse | GuildJoinRequestResponseFormResponsesNullableInnerItem3 TextInputFormFieldResponse
     deriving (Show, Eq, Generic)

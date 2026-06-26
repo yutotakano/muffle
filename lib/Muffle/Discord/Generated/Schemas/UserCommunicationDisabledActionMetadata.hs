@@ -7,6 +7,6 @@ import GHC.Generics
 
 
 data UserCommunicationDisabledActionMetadata = UserCommunicationDisabledActionMetadata
-    { durationSeconds :: Maybe Integer
+    { durationSeconds :: Maybe (Maybe Integer)
     }
     deriving (Show, Eq, Generic)

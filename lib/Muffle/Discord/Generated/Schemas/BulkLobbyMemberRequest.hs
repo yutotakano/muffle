@@ -10,12 +10,16 @@ data BulkLobbyMemberRequest = BulkLobbyMemberRequest
     { flags :: Maybe BulkLobbyMemberRequestFlagsNullableInner
     , id :: SnowflakeType
     , metadata :: Maybe BulkLobbyMemberRequestMetadataNullableInner
-    , removeMember :: Maybe Bool
+    , removeMember :: Maybe (Maybe Bool)
     }
     deriving (Show, Eq, Generic)
-data BulkLobbyMemberRequestFlagsNullableInner = BulkLobbyMemberRequestFlagsNullableInnerEnum1
+newtype BulkLobbyMemberRequestFlagsNullableInner = BulkLobbyMemberRequestFlagsNullableInner (Maybe BulkLobbyMemberRequestFlagsNullableInnerNullableInner)
     deriving (Show, Eq, Generic)
-data BulkLobbyMemberRequestMetadataNullableInner = BulkLobbyMemberRequestMetadataNullableInner
+data BulkLobbyMemberRequestFlagsNullableInnerNullableInner = BulkLobbyMemberRequestFlagsNullableInnerNullableInnerEnum1
+    deriving (Show, Eq, Generic)
+newtype BulkLobbyMemberRequestMetadataNullableInner = BulkLobbyMemberRequestMetadataNullableInner (Maybe BulkLobbyMemberRequestMetadataNullableInnerNullableInner)
+    deriving (Show, Eq, Generic)
+data BulkLobbyMemberRequestMetadataNullableInnerNullableInner = BulkLobbyMemberRequestMetadataNullableInnerNullableInner
     { 
     }
     deriving (Show, Eq, Generic)

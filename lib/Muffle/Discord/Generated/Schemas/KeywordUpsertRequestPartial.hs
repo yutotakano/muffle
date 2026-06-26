@@ -14,15 +14,17 @@ import Muffle.Discord.Generated.Schemas.QuarantineUserAction
 import Muffle.Discord.Generated.Schemas.UserCommunicationDisabledAction
 
 data KeywordUpsertRequestPartial = KeywordUpsertRequestPartial
-    { actions :: [KeywordUpsertRequestPartialActionsItem]
-    , enabled :: Maybe Bool
-    , eventType :: AutomodEventType
-    , exemptChannels :: [SnowflakeType]
-    , exemptRoles :: [SnowflakeType]
-    , name :: String
-    , triggerMetadata :: Maybe KeywordTriggerMetadata
-    , triggerType :: AutomodTriggerType
+    { actions :: Maybe KeywordUpsertRequestPartialActionsNullableInner
+    , enabled :: Maybe (Maybe Bool)
+    , eventType :: Maybe AutomodEventType
+    , exemptChannels :: Maybe [SnowflakeType]
+    , exemptRoles :: Maybe [SnowflakeType]
+    , name :: Maybe String
+    , triggerMetadata :: Maybe (Maybe KeywordTriggerMetadata)
+    , triggerType :: Maybe AutomodTriggerType
     }
     deriving (Show, Eq, Generic)
-data KeywordUpsertRequestPartialActionsItem = KeywordUpsertRequestPartialActionsItem0 BlockMessageAction | KeywordUpsertRequestPartialActionsItem1 FlagToChannelAction | KeywordUpsertRequestPartialActionsItem2 QuarantineUserAction | KeywordUpsertRequestPartialActionsItem3 UserCommunicationDisabledAction
+newtype KeywordUpsertRequestPartialActionsNullableInner = KeywordUpsertRequestPartialActionsNullableInner [KeywordUpsertRequestPartialActionsNullableInnerItem]
+    deriving (Show, Eq, Generic)
+data KeywordUpsertRequestPartialActionsNullableInnerItem = KeywordUpsertRequestPartialActionsNullableInnerItem0 BlockMessageAction | KeywordUpsertRequestPartialActionsNullableInnerItem1 FlagToChannelAction | KeywordUpsertRequestPartialActionsNullableInnerItem2 QuarantineUserAction | KeywordUpsertRequestPartialActionsNullableInnerItem3 UserCommunicationDisabledAction
     deriving (Show, Eq, Generic)

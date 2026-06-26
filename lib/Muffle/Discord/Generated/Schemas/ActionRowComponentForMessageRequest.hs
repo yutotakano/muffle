@@ -14,7 +14,7 @@ import Muffle.Discord.Generated.Schemas.UserSelectComponentForMessageRequest
 
 data ActionRowComponentForMessageRequest = ActionRowComponentForMessageRequest
     { components :: [ActionRowComponentForMessageRequestComponentsItem]
-    , id :: Maybe Int32
+    , id :: Maybe (Maybe Int32)
     , type' :: MessageComponentTypes
     }
     deriving (Show, Eq, Generic)

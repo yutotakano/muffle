@@ -17,14 +17,16 @@ import Muffle.Discord.Generated.Schemas.SeparatorComponentForMessageRequest
 import Muffle.Discord.Generated.Schemas.TextDisplayComponentForMessageRequest
 
 data IncomingWebhookUpdateRequestPartial = IncomingWebhookUpdateRequestPartial
-    { allowedMentions :: Maybe MessageAllowedMentionsRequest
-    , attachments :: [MessageAttachmentRequest]
-    , components :: [IncomingWebhookUpdateRequestPartialComponentsItem]
-    , content :: Maybe String
-    , embeds :: [RichEmbed]
-    , flags :: Maybe Integer
-    , poll :: Maybe PollCreateRequest
+    { allowedMentions :: Maybe (Maybe MessageAllowedMentionsRequest)
+    , attachments :: Maybe [MessageAttachmentRequest]
+    , components :: Maybe IncomingWebhookUpdateRequestPartialComponentsNullableInner
+    , content :: Maybe (Maybe String)
+    , embeds :: Maybe [RichEmbed]
+    , flags :: Maybe (Maybe Integer)
+    , poll :: Maybe (Maybe PollCreateRequest)
     }
     deriving (Show, Eq, Generic)
-data IncomingWebhookUpdateRequestPartialComponentsItem = IncomingWebhookUpdateRequestPartialComponentsItem0 ActionRowComponentForMessageRequest | IncomingWebhookUpdateRequestPartialComponentsItem1 ContainerComponentForMessageRequest | IncomingWebhookUpdateRequestPartialComponentsItem2 FileComponentForMessageRequest | IncomingWebhookUpdateRequestPartialComponentsItem3 MediaGalleryComponentForMessageRequest | IncomingWebhookUpdateRequestPartialComponentsItem4 SectionComponentForMessageRequest | IncomingWebhookUpdateRequestPartialComponentsItem5 SeparatorComponentForMessageRequest | IncomingWebhookUpdateRequestPartialComponentsItem6 TextDisplayComponentForMessageRequest
+newtype IncomingWebhookUpdateRequestPartialComponentsNullableInner = IncomingWebhookUpdateRequestPartialComponentsNullableInner [IncomingWebhookUpdateRequestPartialComponentsNullableInnerItem]
+    deriving (Show, Eq, Generic)
+data IncomingWebhookUpdateRequestPartialComponentsNullableInnerItem = IncomingWebhookUpdateRequestPartialComponentsNullableInnerItem0 ActionRowComponentForMessageRequest | IncomingWebhookUpdateRequestPartialComponentsNullableInnerItem1 ContainerComponentForMessageRequest | IncomingWebhookUpdateRequestPartialComponentsNullableInnerItem2 FileComponentForMessageRequest | IncomingWebhookUpdateRequestPartialComponentsNullableInnerItem3 MediaGalleryComponentForMessageRequest | IncomingWebhookUpdateRequestPartialComponentsNullableInnerItem4 SectionComponentForMessageRequest | IncomingWebhookUpdateRequestPartialComponentsNullableInnerItem5 SeparatorComponentForMessageRequest | IncomingWebhookUpdateRequestPartialComponentsNullableInnerItem6 TextDisplayComponentForMessageRequest
     deriving (Show, Eq, Generic)

@@ -13,10 +13,10 @@ import Muffle.Discord.Generated.Schemas.SeparatorComponentForMessageRequest
 import Muffle.Discord.Generated.Schemas.TextDisplayComponentForMessageRequest
 
 data ContainerComponentForMessageRequest = ContainerComponentForMessageRequest
-    { accentColor :: Maybe Integer
+    { accentColor :: Maybe (Maybe Integer)
     , components :: [ContainerComponentForMessageRequestComponentsItem]
-    , id :: Maybe Int32
-    , spoiler :: Maybe Bool
+    , id :: Maybe (Maybe Int32)
+    , spoiler :: Maybe (Maybe Bool)
     , type' :: MessageComponentTypes
     }
     deriving (Show, Eq, Generic)

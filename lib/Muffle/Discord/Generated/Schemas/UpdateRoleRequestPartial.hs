@@ -7,13 +7,13 @@ import GHC.Generics
 import Muffle.Discord.Generated.Schemas.RoleColors
 
 data UpdateRoleRequestPartial = UpdateRoleRequestPartial
-    { color :: Maybe Integer
-    , colors :: Maybe RoleColors
-    , hoist :: Maybe Bool
-    , icon :: Maybe String
-    , mentionable :: Maybe Bool
-    , name :: Maybe String
-    , permissions :: Maybe Integer
-    , unicodeEmoji :: Maybe String
+    { color :: Maybe (Maybe Integer)
+    , colors :: Maybe (Maybe RoleColors)
+    , hoist :: Maybe (Maybe Bool)
+    , icon :: Maybe (Maybe String)
+    , mentionable :: Maybe (Maybe Bool)
+    , name :: Maybe (Maybe String)
+    , permissions :: Maybe (Maybe Integer)
+    , unicodeEmoji :: Maybe (Maybe String)
     }
     deriving (Show, Eq, Generic)

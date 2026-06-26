@@ -7,8 +7,8 @@ import GHC.Generics
 
 
 data RadioGroupOptionForRequest = RadioGroupOptionForRequest
-    { default' :: Maybe Bool
-    , description :: Maybe String
+    { default' :: Maybe (Maybe Bool)
+    , description :: Maybe (Maybe String)
     , label :: String
     , value :: String
     }

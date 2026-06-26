@@ -8,7 +8,7 @@ import Muffle.Discord.Generated.Schemas.IncomingWebhookInteractionRequest
 import Muffle.Discord.Generated.Schemas.InteractionCallbackTypes
 
 data CreateMessageInteractionCallbackRequest = CreateMessageInteractionCallbackRequest
-    { data' :: Maybe IncomingWebhookInteractionRequest
+    { data' :: Maybe (Maybe IncomingWebhookInteractionRequest)
     , type' :: InteractionCallbackTypes
     }
     deriving (Show, Eq, Generic)

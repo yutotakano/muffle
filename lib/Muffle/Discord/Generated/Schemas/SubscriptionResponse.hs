@@ -9,7 +9,7 @@ import Muffle.Discord.Generated.Schemas.SubscriptionResponseStatusType
 
 data SubscriptionResponse = SubscriptionResponse
     { canceledAt :: Maybe String
-    , country :: Maybe String
+    , country :: Maybe (Maybe String)
     , currentPeriodEnd :: String
     , currentPeriodStart :: String
     , entitlementIds :: [SnowflakeType]

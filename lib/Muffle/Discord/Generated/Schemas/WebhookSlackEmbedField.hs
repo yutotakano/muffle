@@ -7,8 +7,8 @@ import GHC.Generics
 
 
 data WebhookSlackEmbedField = WebhookSlackEmbedField
-    { inline :: Maybe Bool
-    , name :: Maybe String
-    , value :: Maybe String
+    { inline :: Maybe (Maybe Bool)
+    , name :: Maybe (Maybe String)
+    , value :: Maybe (Maybe String)
     }
     deriving (Show, Eq, Generic)

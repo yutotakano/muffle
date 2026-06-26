@@ -10,11 +10,11 @@ import Muffle.Discord.Generated.Schemas.OnboardingPromptType
 
 data UpdateOnboardingPromptRequest = UpdateOnboardingPromptRequest
     { id :: SnowflakeType
-    , inOnboarding :: Maybe Bool
+    , inOnboarding :: Maybe (Maybe Bool)
     , options :: [OnboardingPromptOptionRequest]
-    , required :: Maybe Bool
-    , singleSelect :: Maybe Bool
+    , required :: Maybe (Maybe Bool)
+    , singleSelect :: Maybe (Maybe Bool)
     , title :: String
-    , type' :: Maybe OnboardingPromptType
+    , type' :: Maybe (Maybe OnboardingPromptType)
     }
     deriving (Show, Eq, Generic)

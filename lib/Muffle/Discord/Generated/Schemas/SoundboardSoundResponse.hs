@@ -11,10 +11,10 @@ data SoundboardSoundResponse = SoundboardSoundResponse
     { available :: Bool
     , emojiId :: Maybe SnowflakeType
     , emojiName :: Maybe String
-    , guildId :: SnowflakeType
+    , guildId :: Maybe SnowflakeType
     , name :: String
     , soundId :: SnowflakeType
-    , user :: UserResponse
+    , user :: Maybe UserResponse
     , volume :: Integer
     }
     deriving (Show, Eq, Generic)

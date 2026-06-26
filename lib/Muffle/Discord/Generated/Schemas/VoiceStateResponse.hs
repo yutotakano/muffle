@@ -11,7 +11,7 @@ data VoiceStateResponse = VoiceStateResponse
     { channelId :: Maybe SnowflakeType
     , deaf :: Bool
     , guildId :: Maybe SnowflakeType
-    , member :: GuildMemberResponse
+    , member :: Maybe GuildMemberResponse
     , mute :: Bool
     , requestToSpeakTimestamp :: Maybe String
     , selfDeaf :: Bool

@@ -7,8 +7,8 @@ import GHC.Generics
 
 
 data GuildScheduledEventExceptionPatchRequestPartial = GuildScheduledEventExceptionPatchRequestPartial
-    { isCanceled :: Maybe Bool
-    , scheduledEndTime :: Maybe String
-    , scheduledStartTime :: Maybe String
+    { isCanceled :: Maybe (Maybe Bool)
+    , scheduledEndTime :: Maybe (Maybe String)
+    , scheduledStartTime :: Maybe (Maybe String)
     }
     deriving (Show, Eq, Generic)

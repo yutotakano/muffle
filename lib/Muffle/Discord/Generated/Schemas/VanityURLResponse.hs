@@ -8,7 +8,7 @@ import Muffle.Discord.Generated.Schemas.VanityURLErrorResponse
 
 data VanityURLResponse = VanityURLResponse
     { code :: Maybe String
-    , error :: Maybe VanityURLErrorResponse
+    , error :: Maybe (Maybe VanityURLErrorResponse)
     , uses :: Int32
     }
     deriving (Show, Eq, Generic)

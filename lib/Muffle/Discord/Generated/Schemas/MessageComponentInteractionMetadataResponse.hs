@@ -12,9 +12,9 @@ data MessageComponentInteractionMetadataResponse = MessageComponentInteractionMe
     { authorizingIntegrationOwners :: MessageComponentInteractionMetadataResponseAuthorizingIntegrationOwners
     , id :: SnowflakeType
     , interactedMessageId :: SnowflakeType
-    , originalResponseMessageId :: SnowflakeType
+    , originalResponseMessageId :: Maybe SnowflakeType
     , type' :: InteractionTypes
-    , user :: UserResponse
+    , user :: Maybe UserResponse
     }
     deriving (Show, Eq, Generic)
 data MessageComponentInteractionMetadataResponseAuthorizingIntegrationOwners = MessageComponentInteractionMetadataResponseAuthorizingIntegrationOwners

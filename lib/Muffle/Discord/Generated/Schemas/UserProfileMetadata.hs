@@ -7,8 +7,8 @@ import GHC.Generics
 
 
 data UserProfileMetadata = UserProfileMetadata
-    { allowList :: [String]
-    , keywordFilter :: [String]
-    , regexPatterns :: [String]
+    { allowList :: Maybe [String]
+    , keywordFilter :: Maybe [String]
+    , regexPatterns :: Maybe [String]
     }
     deriving (Show, Eq, Generic)

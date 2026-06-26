@@ -8,8 +8,8 @@ import Muffle.Discord.Generated.Schemas.MessageComponentTypes
 
 data CheckboxComponentForModalRequest = CheckboxComponentForModalRequest
     { customId :: String
-    , default' :: Maybe Bool
-    , id :: Maybe Int32
+    , default' :: Maybe (Maybe Bool)
+    , id :: Maybe (Maybe Int32)
     , type' :: MessageComponentTypes
     }
     deriving (Show, Eq, Generic)

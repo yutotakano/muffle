@@ -11,11 +11,11 @@ import Muffle.Discord.Generated.Schemas.InteractionTypes
 data ApplicationCommandInteractionMetadataResponse = ApplicationCommandInteractionMetadataResponse
     { authorizingIntegrationOwners :: ApplicationCommandInteractionMetadataResponseAuthorizingIntegrationOwners
     , id :: SnowflakeType
-    , originalResponseMessageId :: SnowflakeType
-    , targetMessageId :: SnowflakeType
-    , targetUser :: UserResponse
+    , originalResponseMessageId :: Maybe SnowflakeType
+    , targetMessageId :: Maybe SnowflakeType
+    , targetUser :: Maybe UserResponse
     , type' :: InteractionTypes
-    , user :: UserResponse
+    , user :: Maybe UserResponse
     }
     deriving (Show, Eq, Generic)
 data ApplicationCommandInteractionMetadataResponseAuthorizingIntegrationOwners = ApplicationCommandInteractionMetadataResponseAuthorizingIntegrationOwners

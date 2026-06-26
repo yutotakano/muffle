@@ -13,18 +13,18 @@ import Muffle.Discord.Generated.Schemas.RichEmbedThumbnail
 import Muffle.Discord.Generated.Schemas.RichEmbedVideo
 
 data RichEmbed = RichEmbed
-    { author :: Maybe RichEmbedAuthor
-    , color :: Maybe Integer
-    , description :: Maybe String
-    , fields :: [RichEmbedField]
-    , footer :: Maybe RichEmbedFooter
-    , image :: Maybe RichEmbedImage
-    , provider :: Maybe RichEmbedProvider
-    , thumbnail :: Maybe RichEmbedThumbnail
-    , timestamp :: Maybe String
-    , title :: Maybe String
-    , type' :: Maybe String
-    , url :: Maybe String
-    , video :: Maybe RichEmbedVideo
+    { author :: Maybe (Maybe RichEmbedAuthor)
+    , color :: Maybe (Maybe Integer)
+    , description :: Maybe (Maybe String)
+    , fields :: Maybe [RichEmbedField]
+    , footer :: Maybe (Maybe RichEmbedFooter)
+    , image :: Maybe (Maybe RichEmbedImage)
+    , provider :: Maybe (Maybe RichEmbedProvider)
+    , thumbnail :: Maybe (Maybe RichEmbedThumbnail)
+    , timestamp :: Maybe (Maybe String)
+    , title :: Maybe (Maybe String)
+    , type' :: Maybe (Maybe String)
+    , url :: Maybe (Maybe String)
+    , video :: Maybe (Maybe RichEmbedVideo)
     }
     deriving (Show, Eq, Generic)

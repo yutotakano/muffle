@@ -9,12 +9,12 @@ import Muffle.Discord.Generated.Schemas.MessageComponentTypes
 
 data RoleSelectComponentResponse = RoleSelectComponentResponse
     { customId :: String
-    , defaultValues :: [RoleSelectDefaultValueResponse]
-    , disabled :: Bool
+    , defaultValues :: Maybe [RoleSelectDefaultValueResponse]
+    , disabled :: Maybe Bool
     , id :: Int32
     , maxValues :: Int32
     , minValues :: Int32
-    , placeholder :: String
+    , placeholder :: Maybe String
     , type' :: MessageComponentTypes
     }
     deriving (Show, Eq, Generic)

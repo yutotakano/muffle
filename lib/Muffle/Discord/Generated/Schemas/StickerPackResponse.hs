@@ -8,8 +8,8 @@ import Muffle.Discord.Generated.Schemas.SnowflakeType
 import Muffle.Discord.Generated.Schemas.StandardStickerResponse
 
 data StickerPackResponse = StickerPackResponse
-    { bannerAssetId :: SnowflakeType
-    , coverStickerId :: SnowflakeType
+    { bannerAssetId :: Maybe SnowflakeType
+    , coverStickerId :: Maybe SnowflakeType
     , description :: Maybe String
     , id :: SnowflakeType
     , name :: String

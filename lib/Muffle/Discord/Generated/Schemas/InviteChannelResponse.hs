@@ -9,10 +9,10 @@ import Muffle.Discord.Generated.Schemas.InviteChannelRecipientResponse
 import Muffle.Discord.Generated.Schemas.ChannelTypes
 
 data InviteChannelResponse = InviteChannelResponse
-    { icon :: String
+    { icon :: Maybe String
     , id :: SnowflakeType
     , name :: Maybe String
-    , recipients :: [InviteChannelRecipientResponse]
+    , recipients :: Maybe [InviteChannelRecipientResponse]
     , type' :: ChannelTypes
     }
     deriving (Show, Eq, Generic)

@@ -8,7 +8,7 @@ import Muffle.Discord.Generated.Schemas.SKUIneligibilityReason
 
 data SocialLayerSKUPurchaseEligibilityCallbackData = SocialLayerSKUPurchaseEligibilityCallbackData
     { eligible :: Bool
-    , ineligibleReason :: Maybe SKUIneligibilityReason
-    , ineligibleReasonDescription :: Maybe String
+    , ineligibleReason :: Maybe (Maybe SKUIneligibilityReason)
+    , ineligibleReasonDescription :: Maybe (Maybe String)
     }
     deriving (Show, Eq, Generic)

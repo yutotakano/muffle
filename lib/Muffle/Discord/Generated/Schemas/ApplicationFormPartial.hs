@@ -12,35 +12,41 @@ import Muffle.Discord.Generated.Schemas.SnowflakeType
 import Muffle.Discord.Generated.Schemas.ApplicationTypes
 
 data ApplicationFormPartial = ApplicationFormPartial
-    { coverImage :: Maybe String
-    , customInstallUrl :: Maybe String
+    { coverImage :: Maybe (Maybe String)
+    , customInstallUrl :: Maybe (Maybe String)
     , description :: Maybe ApplicationFormPartialDescriptionNullableInner
-    , eventWebhooksStatus :: Maybe ApplicationEventWebhooksStatus
-    , eventWebhooksTypes :: [ActionTypes]
-    , eventWebhooksUrl :: Maybe String
-    , explicitContentFilter :: Maybe ApplicationExplicitContentFilterTypes
-    , flags :: Maybe Integer
-    , icon :: Maybe String
-    , installParams :: Maybe ApplicationOAuth2InstallParams
+    , eventWebhooksStatus :: Maybe (Maybe ApplicationEventWebhooksStatus)
+    , eventWebhooksTypes :: Maybe [ActionTypes]
+    , eventWebhooksUrl :: Maybe (Maybe String)
+    , explicitContentFilter :: Maybe (Maybe ApplicationExplicitContentFilterTypes)
+    , flags :: Maybe (Maybe Integer)
+    , icon :: Maybe (Maybe String)
+    , installParams :: Maybe (Maybe ApplicationOAuth2InstallParams)
     , integrationTypesConfig :: Maybe ApplicationFormPartialIntegrationTypesConfigNullableInner
-    , interactionsEndpointUrl :: Maybe String
-    , maxParticipants :: Maybe Int32
-    , roleConnectionsVerificationUrl :: Maybe String
-    , tags :: [String]
-    , teamId :: Maybe SnowflakeType
-    , type' :: Maybe ApplicationTypes
+    , interactionsEndpointUrl :: Maybe (Maybe String)
+    , maxParticipants :: Maybe (Maybe Int32)
+    , roleConnectionsVerificationUrl :: Maybe (Maybe String)
+    , tags :: Maybe [String]
+    , teamId :: Maybe (Maybe SnowflakeType)
+    , type' :: Maybe (Maybe ApplicationTypes)
     }
     deriving (Show, Eq, Generic)
-data ApplicationFormPartialDescriptionNullableInner = ApplicationFormPartialDescriptionNullableInner
+newtype ApplicationFormPartialDescriptionNullableInner = ApplicationFormPartialDescriptionNullableInner (Maybe ApplicationFormPartialDescriptionNullableInnerNullableInner)
+    deriving (Show, Eq, Generic)
+data ApplicationFormPartialDescriptionNullableInnerNullableInner = ApplicationFormPartialDescriptionNullableInnerNullableInner
     { default' :: String
-    , localizations :: Maybe ApplicationFormPartialDescriptionNullableInnerLocalizationsNullableInner
+    , localizations :: Maybe ApplicationFormPartialDescriptionNullableInnerNullableInnerLocalizationsNullableInner
     }
     deriving (Show, Eq, Generic)
-data ApplicationFormPartialDescriptionNullableInnerLocalizationsNullableInner = ApplicationFormPartialDescriptionNullableInnerLocalizationsNullableInner
+newtype ApplicationFormPartialDescriptionNullableInnerNullableInnerLocalizationsNullableInner = ApplicationFormPartialDescriptionNullableInnerNullableInnerLocalizationsNullableInner (Maybe ApplicationFormPartialDescriptionNullableInnerNullableInnerLocalizationsNullableInnerNullableInner)
+    deriving (Show, Eq, Generic)
+data ApplicationFormPartialDescriptionNullableInnerNullableInnerLocalizationsNullableInnerNullableInner = ApplicationFormPartialDescriptionNullableInnerNullableInnerLocalizationsNullableInnerNullableInner
     { 
     }
     deriving (Show, Eq, Generic)
-data ApplicationFormPartialIntegrationTypesConfigNullableInner = ApplicationFormPartialIntegrationTypesConfigNullableInner
+newtype ApplicationFormPartialIntegrationTypesConfigNullableInner = ApplicationFormPartialIntegrationTypesConfigNullableInner (Maybe ApplicationFormPartialIntegrationTypesConfigNullableInnerNullableInner)
+    deriving (Show, Eq, Generic)
+data ApplicationFormPartialIntegrationTypesConfigNullableInnerNullableInner = ApplicationFormPartialIntegrationTypesConfigNullableInnerNullableInner
     { 
     }
     deriving (Show, Eq, Generic)

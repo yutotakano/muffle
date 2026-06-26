@@ -16,25 +16,25 @@ import Muffle.Discord.Generated.Schemas.GithubRelease
 import Muffle.Discord.Generated.Schemas.GithubReview
 
 data GithubWebhook = GithubWebhook
-    { action :: Maybe String
-    , answer :: Maybe GithubComment
-    , checkRun :: Maybe GithubCheckRun
-    , checkSuite :: Maybe GithubCheckSuite
-    , comment :: Maybe GithubComment
-    , commits :: [GithubCommit]
-    , compare :: Maybe String
-    , discussion :: Maybe GithubDiscussion
-    , forced :: Maybe Bool
-    , forkee :: Maybe GithubRepository
-    , headCommit :: Maybe GithubCommit
-    , issue :: Maybe GithubIssue
-    , member :: Maybe GithubUser
-    , pullRequest :: Maybe GithubIssue
-    , ref :: Maybe String
-    , refType :: Maybe String
-    , release :: Maybe GithubRelease
-    , repository :: Maybe GithubRepository
-    , review :: Maybe GithubReview
+    { action :: Maybe (Maybe String)
+    , answer :: Maybe (Maybe GithubComment)
+    , checkRun :: Maybe (Maybe GithubCheckRun)
+    , checkSuite :: Maybe (Maybe GithubCheckSuite)
+    , comment :: Maybe (Maybe GithubComment)
+    , commits :: Maybe [GithubCommit]
+    , compare :: Maybe (Maybe String)
+    , discussion :: Maybe (Maybe GithubDiscussion)
+    , forced :: Maybe (Maybe Bool)
+    , forkee :: Maybe (Maybe GithubRepository)
+    , headCommit :: Maybe (Maybe GithubCommit)
+    , issue :: Maybe (Maybe GithubIssue)
+    , member :: Maybe (Maybe GithubUser)
+    , pullRequest :: Maybe (Maybe GithubIssue)
+    , ref :: Maybe (Maybe String)
+    , refType :: Maybe (Maybe String)
+    , release :: Maybe (Maybe GithubRelease)
+    , repository :: Maybe (Maybe GithubRepository)
+    , review :: Maybe (Maybe GithubReview)
     , sender :: GithubUser
     }
     deriving (Show, Eq, Generic)

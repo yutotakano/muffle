@@ -11,8 +11,8 @@ import Muffle.Discord.Generated.Schemas.UserResponse
 data MessageInteractionResponse = MessageInteractionResponse
     { id :: SnowflakeType
     , name :: String
-    , nameLocalized :: String
+    , nameLocalized :: Maybe String
     , type' :: InteractionTypes
-    , user :: UserResponse
+    , user :: Maybe UserResponse
     }
     deriving (Show, Eq, Generic)

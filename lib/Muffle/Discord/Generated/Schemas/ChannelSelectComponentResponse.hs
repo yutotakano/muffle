@@ -9,14 +9,14 @@ import Muffle.Discord.Generated.Schemas.ChannelSelectDefaultValueResponse
 import Muffle.Discord.Generated.Schemas.MessageComponentTypes
 
 data ChannelSelectComponentResponse = ChannelSelectComponentResponse
-    { channelTypes :: [ChannelTypes]
+    { channelTypes :: Maybe [ChannelTypes]
     , customId :: String
-    , defaultValues :: [ChannelSelectDefaultValueResponse]
-    , disabled :: Bool
+    , defaultValues :: Maybe [ChannelSelectDefaultValueResponse]
+    , disabled :: Maybe Bool
     , id :: Int32
     , maxValues :: Int32
     , minValues :: Int32
-    , placeholder :: String
+    , placeholder :: Maybe String
     , type' :: MessageComponentTypes
     }
     deriving (Show, Eq, Generic)

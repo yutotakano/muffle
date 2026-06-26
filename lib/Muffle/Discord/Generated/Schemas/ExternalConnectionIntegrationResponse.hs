@@ -13,17 +13,17 @@ import Muffle.Discord.Generated.Schemas.UserResponse
 
 data ExternalConnectionIntegrationResponse = ExternalConnectionIntegrationResponse
     { account :: AccountResponse
-    , enableEmoticons :: Bool
+    , enableEmoticons :: Maybe Bool
     , enabled :: Bool
-    , expireBehavior :: IntegrationExpireBehaviorTypes
-    , expireGracePeriod :: IntegrationExpireGracePeriodTypes
+    , expireBehavior :: Maybe IntegrationExpireBehaviorTypes
+    , expireGracePeriod :: Maybe IntegrationExpireGracePeriodTypes
     , id :: String
     , name :: Maybe String
-    , revoked :: Bool
-    , roleId :: Maybe SnowflakeType
-    , subscriberCount :: Int32
-    , syncedAt :: String
-    , syncing :: Bool
+    , revoked :: Maybe Bool
+    , roleId :: Maybe (Maybe SnowflakeType)
+    , subscriberCount :: Maybe Int32
+    , syncedAt :: Maybe String
+    , syncing :: Maybe Bool
     , type' :: IntegrationTypes
     , user :: UserResponse
     }

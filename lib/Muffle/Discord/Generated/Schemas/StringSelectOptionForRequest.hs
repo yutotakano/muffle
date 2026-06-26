@@ -7,9 +7,9 @@ import GHC.Generics
 import Muffle.Discord.Generated.Schemas.ComponentEmojiForRequest
 
 data StringSelectOptionForRequest = StringSelectOptionForRequest
-    { default' :: Maybe Bool
-    , description :: Maybe String
-    , emoji :: Maybe ComponentEmojiForRequest
+    { default' :: Maybe (Maybe Bool)
+    , description :: Maybe (Maybe String)
+    , emoji :: Maybe (Maybe ComponentEmojiForRequest)
     , label :: String
     , value :: String
     }

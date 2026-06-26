@@ -13,10 +13,10 @@ data TextInputComponentResponse = TextInputComponentResponse
     , label :: Maybe String
     , maxLength :: Maybe Int32
     , minLength :: Maybe Int32
-    , placeholder :: String
-    , required :: Bool
+    , placeholder :: Maybe String
+    , required :: Maybe Bool
     , style :: TextInputStyleTypes
     , type' :: MessageComponentTypes
-    , value :: String
+    , value :: Maybe String
     }
     deriving (Show, Eq, Generic)

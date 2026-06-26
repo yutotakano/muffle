@@ -7,9 +7,9 @@ import GHC.Generics
 import Muffle.Discord.Generated.Schemas.SnowflakeType
 
 data CreateOrUpdateThreadTagRequest = CreateOrUpdateThreadTagRequest
-    { emojiId :: Maybe SnowflakeType
-    , emojiName :: Maybe String
-    , moderated :: Maybe Bool
+    { emojiId :: Maybe (Maybe SnowflakeType)
+    , emojiName :: Maybe (Maybe String)
+    , moderated :: Maybe (Maybe Bool)
     , name :: String
     }
     deriving (Show, Eq, Generic)

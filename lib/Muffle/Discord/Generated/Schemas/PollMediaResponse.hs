@@ -7,7 +7,7 @@ import GHC.Generics
 import Muffle.Discord.Generated.Schemas.MessageReactionEmojiResponse
 
 data PollMediaResponse = PollMediaResponse
-    { emoji :: MessageReactionEmojiResponse
-    , text :: String
+    { emoji :: Maybe MessageReactionEmojiResponse
+    , text :: Maybe String
     }
     deriving (Show, Eq, Generic)

@@ -8,6 +8,6 @@ import GHC.Generics
 
 data MessageEmbedProviderResponse = MessageEmbedProviderResponse
     { name :: String
-    , url :: String
+    , url :: Maybe String
     }
     deriving (Show, Eq, Generic)

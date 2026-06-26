@@ -9,17 +9,17 @@ import Muffle.Discord.Generated.Schemas.ThreadAutoArchiveDuration
 import Muffle.Discord.Generated.Schemas.VideoQualityModes
 
 data UpdateThreadRequestPartial = UpdateThreadRequestPartial
-    { appliedTags :: [SnowflakeType]
-    , archived :: Maybe Bool
-    , autoArchiveDuration :: Maybe ThreadAutoArchiveDuration
-    , bitrate :: Maybe Int32
-    , flags :: Maybe Integer
-    , invitable :: Maybe Bool
-    , locked :: Maybe Bool
-    , name :: Maybe String
-    , rateLimitPerUser :: Maybe Integer
-    , rtcRegion :: Maybe String
-    , userLimit :: Maybe Integer
-    , videoQualityMode :: Maybe VideoQualityModes
+    { appliedTags :: Maybe [SnowflakeType]
+    , archived :: Maybe (Maybe Bool)
+    , autoArchiveDuration :: Maybe (Maybe ThreadAutoArchiveDuration)
+    , bitrate :: Maybe (Maybe Int32)
+    , flags :: Maybe (Maybe Integer)
+    , invitable :: Maybe (Maybe Bool)
+    , locked :: Maybe (Maybe Bool)
+    , name :: Maybe (Maybe String)
+    , rateLimitPerUser :: Maybe (Maybe Integer)
+    , rtcRegion :: Maybe (Maybe String)
+    , userLimit :: Maybe (Maybe Integer)
+    , videoQualityMode :: Maybe (Maybe VideoQualityModes)
     }
     deriving (Show, Eq, Generic)

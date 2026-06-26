@@ -9,11 +9,11 @@ import Muffle.Discord.Generated.Schemas.MessageComponentTypes
 
 data CheckboxGroupComponentForModalRequest = CheckboxGroupComponentForModalRequest
     { customId :: String
-    , id :: Maybe Int32
-    , maxValues :: Maybe Integer
-    , minValues :: Maybe Integer
+    , id :: Maybe (Maybe Int32)
+    , maxValues :: Maybe (Maybe Integer)
+    , minValues :: Maybe (Maybe Integer)
     , options :: [CheckboxGroupOptionForRequest]
-    , required :: Maybe Bool
+    , required :: Maybe (Maybe Bool)
     , type' :: MessageComponentTypes
     }
     deriving (Show, Eq, Generic)

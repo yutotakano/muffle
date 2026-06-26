@@ -11,9 +11,9 @@ import Muffle.Discord.Generated.Schemas.ConnectedAccountVisibility
 data ConnectedAccountResponse = ConnectedAccountResponse
     { friendSync :: Bool
     , id :: String
-    , integrations :: [ConnectedAccountIntegrationResponse]
+    , integrations :: Maybe [ConnectedAccountIntegrationResponse]
     , name :: Maybe String
-    , revoked :: Bool
+    , revoked :: Maybe Bool
     , showActivity :: Bool
     , twoWayLink :: Bool
     , type' :: ConnectedAccountProviders

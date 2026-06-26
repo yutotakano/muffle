@@ -7,8 +7,8 @@ import GHC.Generics
 import Muffle.Discord.Generated.Schemas.SnowflakeType
 
 data PollEmoji = PollEmoji
-    { animated :: Maybe Bool
-    , id :: Maybe SnowflakeType
-    , name :: Maybe String
+    { animated :: Maybe (Maybe Bool)
+    , id :: Maybe (Maybe SnowflakeType)
+    , name :: Maybe (Maybe String)
     }
     deriving (Show, Eq, Generic)

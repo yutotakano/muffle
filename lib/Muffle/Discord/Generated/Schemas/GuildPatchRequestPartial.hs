@@ -12,26 +12,26 @@ import Muffle.Discord.Generated.Schemas.AvailableLocalesEnum
 import Muffle.Discord.Generated.Schemas.VerificationLevels
 
 data GuildPatchRequestPartial = GuildPatchRequestPartial
-    { afkChannelId :: Maybe SnowflakeType
-    , afkTimeout :: Maybe AfkTimeouts
-    , banner :: Maybe String
-    , defaultMessageNotifications :: Maybe UserNotificationSettings
-    , description :: Maybe String
-    , discoverySplash :: Maybe String
-    , explicitContentFilter :: Maybe GuildExplicitContentFilterTypes
-    , features :: [Maybe String]
-    , homeHeader :: Maybe String
-    , icon :: Maybe String
-    , name :: String
-    , preferredLocale :: Maybe AvailableLocalesEnum
-    , premiumProgressBarEnabled :: Maybe Bool
-    , publicUpdatesChannelId :: Maybe SnowflakeType
-    , region :: Maybe String
-    , rulesChannelId :: Maybe SnowflakeType
-    , safetyAlertsChannelId :: Maybe SnowflakeType
-    , splash :: Maybe String
-    , systemChannelFlags :: Maybe Integer
-    , systemChannelId :: Maybe SnowflakeType
-    , verificationLevel :: Maybe VerificationLevels
+    { afkChannelId :: Maybe (Maybe SnowflakeType)
+    , afkTimeout :: Maybe (Maybe AfkTimeouts)
+    , banner :: Maybe (Maybe String)
+    , defaultMessageNotifications :: Maybe (Maybe UserNotificationSettings)
+    , description :: Maybe (Maybe String)
+    , discoverySplash :: Maybe (Maybe String)
+    , explicitContentFilter :: Maybe (Maybe GuildExplicitContentFilterTypes)
+    , features :: Maybe ([Maybe String])
+    , homeHeader :: Maybe (Maybe String)
+    , icon :: Maybe (Maybe String)
+    , name :: Maybe String
+    , preferredLocale :: Maybe (Maybe AvailableLocalesEnum)
+    , premiumProgressBarEnabled :: Maybe (Maybe Bool)
+    , publicUpdatesChannelId :: Maybe (Maybe SnowflakeType)
+    , region :: Maybe (Maybe String)
+    , rulesChannelId :: Maybe (Maybe SnowflakeType)
+    , safetyAlertsChannelId :: Maybe (Maybe SnowflakeType)
+    , splash :: Maybe (Maybe String)
+    , systemChannelFlags :: Maybe (Maybe Integer)
+    , systemChannelId :: Maybe (Maybe SnowflakeType)
+    , verificationLevel :: Maybe (Maybe VerificationLevels)
     }
     deriving (Show, Eq, Generic)

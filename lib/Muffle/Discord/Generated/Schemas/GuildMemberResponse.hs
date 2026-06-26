@@ -11,9 +11,9 @@ import Muffle.Discord.Generated.Schemas.UserResponse
 
 data GuildMemberResponse = GuildMemberResponse
     { avatar :: Maybe String
-    , avatarDecorationData :: Maybe UserAvatarDecorationResponse
+    , avatarDecorationData :: Maybe (Maybe UserAvatarDecorationResponse)
     , banner :: Maybe String
-    , collectibles :: Maybe UserCollectiblesResponse
+    , collectibles :: Maybe (Maybe UserCollectiblesResponse)
     , communicationDisabledUntil :: Maybe String
     , deaf :: Bool
     , flags :: Int32

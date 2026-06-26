@@ -39,12 +39,12 @@ import Muffle.Discord.Generated.Schemas.GuildStickerResponse
 import Muffle.Discord.Generated.Schemas.StandardStickerResponse
 
 data MessageResponse = MessageResponse
-    { activity :: MessageActivityResponse
-    , application :: BasicApplicationResponseWithBot
-    , applicationId :: SnowflakeType
+    { activity :: Maybe MessageActivityResponse
+    , application :: Maybe BasicApplicationResponseWithBot
+    , applicationId :: Maybe SnowflakeType
     , attachments :: [MessageAttachmentResponse]
     , author :: UserResponse
-    , call :: MessageCallResponse
+    , call :: Maybe MessageCallResponse
     , channelId :: SnowflakeType
     , components :: [MessageResponseComponentsItem]
     , content :: String
@@ -52,38 +52,40 @@ data MessageResponse = MessageResponse
     , embeds :: [MessageEmbedResponse]
     , flags :: Int32
     , id :: SnowflakeType
-    , interaction :: MessageInteractionResponse
-    , interactionMetadata :: MessageResponseInteractionMetadata
-    , mentionChannels :: [MessageMentionChannelResponse]
+    , interaction :: Maybe MessageInteractionResponse
+    , interactionMetadata :: Maybe MessageResponseInteractionMetadataNullableInner
+    , mentionChannels :: Maybe [MessageMentionChannelResponse]
     , mentionEveryone :: Bool
     , mentionRoles :: [SnowflakeType]
     , mentions :: [UserResponse]
-    , messageReference :: MessageReferenceResponse
-    , messageSnapshots :: [MessageSnapshotResponse]
-    , nonce :: MessageResponseNonce
+    , messageReference :: Maybe MessageReferenceResponse
+    , messageSnapshots :: Maybe [MessageSnapshotResponse]
+    , nonce :: Maybe MessageResponseNonceNullableInner
     , pinned :: Bool
-    , poll :: PollResponse
-    , position :: Int32
-    , purchaseNotification :: PurchaseNotificationResponse
-    , reactions :: [MessageReactionResponse]
-    , referencedMessage :: Maybe BasicMessageResponse
-    , resolved :: ResolvedObjectsResponse
-    , roleSubscriptionData :: MessageRoleSubscriptionDataResponse
-    , sharedClientTheme :: CustomClientThemeResponse
-    , stickerItems :: [MessageStickerItemResponse]
-    , stickers :: [MessageResponseStickersItem]
-    , thread :: ThreadResponse
+    , poll :: Maybe PollResponse
+    , position :: Maybe Int32
+    , purchaseNotification :: Maybe PurchaseNotificationResponse
+    , reactions :: Maybe [MessageReactionResponse]
+    , referencedMessage :: Maybe (Maybe BasicMessageResponse)
+    , resolved :: Maybe ResolvedObjectsResponse
+    , roleSubscriptionData :: Maybe MessageRoleSubscriptionDataResponse
+    , sharedClientTheme :: Maybe CustomClientThemeResponse
+    , stickerItems :: Maybe [MessageStickerItemResponse]
+    , stickers :: Maybe MessageResponseStickersNullableInner
+    , thread :: Maybe ThreadResponse
     , timestamp :: String
     , tts :: Bool
     , type' :: MessageType
-    , webhookId :: SnowflakeType
+    , webhookId :: Maybe SnowflakeType
     }
     deriving (Show, Eq, Generic)
 data MessageResponseComponentsItem = MessageResponseComponentsItem0 ActionRowComponentResponse | MessageResponseComponentsItem1 ContainerComponentResponse | MessageResponseComponentsItem2 FileComponentResponse | MessageResponseComponentsItem3 MediaGalleryComponentResponse | MessageResponseComponentsItem4 SectionComponentResponse | MessageResponseComponentsItem5 SeparatorComponentResponse | MessageResponseComponentsItem6 TextDisplayComponentResponse
     deriving (Show, Eq, Generic)
-data MessageResponseInteractionMetadata = MessageResponseInteractionMetadata0 ApplicationCommandInteractionMetadataResponse | MessageResponseInteractionMetadata1 MessageComponentInteractionMetadataResponse | MessageResponseInteractionMetadata2 ModalSubmitInteractionMetadataResponse
+data MessageResponseInteractionMetadataNullableInner = MessageResponseInteractionMetadataNullableInner0 ApplicationCommandInteractionMetadataResponse | MessageResponseInteractionMetadataNullableInner1 MessageComponentInteractionMetadataResponse | MessageResponseInteractionMetadataNullableInner2 ModalSubmitInteractionMetadataResponse
     deriving (Show, Eq, Generic)
-data MessageResponseNonce = MessageResponseNonce0 Int64 | MessageResponseNonce1 String
+data MessageResponseNonceNullableInner = MessageResponseNonceNullableInner0 Int64 | MessageResponseNonceNullableInner1 String
     deriving (Show, Eq, Generic)
-data MessageResponseStickersItem = MessageResponseStickersItem0 GuildStickerResponse | MessageResponseStickersItem1 StandardStickerResponse
+newtype MessageResponseStickersNullableInner = MessageResponseStickersNullableInner [MessageResponseStickersNullableInnerItem]
+    deriving (Show, Eq, Generic)
+data MessageResponseStickersNullableInnerItem = MessageResponseStickersNullableInnerItem0 GuildStickerResponse | MessageResponseStickersNullableInnerItem1 StandardStickerResponse
     deriving (Show, Eq, Generic)

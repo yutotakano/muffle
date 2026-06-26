@@ -7,7 +7,7 @@ import GHC.Generics
 
 
 data RichEmbedField = RichEmbedField
-    { inline :: Maybe Bool
+    { inline :: Maybe (Maybe Bool)
     , name :: String
     , value :: String
     }

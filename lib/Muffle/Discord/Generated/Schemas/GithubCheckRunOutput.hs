@@ -7,7 +7,7 @@ import GHC.Generics
 
 
 data GithubCheckRunOutput = GithubCheckRunOutput
-    { summary :: Maybe String
-    , title :: Maybe String
+    { summary :: Maybe (Maybe String)
+    , title :: Maybe (Maybe String)
     }
     deriving (Show, Eq, Generic)

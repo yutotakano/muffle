@@ -12,16 +12,16 @@ import Muffle.Discord.Generated.Schemas.RecurrenceRule
 import Muffle.Discord.Generated.Schemas.GuildScheduledEventStatuses
 
 data ExternalScheduledEventPatchRequestPartial = ExternalScheduledEventPatchRequestPartial
-    { channelId :: Maybe SnowflakeType
-    , description :: Maybe String
-    , entityMetadata :: EntityMetadataExternal
-    , entityType :: Maybe GuildScheduledEventEntityTypes
-    , image :: Maybe String
-    , name :: String
-    , privacyLevel :: GuildScheduledEventPrivacyLevels
-    , recurrenceRule :: Maybe RecurrenceRule
-    , scheduledEndTime :: Maybe String
-    , scheduledStartTime :: String
-    , status :: Maybe GuildScheduledEventStatuses
+    { channelId :: Maybe (Maybe SnowflakeType)
+    , description :: Maybe (Maybe String)
+    , entityMetadata :: Maybe EntityMetadataExternal
+    , entityType :: Maybe (Maybe GuildScheduledEventEntityTypes)
+    , image :: Maybe (Maybe String)
+    , name :: Maybe String
+    , privacyLevel :: Maybe GuildScheduledEventPrivacyLevels
+    , recurrenceRule :: Maybe (Maybe RecurrenceRule)
+    , scheduledEndTime :: Maybe (Maybe String)
+    , scheduledStartTime :: Maybe String
+    , status :: Maybe (Maybe GuildScheduledEventStatuses)
     }
     deriving (Show, Eq, Generic)

@@ -9,8 +9,8 @@ import Muffle.Discord.Generated.Schemas.MessageComponentTypes
 
 data FileComponentForMessageRequest = FileComponentForMessageRequest
     { file :: UnfurledMediaRequestWithAttachmentReferenceRequired
-    , id :: Maybe Int32
-    , spoiler :: Maybe Bool
+    , id :: Maybe (Maybe Int32)
+    , spoiler :: Maybe (Maybe Bool)
     , type' :: MessageComponentTypes
     }
     deriving (Show, Eq, Generic)

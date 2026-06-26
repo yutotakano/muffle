@@ -7,6 +7,6 @@ import GHC.Generics
 import Muffle.Discord.Generated.Schemas.ApplicationOAuth2InstallParamsResponse
 
 data ApplicationIntegrationTypeConfigurationResponse = ApplicationIntegrationTypeConfigurationResponse
-    { oauth2InstallParams :: ApplicationOAuth2InstallParamsResponse
+    { oauth2InstallParams :: Maybe ApplicationOAuth2InstallParamsResponse
     }
     deriving (Show, Eq, Generic)

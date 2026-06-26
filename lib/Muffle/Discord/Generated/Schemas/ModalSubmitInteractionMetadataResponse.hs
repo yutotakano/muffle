@@ -13,10 +13,10 @@ import Muffle.Discord.Generated.Schemas.MessageComponentInteractionMetadataRespo
 data ModalSubmitInteractionMetadataResponse = ModalSubmitInteractionMetadataResponse
     { authorizingIntegrationOwners :: ModalSubmitInteractionMetadataResponseAuthorizingIntegrationOwners
     , id :: SnowflakeType
-    , originalResponseMessageId :: SnowflakeType
+    , originalResponseMessageId :: Maybe SnowflakeType
     , triggeringInteractionMetadata :: ModalSubmitInteractionMetadataResponseTriggeringInteractionMetadata
     , type' :: InteractionTypes
-    , user :: UserResponse
+    , user :: Maybe UserResponse
     }
     deriving (Show, Eq, Generic)
 data ModalSubmitInteractionMetadataResponseAuthorizingIntegrationOwners = ModalSubmitInteractionMetadataResponseAuthorizingIntegrationOwners

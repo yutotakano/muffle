@@ -7,7 +7,7 @@ import GHC.Generics
 
 
 data RichEmbedProvider = RichEmbedProvider
-    { name :: Maybe String
-    , url :: Maybe String
+    { name :: Maybe (Maybe String)
+    , url :: Maybe (Maybe String)
     }
     deriving (Show, Eq, Generic)

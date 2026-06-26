@@ -9,19 +9,23 @@ import Muffle.Discord.Generated.Schemas.ApplicationCommandOptionType
 data ApplicationCommandAttachmentOptionResponse = ApplicationCommandAttachmentOptionResponse
     { description :: String
     , descriptionLocalizations :: Maybe ApplicationCommandAttachmentOptionResponseDescriptionLocalizationsNullableInner
-    , descriptionLocalized :: String
+    , descriptionLocalized :: Maybe String
     , name :: String
     , nameLocalizations :: Maybe ApplicationCommandAttachmentOptionResponseNameLocalizationsNullableInner
-    , nameLocalized :: String
-    , required :: Bool
+    , nameLocalized :: Maybe String
+    , required :: Maybe Bool
     , type' :: ApplicationCommandOptionType
     }
     deriving (Show, Eq, Generic)
-data ApplicationCommandAttachmentOptionResponseDescriptionLocalizationsNullableInner = ApplicationCommandAttachmentOptionResponseDescriptionLocalizationsNullableInner
+newtype ApplicationCommandAttachmentOptionResponseDescriptionLocalizationsNullableInner = ApplicationCommandAttachmentOptionResponseDescriptionLocalizationsNullableInner (Maybe ApplicationCommandAttachmentOptionResponseDescriptionLocalizationsNullableInnerNullableInner)
+    deriving (Show, Eq, Generic)
+data ApplicationCommandAttachmentOptionResponseDescriptionLocalizationsNullableInnerNullableInner = ApplicationCommandAttachmentOptionResponseDescriptionLocalizationsNullableInnerNullableInner
     { 
     }
     deriving (Show, Eq, Generic)
-data ApplicationCommandAttachmentOptionResponseNameLocalizationsNullableInner = ApplicationCommandAttachmentOptionResponseNameLocalizationsNullableInner
+newtype ApplicationCommandAttachmentOptionResponseNameLocalizationsNullableInner = ApplicationCommandAttachmentOptionResponseNameLocalizationsNullableInner (Maybe ApplicationCommandAttachmentOptionResponseNameLocalizationsNullableInnerNullableInner)
+    deriving (Show, Eq, Generic)
+data ApplicationCommandAttachmentOptionResponseNameLocalizationsNullableInnerNullableInner = ApplicationCommandAttachmentOptionResponseNameLocalizationsNullableInnerNullableInner
     { 
     }
     deriving (Show, Eq, Generic)

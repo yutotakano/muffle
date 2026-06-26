@@ -14,9 +14,9 @@ data RecurrenceRuleResponse = RecurrenceRuleResponse
     , byMonthDay :: [Int32]
     , byNWeekday :: [ByNWeekdayResponse]
     , byWeekday :: [RecurrenceRuleWeekdays]
-    , byYearDay :: [Int32]
-    , count :: Maybe Int32
-    , end :: Maybe String
+    , byYearDay :: Maybe [Int32]
+    , count :: Maybe (Maybe Int32)
+    , end :: Maybe (Maybe String)
     , frequency :: RecurrenceRuleFrequencies
     , interval :: Int32
     , start :: String

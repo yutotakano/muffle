@@ -7,7 +7,7 @@ import GHC.Generics
 import Muffle.Discord.Generated.Schemas.SnowflakeType
 
 data BulkBanUsersRequest = BulkBanUsersRequest
-    { deleteMessageSeconds :: Maybe Integer
+    { deleteMessageSeconds :: Maybe (Maybe Integer)
     , userIds :: [SnowflakeType]
     }
     deriving (Show, Eq, Generic)

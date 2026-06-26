@@ -9,14 +9,14 @@ import Muffle.Discord.Generated.Schemas.MessageComponentTypes
 
 data TextInputComponentForModalRequest = TextInputComponentForModalRequest
     { customId :: String
-    , id :: Maybe Int32
-    , label :: Maybe String
-    , maxLength :: Maybe Integer
-    , minLength :: Maybe Integer
-    , placeholder :: Maybe String
-    , required :: Maybe Bool
+    , id :: Maybe (Maybe Int32)
+    , label :: Maybe (Maybe String)
+    , maxLength :: Maybe (Maybe Integer)
+    , minLength :: Maybe (Maybe Integer)
+    , placeholder :: Maybe (Maybe String)
+    , required :: Maybe (Maybe Bool)
     , style :: TextInputStyleTypes
     , type' :: MessageComponentTypes
-    , value :: Maybe String
+    , value :: Maybe (Maybe String)
     }
     deriving (Show, Eq, Generic)

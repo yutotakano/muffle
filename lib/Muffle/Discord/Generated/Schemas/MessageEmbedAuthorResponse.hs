@@ -7,9 +7,9 @@ import GHC.Generics
 
 
 data MessageEmbedAuthorResponse = MessageEmbedAuthorResponse
-    { iconUrl :: String
+    { iconUrl :: Maybe String
     , name :: String
-    , proxyIconUrl :: String
-    , url :: String
+    , proxyIconUrl :: Maybe String
+    , url :: Maybe String
     }
     deriving (Show, Eq, Generic)

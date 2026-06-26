@@ -9,11 +9,13 @@ import GHC.Generics
 data ApplicationCommandOptionNumberChoiceResponse = ApplicationCommandOptionNumberChoiceResponse
     { name :: String
     , nameLocalizations :: Maybe ApplicationCommandOptionNumberChoiceResponseNameLocalizationsNullableInner
-    , nameLocalized :: String
+    , nameLocalized :: Maybe String
     , value :: Integer
     }
     deriving (Show, Eq, Generic)
-data ApplicationCommandOptionNumberChoiceResponseNameLocalizationsNullableInner = ApplicationCommandOptionNumberChoiceResponseNameLocalizationsNullableInner
+newtype ApplicationCommandOptionNumberChoiceResponseNameLocalizationsNullableInner = ApplicationCommandOptionNumberChoiceResponseNameLocalizationsNullableInner (Maybe ApplicationCommandOptionNumberChoiceResponseNameLocalizationsNullableInnerNullableInner)
+    deriving (Show, Eq, Generic)
+data ApplicationCommandOptionNumberChoiceResponseNameLocalizationsNullableInnerNullableInner = ApplicationCommandOptionNumberChoiceResponseNameLocalizationsNullableInnerNullableInner
     { 
     }
     deriving (Show, Eq, Generic)

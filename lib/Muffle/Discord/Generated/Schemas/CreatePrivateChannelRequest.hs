@@ -7,12 +7,14 @@ import GHC.Generics
 import Muffle.Discord.Generated.Schemas.SnowflakeType
 
 data CreatePrivateChannelRequest = CreatePrivateChannelRequest
-    { accessTokens :: [String]
+    { accessTokens :: Maybe [String]
     , nicks :: Maybe CreatePrivateChannelRequestNicksNullableInner
-    , recipientId :: Maybe SnowflakeType
+    , recipientId :: Maybe (Maybe SnowflakeType)
     }
     deriving (Show, Eq, Generic)
-data CreatePrivateChannelRequestNicksNullableInner = CreatePrivateChannelRequestNicksNullableInner
+newtype CreatePrivateChannelRequestNicksNullableInner = CreatePrivateChannelRequestNicksNullableInner (Maybe CreatePrivateChannelRequestNicksNullableInnerNullableInner)
+    deriving (Show, Eq, Generic)
+data CreatePrivateChannelRequestNicksNullableInnerNullableInner = CreatePrivateChannelRequestNicksNullableInnerNullableInner
     { 
     }
     deriving (Show, Eq, Generic)

@@ -7,8 +7,8 @@ import GHC.Generics
 import Muffle.Discord.Generated.Schemas.ThreadAutoArchiveDuration
 
 data CreateTextThreadWithMessageRequest = CreateTextThreadWithMessageRequest
-    { autoArchiveDuration :: Maybe ThreadAutoArchiveDuration
+    { autoArchiveDuration :: Maybe (Maybe ThreadAutoArchiveDuration)
     , name :: String
-    , rateLimitPerUser :: Maybe Integer
+    , rateLimitPerUser :: Maybe (Maybe Integer)
     }
     deriving (Show, Eq, Generic)

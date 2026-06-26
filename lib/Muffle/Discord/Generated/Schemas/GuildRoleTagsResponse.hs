@@ -8,10 +8,10 @@ import Muffle.Discord.Generated.Schemas.SnowflakeType
 
 data GuildRoleTagsResponse = GuildRoleTagsResponse
     { availableForPurchase :: Maybe ()
-    , botId :: SnowflakeType
+    , botId :: Maybe SnowflakeType
     , guildConnections :: Maybe ()
-    , integrationId :: SnowflakeType
+    , integrationId :: Maybe SnowflakeType
     , premiumSubscriber :: Maybe ()
-    , subscriptionListingId :: SnowflakeType
+    , subscriptionListingId :: Maybe SnowflakeType
     }
     deriving (Show, Eq, Generic)

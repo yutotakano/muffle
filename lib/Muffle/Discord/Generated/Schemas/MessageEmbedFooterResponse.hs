@@ -7,8 +7,8 @@ import GHC.Generics
 
 
 data MessageEmbedFooterResponse = MessageEmbedFooterResponse
-    { iconUrl :: String
-    , proxyIconUrl :: String
+    { iconUrl :: Maybe String
+    , proxyIconUrl :: Maybe String
     , text :: String
     }
     deriving (Show, Eq, Generic)

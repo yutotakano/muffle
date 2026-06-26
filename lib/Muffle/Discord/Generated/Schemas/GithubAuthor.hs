@@ -8,6 +8,6 @@ import GHC.Generics
 
 data GithubAuthor = GithubAuthor
     { name :: String
-    , username :: Maybe String
+    , username :: Maybe (Maybe String)
     }
     deriving (Show, Eq, Generic)

@@ -13,10 +13,10 @@ data LobbyResponse = LobbyResponse
     { applicationId :: SnowflakeType
     , flags :: UInt32Type
     , id :: SnowflakeType
-    , linkedChannel :: GuildChannelResponse
+    , linkedChannel :: Maybe GuildChannelResponse
     , members :: [LobbyMemberResponse]
     , metadata :: Maybe LobbyResponseMetadataNullableInner
-    , overrideEventWebhooksUrl :: Maybe String
+    , overrideEventWebhooksUrl :: Maybe (Maybe String)
     }
     deriving (Show, Eq, Generic)
 data LobbyResponseMetadataNullableInner = LobbyResponseMetadataNullableInner

@@ -9,11 +9,11 @@ import Muffle.Discord.Generated.Schemas.SearchMessageResponse
 import Muffle.Discord.Generated.Schemas.ThreadResponse
 
 data GuildSearchResponse = GuildSearchResponse
-    { documentsIndexed :: Maybe Int32
+    { documentsIndexed :: Maybe (Maybe Int32)
     , doingDeepHistoricalIndex :: Bool
-    , members :: [ThreadMemberResponse]
+    , members :: Maybe [ThreadMemberResponse]
     , messages :: [[SearchMessageResponse]]
-    , threads :: [ThreadResponse]
+    , threads :: Maybe [ThreadResponse]
     , totalResults :: Int32
     }
     deriving (Show, Eq, Generic)

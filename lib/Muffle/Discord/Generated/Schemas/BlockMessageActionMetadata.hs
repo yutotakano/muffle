@@ -7,6 +7,6 @@ import GHC.Generics
 
 
 data BlockMessageActionMetadata = BlockMessageActionMetadata
-    { customMessage :: Maybe String
+    { customMessage :: Maybe (Maybe String)
     }
     deriving (Show, Eq, Generic)

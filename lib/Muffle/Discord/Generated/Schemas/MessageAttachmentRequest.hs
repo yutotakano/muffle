@@ -7,13 +7,13 @@ import GHC.Generics
 import Muffle.Discord.Generated.Schemas.SnowflakeType
 
 data MessageAttachmentRequest = MessageAttachmentRequest
-    { description :: Maybe String
-    , durationSecs :: Maybe Integer
-    , filename :: Maybe String
+    { description :: Maybe (Maybe String)
+    , durationSecs :: Maybe (Maybe Integer)
+    , filename :: Maybe (Maybe String)
     , id :: SnowflakeType
-    , isRemix :: Maybe Bool
-    , isSpoiler :: Maybe Bool
-    , title :: Maybe String
-    , waveform :: Maybe String
+    , isRemix :: Maybe (Maybe Bool)
+    , isSpoiler :: Maybe (Maybe Bool)
+    , title :: Maybe (Maybe String)
+    , waveform :: Maybe (Maybe String)
     }
     deriving (Show, Eq, Generic)

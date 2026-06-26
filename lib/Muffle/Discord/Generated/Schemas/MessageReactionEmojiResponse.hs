@@ -7,7 +7,7 @@ import GHC.Generics
 import Muffle.Discord.Generated.Schemas.SnowflakeType
 
 data MessageReactionEmojiResponse = MessageReactionEmojiResponse
-    { animated :: Bool
+    { animated :: Maybe Bool
     , id :: Maybe SnowflakeType
     , name :: Maybe String
     }

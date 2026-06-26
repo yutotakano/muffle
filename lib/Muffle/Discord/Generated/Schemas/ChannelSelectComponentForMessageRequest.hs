@@ -9,15 +9,15 @@ import Muffle.Discord.Generated.Schemas.ChannelSelectDefaultValue
 import Muffle.Discord.Generated.Schemas.MessageComponentTypes
 
 data ChannelSelectComponentForMessageRequest = ChannelSelectComponentForMessageRequest
-    { channelTypes :: [ChannelTypes]
+    { channelTypes :: Maybe [ChannelTypes]
     , customId :: String
-    , defaultValues :: [ChannelSelectDefaultValue]
-    , disabled :: Maybe Bool
-    , id :: Maybe Int32
-    , maxValues :: Maybe Integer
-    , minValues :: Maybe Integer
-    , placeholder :: Maybe String
-    , required :: Maybe Bool
+    , defaultValues :: Maybe [ChannelSelectDefaultValue]
+    , disabled :: Maybe (Maybe Bool)
+    , id :: Maybe (Maybe Int32)
+    , maxValues :: Maybe (Maybe Integer)
+    , minValues :: Maybe (Maybe Integer)
+    , placeholder :: Maybe (Maybe String)
+    , required :: Maybe (Maybe Bool)
     , type' :: MessageComponentTypes
     }
     deriving (Show, Eq, Generic)
