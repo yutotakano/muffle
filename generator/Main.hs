@@ -13,17 +13,17 @@ import Data.Aeson.Types (JSONPathElement (..), Object, Parser, parseEither, (.!=
 import qualified Data.Aeson.Types (Value (Object, String))
 import qualified Data.ByteString.Lazy as BS (readFile)
 import Data.Char (isAlpha, isAlphaNum, toLower, toUpper)
-import Data.List (intercalate, nub, isInfixOf)
+import Data.List (intercalate, isInfixOf, nub)
 import Data.List.NonEmpty (head)
 import qualified Data.List.NonEmpty as NE
 import qualified Data.Map.Strict as StrictMap
 import Data.Maybe (fromJust, isJust)
 import qualified Data.Text as T
 import qualified Data.Text.Lazy.IO as TLIO
-import Text.Pretty.Simple (pShowNoColor)
-import Prelude hiding (head)
 import System.Directory (createDirectoryIfMissing)
 import System.IO (readFile')
+import Text.Pretty.Simple (pShowNoColor)
+import Prelude hiding (head)
 
 data ParsedSchemaConstant = ParsedSchemaConstant
     { parsedSchemaConst :: String
@@ -558,8 +558,9 @@ schemaToSimpleHaskellType (ArraySchema (ParsedSchemaArray innerSchema _min _max)
     Nothing -> Nothing
 schemaToSimpleHaskellType _ = Nothing
 
--- | Check if a schema is a reference to another schema that is not present in
--- the map of schemas.
+{- | Check if a schema is a reference to another schema that is not present in
+the map of schemas.
+-}
 isUnresolvedRef :: ParsedSchema -> StrictMap.Map String ParsedSchema -> Bool
 isUnresolvedRef (RefSchema (ParsedSchemaRef ref)) schemas = not $ StrictMap.member ref schemas
 isUnresolvedRef (TypedEnumSchema (ParsedSchemaTypedEnum ref _)) schemas = not $ StrictMap.member ref schemas
@@ -584,15 +585,15 @@ listContainedUnresolvedRef schema schemas = case schema of
 filterUnresolvedRefs :: StrictMap.Map String ParsedSchema -> [String]
 filterUnresolvedRefs schemas = foldl' (\acc (_, schema) -> acc ++ listContainedUnresolvedRef schema schemas) [] (StrictMap.toList schemas)
 
--- | Takes the content of a cabal file and splits it into two parts:
--- - the part up to and including -- BEGIN GENERATED MODULES
--- - and the part after -- END GENERATED MODULES (including the line itself)
+{- | Takes the content of a cabal file and splits it into two parts:
+- the part up to and including -- BEGIN GENERATED MODULES
+- and the part after -- END GENERATED MODULES (including the line itself)
+-}
 splitCabalFileOnGeneratedModules :: [String] -> ([String], [String])
 splitCabalFileOnGeneratedModules cabalFileContent =
     let (before, after) = break (isInfixOf "-- BEGIN GENERATED MODULES") cabalFileContent
         after' = dropWhile (not . isInfixOf "-- END GENERATED MODULES") after
      in (before ++ take 1 after, after')
-
 
 insertGeneratedModulesIntoCabalFile :: FilePath -> [(String, ParsedSchema)] -> IO ()
 insertGeneratedModulesIntoCabalFile cabalFilePath schemas = do
@@ -600,7 +601,6 @@ insertGeneratedModulesIntoCabalFile cabalFilePath schemas = do
     let (before, after) = splitCabalFileOnGeneratedModules (lines cabalFileContent)
     let newContents = before ++ ["        Muffle.Discord.Generated.Schemas"] ++ ["        Muffle.Discord.Generated.Schemas." ++ name | (name, _) <- schemas] ++ after
     writeFile cabalFilePath (unlines newContents)
-
 
 main :: IO ()
 main = do
