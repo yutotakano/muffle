@@ -621,5 +621,5 @@ main = do
 
     let importStatements = intercalate "\n" $ map (\(name, _) -> "import Muffle.Discord.Generated.Schemas." ++ name) schemas
     let moduleStatements = intercalate "\n" $ map (\(name, _) -> "    module Muffle.Discord.Generated.Schemas." ++ name ++ ",") schemas
-    let allSchemasModuleContent = "module Muffle.Discord.Generated.Schemas (\n" ++ moduleStatements ++ "\n) where\n\n" ++ importStatements ++ "\n"
+    let allSchemasModuleContent = "{-# LANGUAGE DuplicateRecordFields #-}\nmodule Muffle.Discord.Generated.Schemas (\n" ++ moduleStatements ++ "\n) where\n\n" ++ importStatements ++ "\n"
     writeFile "lib/Muffle/Discord/Generated/Schemas.hs" allSchemasModuleContent
