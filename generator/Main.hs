@@ -287,12 +287,17 @@ flattenSchema name (ObjectSchema (ParsedSchemaObject properties required)) acc =
             foldl'
                 ( \(propsAcc, accAcc) (propName, propSchema) ->
                     let newPropName = name ++ newValidConstructorName propName
-                        accWithFlattenedProp = flattenSchema newPropName propSchema accAcc
+                        -- Special case for object keys with only type: null
+                        -- subschema, this should be treated as
+                        -- Nullable (RawType "null") instead of just RawType "null".
+                        processedPropSchema = if isRawTypeNullSchema propSchema then NullableSchema propSchema else propSchema
+
+                        accWithFlattenedProp = flattenSchema newPropName processedPropSchema accAcc
                         -- Simulate insertion to get de-duplicated name
                         nameOfMainSchemaInFlattened = fst $ insertDeduplicate newPropName undefined accAcc
                         mainSchemaInFlattened = fromJust $ StrictMap.lookup nameOfMainSchemaInFlattened accWithFlattenedProp
-                     in if isJust (schemaToSimpleHaskellType propSchema)
-                            then (propsAcc ++ [(propName, propSchema)], accAcc)
+                     in if isJust (schemaToSimpleHaskellType processedPropSchema)
+                            then (propsAcc ++ [(propName, processedPropSchema)], accAcc)
                             -- If the flattened schema became simple enough, use that.
                             -- Remove from the accumulator.
                             else
@@ -545,7 +550,7 @@ schemaToSimpleHaskellType (RawTypeSchema (ParsedSchemaRawType rawType)) = case r
     "string" -> Just "String"
     "number" -> Just "Integer"
     "boolean" -> Just "Bool"
-    "null" -> Just "Maybe ()"
+    "null" -> Just "()"
     _ -> Nothing
 schemaToSimpleHaskellType (TypedEnumSchema (ParsedSchemaTypedEnum enumType _)) = Just enumType
 schemaToSimpleHaskellType (IntegerSchema (ParsedSchemaInteger format _min _max)) = case format of
