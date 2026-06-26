@@ -554,6 +554,32 @@ schemaToSimpleHaskellType (ArraySchema (ParsedSchemaArray innerSchema _min _max)
     Nothing -> Nothing
 schemaToSimpleHaskellType _ = Nothing
 
+-- | Check if a schema is a reference to another schema that is not present in
+-- the map of schemas.
+isUnresolvedRef :: ParsedSchema -> StrictMap.Map String ParsedSchema -> Bool
+isUnresolvedRef (RefSchema (ParsedSchemaRef ref)) schemas = not $ StrictMap.member ref schemas
+isUnresolvedRef (TypedEnumSchema (ParsedSchemaTypedEnum ref _)) schemas = not $ StrictMap.member ref schemas
+isUnresolvedRef _ _ = False
+
+listContainedUnresolvedRef :: ParsedSchema -> StrictMap.Map String ParsedSchema -> [String]
+listContainedUnresolvedRef schema schemas = case schema of
+    RefSchema (ParsedSchemaRef name) -> [name | isUnresolvedRef schema schemas]
+    NullableSchema innerSchema -> listContainedUnresolvedRef innerSchema schemas
+    ConstSchema _ -> []
+    RawTypeSchema _ -> []
+    EmptySchema -> []
+    EnumSchema _ -> []
+    TypedEnumSchema (ParsedSchemaTypedEnum name _) -> [name | isUnresolvedRef schema schemas]
+    IntegerSchema _ -> []
+    ArraySchema (ParsedSchemaArray innerSchema _min _max) -> listContainedUnresolvedRef innerSchema schemas
+    ObjectSchema (ParsedSchemaObject properties _) -> concatMap (\(_, propSchema) -> listContainedUnresolvedRef propSchema schemas) properties
+    AnyOfSchema schemasList -> concatMap (\(_, s) -> listContainedUnresolvedRef s schemas) schemasList
+    AllOfSchema schemasList -> concatMap (\(_, s) -> listContainedUnresolvedRef s schemas) schemasList
+    OneOfSchema schemasList -> concatMap (\(_, s) -> listContainedUnresolvedRef s schemas) schemasList
+
+filterUnresolvedRefs :: StrictMap.Map String ParsedSchema -> [String]
+filterUnresolvedRefs schemas = foldl' (\acc (_, schema) -> acc ++ listContainedUnresolvedRef schema schemas) [] (StrictMap.toList schemas)
+
 main :: IO ()
 main = do
     putStrLn "Starting Generator"
@@ -588,7 +614,8 @@ main = do
         let outputFile = "lib/Muffle/Discord/Generated/Schemas/" ++ name ++ ".hs"
         let intermediateOutputFile = "lib/Muffle/Discord/Generated/Schemas/" ++ name ++ ".hs.txt"
 
-        let moduleHeader = "{-# LANGUAGE DuplicateRecordFields #-}\nmodule Muffle.Discord.Generated.Schemas." ++ name ++ " where\n\nimport Data.Int (Int32, Int64)\n\n"
+        let otherRefsImport = intercalate "\n" $ map ("import Muffle.Discord.Generated.Schemas." ++) $ filterUnresolvedRefs flattenedSchemas
+        let moduleHeader = "{-# LANGUAGE DuplicateRecordFields #-}\nmodule Muffle.Discord.Generated.Schemas." ++ name ++ " where\n\nimport Data.Int (Int32, Int64)\n" ++ otherRefsImport ++ "\n\n"
         writeFile outputFile (moduleHeader ++ unlines haskellDeclarations)
         TLIO.writeFile intermediateOutputFile $ pShowNoColor flattenedSchemas
 
