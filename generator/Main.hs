@@ -618,7 +618,7 @@ main = do
         let intermediateOutputFile = "lib/Muffle/Discord/Generated/Schemas/" ++ name ++ ".hs.txt"
 
         let otherRefsImport = intercalate "\n" $ map ("import Muffle.Discord.Generated.Schemas." ++) $ nub $ filterUnresolvedRefs flattenedSchemas
-        let moduleHeader = "{-# LANGUAGE DuplicateRecordFields #-}\nmodule Muffle.Discord.Generated.Schemas." ++ name ++ " where\n\nimport Data.Int (Int32, Int64)\n" ++ otherRefsImport ++ "\n\n"
+        let moduleHeader = "{-# LANGUAGE DuplicateRecordFields #-}\n{-# LANGUAGE DeriveGeneric #-}\nmodule Muffle.Discord.Generated.Schemas." ++ name ++ " where\n\nimport Data.Int (Int32, Int64)\nimport GHC.Generics\n" ++ otherRefsImport ++ "\n\n"
         writeFile outputFile (moduleHeader ++ unlines haskellDeclarations)
         TLIO.writeFile intermediateOutputFile $ pShowNoColor flattenedSchemas
 
