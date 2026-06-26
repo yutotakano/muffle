@@ -544,7 +544,7 @@ schemaToSimpleHaskellType (RawTypeSchema (ParsedSchemaRawType rawType)) = case r
     "string" -> Just "String"
     "number" -> Just "Integer"
     "boolean" -> Just "Bool"
-    "null" -> Just "()"
+    "null" -> Just "Maybe ()"
     _ -> Nothing
 schemaToSimpleHaskellType (TypedEnumSchema (ParsedSchemaTypedEnum enumType _)) = Just enumType
 schemaToSimpleHaskellType (IntegerSchema (ParsedSchemaInteger format _min _max)) = case format of
