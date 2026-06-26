@@ -13,7 +13,7 @@ import Data.Aeson.Types (JSONPathElement (..), Object, Parser, parseEither, (.!=
 import qualified Data.Aeson.Types (Value (Object, String))
 import Data.ByteString.Lazy as BS (readFile)
 import Data.Char (isAlpha, isAlphaNum, toLower, toUpper)
-import Data.List (intercalate)
+import Data.List (intercalate, nub)
 import Data.List.NonEmpty (head)
 import qualified Data.List.NonEmpty as NE
 import qualified Data.Map.Strict as StrictMap
@@ -614,7 +614,7 @@ main = do
         let outputFile = "lib/Muffle/Discord/Generated/Schemas/" ++ name ++ ".hs"
         let intermediateOutputFile = "lib/Muffle/Discord/Generated/Schemas/" ++ name ++ ".hs.txt"
 
-        let otherRefsImport = intercalate "\n" $ map ("import Muffle.Discord.Generated.Schemas." ++) $ filterUnresolvedRefs flattenedSchemas
+        let otherRefsImport = intercalate "\n" $ map ("import Muffle.Discord.Generated.Schemas." ++) $ nub $ filterUnresolvedRefs flattenedSchemas
         let moduleHeader = "{-# LANGUAGE DuplicateRecordFields #-}\nmodule Muffle.Discord.Generated.Schemas." ++ name ++ " where\n\nimport Data.Int (Int32, Int64)\n" ++ otherRefsImport ++ "\n\n"
         writeFile outputFile (moduleHeader ++ unlines haskellDeclarations)
         TLIO.writeFile intermediateOutputFile $ pShowNoColor flattenedSchemas
