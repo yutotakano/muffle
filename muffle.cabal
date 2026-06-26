@@ -23,7 +23,9 @@ library
         Muffle
         Muffle.Discord
         Muffle.Discord.Generated
-        Muffle.Discord.Generated.Schemas
+
+        -- BEGIN GENERATED MODULES (run `cabal run generator` to regenerate)
+        -- END GENERATED MODULES
     -- other-modules:
     -- other-extensions:
     build-depends:

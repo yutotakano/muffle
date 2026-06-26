@@ -11,18 +11,19 @@ import Data.Aeson.Key (fromString, toString)
 import Data.Aeson.KeyMap (insert, keys, lookup, member)
 import Data.Aeson.Types (JSONPathElement (..), Object, Parser, parseEither, (.!=), (.:), (.:?), (<?>))
 import qualified Data.Aeson.Types (Value (Object, String))
-import Data.ByteString.Lazy as BS (readFile)
+import qualified Data.ByteString.Lazy as BS (readFile)
 import Data.Char (isAlpha, isAlphaNum, toLower, toUpper)
-import Data.List (intercalate, nub)
+import Data.List (intercalate, nub, isInfixOf)
 import Data.List.NonEmpty (head)
 import qualified Data.List.NonEmpty as NE
 import qualified Data.Map.Strict as StrictMap
 import Data.Maybe (fromJust, isJust)
 import qualified Data.Text as T
 import qualified Data.Text.Lazy.IO as TLIO
-import Text.Pretty.Simple (pPrint, pShowNoColor)
+import Text.Pretty.Simple (pShowNoColor)
 import Prelude hiding (head)
 import System.Directory (createDirectoryIfMissing)
+import System.IO (readFile')
 
 data ParsedSchemaConstant = ParsedSchemaConstant
     { parsedSchemaConst :: String
@@ -583,6 +584,24 @@ listContainedUnresolvedRef schema schemas = case schema of
 filterUnresolvedRefs :: StrictMap.Map String ParsedSchema -> [String]
 filterUnresolvedRefs schemas = foldl' (\acc (_, schema) -> acc ++ listContainedUnresolvedRef schema schemas) [] (StrictMap.toList schemas)
 
+-- | Takes the content of a cabal file and splits it into two parts:
+-- - the part up to and including -- BEGIN GENERATED MODULES
+-- - and the part after -- END GENERATED MODULES (including the line itself)
+splitCabalFileOnGeneratedModules :: [String] -> ([String], [String])
+splitCabalFileOnGeneratedModules cabalFileContent =
+    let (before, after) = break (isInfixOf "-- BEGIN GENERATED MODULES") cabalFileContent
+        after' = dropWhile (not . isInfixOf "-- END GENERATED MODULES") after
+     in (before ++ take 1 after, after')
+
+
+insertGeneratedModulesIntoCabalFile :: FilePath -> [(String, ParsedSchema)] -> IO ()
+insertGeneratedModulesIntoCabalFile cabalFilePath schemas = do
+    cabalFileContent <- readFile' "muffle.cabal" -- strict
+    let (before, after) = splitCabalFileOnGeneratedModules (lines cabalFileContent)
+    let newContents = before ++ ["        Muffle.Discord.Generated.Schemas"] ++ ["        Muffle.Discord.Generated.Schemas." ++ name | (name, _) <- schemas] ++ after
+    writeFile cabalFilePath (unlines newContents)
+
+
 main :: IO ()
 main = do
     putStrLn "Starting Generator"
@@ -627,4 +646,4 @@ main = do
     let allSchemasModuleContent = "{-# LANGUAGE DuplicateRecordFields #-}\nmodule Muffle.Discord.Generated.Schemas (\n" ++ moduleStatements ++ "\n) where\n\n" ++ importStatements ++ "\n"
     writeFile "lib/Muffle/Discord/Generated/Schemas.hs" allSchemasModuleContent
 
-    putStrLn $ "Add the following to your cabal file:\n\n  exposed-modules:\n" ++ intercalate "\n" (map (\(name, _) -> "    Muffle.Discord.Generated.Schemas." ++ name) schemas) ++ "\n"
+    insertGeneratedModulesIntoCabalFile "muffle.cabal" schemas
