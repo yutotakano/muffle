@@ -19,7 +19,6 @@ common warnings
 library
     import:           warnings
     exposed-modules:
-        MyLib
         Muffle
         Muffle.Discord
         Muffle.Discord.Generated
