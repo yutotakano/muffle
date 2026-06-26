@@ -7,3 +7,4 @@
 # Cabal Artifacts
 dist-newstyle
 
+lib/Muffle/Discord/Generated/Schemas/*.hs.txt

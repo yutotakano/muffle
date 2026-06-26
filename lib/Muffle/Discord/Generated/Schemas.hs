@@ -1,0 +1,1078 @@
+{-# LANGUAGE DuplicateRecordFields #-}
+module Muffle.Discord.Generated.Schemas (
+    module Muffle.Discord.Generated.Schemas.AccountResponse,
+    module Muffle.Discord.Generated.Schemas.ActionRowComponentForMessageRequest,
+    module Muffle.Discord.Generated.Schemas.ActionRowComponentForModalRequest,
+    module Muffle.Discord.Generated.Schemas.ActionRowComponentResponse,
+    module Muffle.Discord.Generated.Schemas.ActionTypes,
+    module Muffle.Discord.Generated.Schemas.ActivitiesAttachmentResponse,
+    module Muffle.Discord.Generated.Schemas.ActivityActionTypes,
+    module Muffle.Discord.Generated.Schemas.ActivityInstanceCallbackResponse,
+    module Muffle.Discord.Generated.Schemas.AfkTimeouts,
+    module Muffle.Discord.Generated.Schemas.AllowedMentionTypes,
+    module Muffle.Discord.Generated.Schemas.ApplicationCommandAttachmentOption,
+    module Muffle.Discord.Generated.Schemas.ApplicationCommandAttachmentOptionResponse,
+    module Muffle.Discord.Generated.Schemas.ApplicationCommandAutocompleteCallbackRequest,
+    module Muffle.Discord.Generated.Schemas.ApplicationCommandBooleanOption,
+    module Muffle.Discord.Generated.Schemas.ApplicationCommandBooleanOptionResponse,
+    module Muffle.Discord.Generated.Schemas.ApplicationCommandChannelOption,
+    module Muffle.Discord.Generated.Schemas.ApplicationCommandChannelOptionResponse,
+    module Muffle.Discord.Generated.Schemas.ApplicationCommandCreateRequest,
+    module Muffle.Discord.Generated.Schemas.ApplicationCommandHandler,
+    module Muffle.Discord.Generated.Schemas.ApplicationCommandIntegerOption,
+    module Muffle.Discord.Generated.Schemas.ApplicationCommandIntegerOptionResponse,
+    module Muffle.Discord.Generated.Schemas.ApplicationCommandInteractionMetadataResponse,
+    module Muffle.Discord.Generated.Schemas.ApplicationCommandMentionableOption,
+    module Muffle.Discord.Generated.Schemas.ApplicationCommandMentionableOptionResponse,
+    module Muffle.Discord.Generated.Schemas.ApplicationCommandNumberOption,
+    module Muffle.Discord.Generated.Schemas.ApplicationCommandNumberOptionResponse,
+    module Muffle.Discord.Generated.Schemas.ApplicationCommandOptionIntegerChoice,
+    module Muffle.Discord.Generated.Schemas.ApplicationCommandOptionIntegerChoiceResponse,
+    module Muffle.Discord.Generated.Schemas.ApplicationCommandOptionNumberChoice,
+    module Muffle.Discord.Generated.Schemas.ApplicationCommandOptionNumberChoiceResponse,
+    module Muffle.Discord.Generated.Schemas.ApplicationCommandOptionStringChoice,
+    module Muffle.Discord.Generated.Schemas.ApplicationCommandOptionStringChoiceResponse,
+    module Muffle.Discord.Generated.Schemas.ApplicationCommandOptionType,
+    module Muffle.Discord.Generated.Schemas.ApplicationCommandPatchRequestPartial,
+    module Muffle.Discord.Generated.Schemas.ApplicationCommandPermission,
+    module Muffle.Discord.Generated.Schemas.ApplicationCommandPermissionType,
+    module Muffle.Discord.Generated.Schemas.ApplicationCommandResponse,
+    module Muffle.Discord.Generated.Schemas.ApplicationCommandRoleOption,
+    module Muffle.Discord.Generated.Schemas.ApplicationCommandRoleOptionResponse,
+    module Muffle.Discord.Generated.Schemas.ApplicationCommandStringOption,
+    module Muffle.Discord.Generated.Schemas.ApplicationCommandStringOptionResponse,
+    module Muffle.Discord.Generated.Schemas.ApplicationCommandSubcommandGroupOption,
+    module Muffle.Discord.Generated.Schemas.ApplicationCommandSubcommandGroupOptionResponse,
+    module Muffle.Discord.Generated.Schemas.ApplicationCommandSubcommandOption,
+    module Muffle.Discord.Generated.Schemas.ApplicationCommandSubcommandOptionResponse,
+    module Muffle.Discord.Generated.Schemas.ApplicationCommandType,
+    module Muffle.Discord.Generated.Schemas.ApplicationCommandUpdateRequest,
+    module Muffle.Discord.Generated.Schemas.ApplicationCommandUserOption,
+    module Muffle.Discord.Generated.Schemas.ApplicationCommandUserOptionResponse,
+    module Muffle.Discord.Generated.Schemas.ApplicationEventWebhooksStatus,
+    module Muffle.Discord.Generated.Schemas.ApplicationExplicitContentFilterTypes,
+    module Muffle.Discord.Generated.Schemas.ApplicationFormPartial,
+    module Muffle.Discord.Generated.Schemas.ApplicationIdentityProviderAuthType,
+    module Muffle.Discord.Generated.Schemas.ApplicationIncomingWebhookResponse,
+    module Muffle.Discord.Generated.Schemas.ApplicationIntegrationType,
+    module Muffle.Discord.Generated.Schemas.ApplicationIntegrationTypeConfiguration,
+    module Muffle.Discord.Generated.Schemas.ApplicationIntegrationTypeConfigurationResponse,
+    module Muffle.Discord.Generated.Schemas.ApplicationOAuth2InstallParams,
+    module Muffle.Discord.Generated.Schemas.ApplicationOAuth2InstallParamsResponse,
+    module Muffle.Discord.Generated.Schemas.ApplicationResponse,
+    module Muffle.Discord.Generated.Schemas.ApplicationRoleConnectionsMetadataItemRequest,
+    module Muffle.Discord.Generated.Schemas.ApplicationRoleConnectionsMetadataItemResponse,
+    module Muffle.Discord.Generated.Schemas.ApplicationTypes,
+    module Muffle.Discord.Generated.Schemas.ApplicationUserRoleConnectionResponse,
+    module Muffle.Discord.Generated.Schemas.AttachmentResponse,
+    module Muffle.Discord.Generated.Schemas.AuditLogActionTypes,
+    module Muffle.Discord.Generated.Schemas.AuditLogEntryResponse,
+    module Muffle.Discord.Generated.Schemas.AuditLogObjectChangeResponse,
+    module Muffle.Discord.Generated.Schemas.AuthorType,
+    module Muffle.Discord.Generated.Schemas.AutomodActionType,
+    module Muffle.Discord.Generated.Schemas.AutomodEventType,
+    module Muffle.Discord.Generated.Schemas.AutomodKeywordPresetType,
+    module Muffle.Discord.Generated.Schemas.AutomodTriggerType,
+    module Muffle.Discord.Generated.Schemas.AvailableLocalesEnum,
+    module Muffle.Discord.Generated.Schemas.BanUserFromGuildRequest,
+    module Muffle.Discord.Generated.Schemas.BaseCreateMessageCreateRequest,
+    module Muffle.Discord.Generated.Schemas.BasicApplicationResponseWithBot,
+    module Muffle.Discord.Generated.Schemas.BasicGuildMemberResponse,
+    module Muffle.Discord.Generated.Schemas.BasicMessageResponse,
+    module Muffle.Discord.Generated.Schemas.BlockMessageAction,
+    module Muffle.Discord.Generated.Schemas.BlockMessageActionMetadata,
+    module Muffle.Discord.Generated.Schemas.BlockMessageActionMetadataResponse,
+    module Muffle.Discord.Generated.Schemas.BlockMessageActionResponse,
+    module Muffle.Discord.Generated.Schemas.BotAccountPatchRequest,
+    module Muffle.Discord.Generated.Schemas.BotAddGuildMemberRequest,
+    module Muffle.Discord.Generated.Schemas.BulkBanUsersRequest,
+    module Muffle.Discord.Generated.Schemas.BulkBanUsersResponse,
+    module Muffle.Discord.Generated.Schemas.BulkLobbyMemberRequest,
+    module Muffle.Discord.Generated.Schemas.ButtonComponentForMessageRequest,
+    module Muffle.Discord.Generated.Schemas.ButtonComponentResponse,
+    module Muffle.Discord.Generated.Schemas.ButtonStyleTypes,
+    module Muffle.Discord.Generated.Schemas.ByNWeekday,
+    module Muffle.Discord.Generated.Schemas.ByNWeekdayResponse,
+    module Muffle.Discord.Generated.Schemas.ChannelFollowerResponse,
+    module Muffle.Discord.Generated.Schemas.ChannelFollowerWebhookResponse,
+    module Muffle.Discord.Generated.Schemas.ChannelPermissionOverwriteRequest,
+    module Muffle.Discord.Generated.Schemas.ChannelPermissionOverwriteResponse,
+    module Muffle.Discord.Generated.Schemas.ChannelPermissionOverwrites,
+    module Muffle.Discord.Generated.Schemas.ChannelSelectComponentForMessageRequest,
+    module Muffle.Discord.Generated.Schemas.ChannelSelectComponentForModalRequest,
+    module Muffle.Discord.Generated.Schemas.ChannelSelectComponentResponse,
+    module Muffle.Discord.Generated.Schemas.ChannelSelectDefaultValue,
+    module Muffle.Discord.Generated.Schemas.ChannelSelectDefaultValueResponse,
+    module Muffle.Discord.Generated.Schemas.ChannelTypes,
+    module Muffle.Discord.Generated.Schemas.CheckboxComponentForModalRequest,
+    module Muffle.Discord.Generated.Schemas.CheckboxGroupComponentForModalRequest,
+    module Muffle.Discord.Generated.Schemas.CheckboxGroupOptionForRequest,
+    module Muffle.Discord.Generated.Schemas.CommandPermissionResponse,
+    module Muffle.Discord.Generated.Schemas.CommandPermissionsResponse,
+    module Muffle.Discord.Generated.Schemas.ComponentEmojiForRequest,
+    module Muffle.Discord.Generated.Schemas.ComponentEmojiResponse,
+    module Muffle.Discord.Generated.Schemas.ConnectedAccountGuildResponse,
+    module Muffle.Discord.Generated.Schemas.ConnectedAccountIntegrationResponse,
+    module Muffle.Discord.Generated.Schemas.ConnectedAccountProviders,
+    module Muffle.Discord.Generated.Schemas.ConnectedAccountResponse,
+    module Muffle.Discord.Generated.Schemas.ConnectedAccountVisibility,
+    module Muffle.Discord.Generated.Schemas.ContainerComponentForMessageRequest,
+    module Muffle.Discord.Generated.Schemas.ContainerComponentResponse,
+    module Muffle.Discord.Generated.Schemas.CreateEntitlementRequestData,
+    module Muffle.Discord.Generated.Schemas.CreateForumThreadRequest,
+    module Muffle.Discord.Generated.Schemas.CreateGroupDMInviteRequest,
+    module Muffle.Discord.Generated.Schemas.CreateGuildChannelRequest,
+    module Muffle.Discord.Generated.Schemas.CreateGuildInviteRequest,
+    module Muffle.Discord.Generated.Schemas.CreateMessageInteractionCallbackRequest,
+    module Muffle.Discord.Generated.Schemas.CreateMessageInteractionCallbackResponse,
+    module Muffle.Discord.Generated.Schemas.CreateOrUpdateThreadTagRequest,
+    module Muffle.Discord.Generated.Schemas.CreatePrivateChannelRequest,
+    module Muffle.Discord.Generated.Schemas.CreateRoleRequest,
+    module Muffle.Discord.Generated.Schemas.CreateTextThreadWithMessageRequest,
+    module Muffle.Discord.Generated.Schemas.CreateTextThreadWithoutMessageRequest,
+    module Muffle.Discord.Generated.Schemas.CreatedThreadResponse,
+    module Muffle.Discord.Generated.Schemas.CustomClientThemeResponse,
+    module Muffle.Discord.Generated.Schemas.CustomClientThemeShareRequest,
+    module Muffle.Discord.Generated.Schemas.DefaultKeywordListTriggerMetadata,
+    module Muffle.Discord.Generated.Schemas.DefaultKeywordListTriggerMetadataResponse,
+    module Muffle.Discord.Generated.Schemas.DefaultKeywordListUpsertRequest,
+    module Muffle.Discord.Generated.Schemas.DefaultKeywordListUpsertRequestPartial,
+    module Muffle.Discord.Generated.Schemas.DefaultKeywordRuleResponse,
+    module Muffle.Discord.Generated.Schemas.DefaultReactionEmojiResponse,
+    module Muffle.Discord.Generated.Schemas.DiscordIntegrationResponse,
+    module Muffle.Discord.Generated.Schemas.EmbeddedActivityInstance,
+    module Muffle.Discord.Generated.Schemas.EmbeddedActivityLocationKind,
+    module Muffle.Discord.Generated.Schemas.EmojiResponse,
+    module Muffle.Discord.Generated.Schemas.EntitlementOwnerTypes,
+    module Muffle.Discord.Generated.Schemas.EntitlementResponse,
+    module Muffle.Discord.Generated.Schemas.EntitlementTenantFulfillmentStatusResponse,
+    module Muffle.Discord.Generated.Schemas.EntitlementTypes,
+    module Muffle.Discord.Generated.Schemas.EntityMetadataExternal,
+    module Muffle.Discord.Generated.Schemas.EntityMetadataExternalResponse,
+    module Muffle.Discord.Generated.Schemas.EntityMetadataStageInstance,
+    module Muffle.Discord.Generated.Schemas.EntityMetadataStageInstanceResponse,
+    module Muffle.Discord.Generated.Schemas.EntityMetadataVoice,
+    module Muffle.Discord.Generated.Schemas.EntityMetadataVoiceResponse,
+    module Muffle.Discord.Generated.Schemas.Error,
+    module Muffle.Discord.Generated.Schemas.ErrorDetails,
+    module Muffle.Discord.Generated.Schemas.ErrorResponse,
+    module Muffle.Discord.Generated.Schemas.ExternalConnectionIntegrationResponse,
+    module Muffle.Discord.Generated.Schemas.ExternalScheduledEventCreateRequest,
+    module Muffle.Discord.Generated.Schemas.ExternalScheduledEventPatchRequestPartial,
+    module Muffle.Discord.Generated.Schemas.ExternalScheduledEventResponse,
+    module Muffle.Discord.Generated.Schemas.FileComponentForMessageRequest,
+    module Muffle.Discord.Generated.Schemas.FileComponentResponse,
+    module Muffle.Discord.Generated.Schemas.FileUploadComponentForModalRequest,
+    module Muffle.Discord.Generated.Schemas.FlagToChannelAction,
+    module Muffle.Discord.Generated.Schemas.FlagToChannelActionMetadata,
+    module Muffle.Discord.Generated.Schemas.FlagToChannelActionMetadataResponse,
+    module Muffle.Discord.Generated.Schemas.FlagToChannelActionResponse,
+    module Muffle.Discord.Generated.Schemas.ForumLayout,
+    module Muffle.Discord.Generated.Schemas.ForumTagResponse,
+    module Muffle.Discord.Generated.Schemas.FriendInviteResponse,
+    module Muffle.Discord.Generated.Schemas.GatewayBotResponse,
+    module Muffle.Discord.Generated.Schemas.GatewayBotSessionStartLimitResponse,
+    module Muffle.Discord.Generated.Schemas.GatewayResponse,
+    module Muffle.Discord.Generated.Schemas.GithubAuthor,
+    module Muffle.Discord.Generated.Schemas.GithubCheckApp,
+    module Muffle.Discord.Generated.Schemas.GithubCheckPullRequest,
+    module Muffle.Discord.Generated.Schemas.GithubCheckRun,
+    module Muffle.Discord.Generated.Schemas.GithubCheckRunOutput,
+    module Muffle.Discord.Generated.Schemas.GithubCheckSuite,
+    module Muffle.Discord.Generated.Schemas.GithubComment,
+    module Muffle.Discord.Generated.Schemas.GithubCommit,
+    module Muffle.Discord.Generated.Schemas.GithubDiscussion,
+    module Muffle.Discord.Generated.Schemas.GithubIssue,
+    module Muffle.Discord.Generated.Schemas.GithubRelease,
+    module Muffle.Discord.Generated.Schemas.GithubRepository,
+    module Muffle.Discord.Generated.Schemas.GithubReview,
+    module Muffle.Discord.Generated.Schemas.GithubUser,
+    module Muffle.Discord.Generated.Schemas.GithubWebhook,
+    module Muffle.Discord.Generated.Schemas.GroupDMInviteResponse,
+    module Muffle.Discord.Generated.Schemas.GuildAuditLogResponse,
+    module Muffle.Discord.Generated.Schemas.GuildBanResponse,
+    module Muffle.Discord.Generated.Schemas.GuildChannelLocation,
+    module Muffle.Discord.Generated.Schemas.GuildChannelResponse,
+    module Muffle.Discord.Generated.Schemas.GuildExplicitContentFilterTypes,
+    module Muffle.Discord.Generated.Schemas.GuildFeatures,
+    module Muffle.Discord.Generated.Schemas.GuildHomeSettingsResponse,
+    module Muffle.Discord.Generated.Schemas.GuildIncidentActionsRequest,
+    module Muffle.Discord.Generated.Schemas.GuildIncidentsDataResponse,
+    module Muffle.Discord.Generated.Schemas.GuildIncomingWebhookResponse,
+    module Muffle.Discord.Generated.Schemas.GuildInviteResponse,
+    module Muffle.Discord.Generated.Schemas.GuildJoinRequestApplicationStatus,
+    module Muffle.Discord.Generated.Schemas.GuildJoinRequestResponse,
+    module Muffle.Discord.Generated.Schemas.GuildJoinRequestsListResponse,
+    module Muffle.Discord.Generated.Schemas.GuildMFALevel,
+    module Muffle.Discord.Generated.Schemas.GuildMemberResponse,
+    module Muffle.Discord.Generated.Schemas.GuildMemberVerificationFormFieldType,
+    module Muffle.Discord.Generated.Schemas.GuildNSFWContentLevel,
+    module Muffle.Discord.Generated.Schemas.GuildOnboardingMode,
+    module Muffle.Discord.Generated.Schemas.GuildOnboardingResponse,
+    module Muffle.Discord.Generated.Schemas.GuildPatchRequestPartial,
+    module Muffle.Discord.Generated.Schemas.GuildPreviewResponse,
+    module Muffle.Discord.Generated.Schemas.GuildProductPurchaseResponse,
+    module Muffle.Discord.Generated.Schemas.GuildPruneResponse,
+    module Muffle.Discord.Generated.Schemas.GuildResponse,
+    module Muffle.Discord.Generated.Schemas.GuildRoleColorsResponse,
+    module Muffle.Discord.Generated.Schemas.GuildRoleResponse,
+    module Muffle.Discord.Generated.Schemas.GuildRoleTagsResponse,
+    module Muffle.Discord.Generated.Schemas.GuildScheduledEventEntityTypes,
+    module Muffle.Discord.Generated.Schemas.GuildScheduledEventExceptionCreateRequest,
+    module Muffle.Discord.Generated.Schemas.GuildScheduledEventExceptionPatchRequestPartial,
+    module Muffle.Discord.Generated.Schemas.GuildScheduledEventExceptionResponse,
+    module Muffle.Discord.Generated.Schemas.GuildScheduledEventPrivacyLevels,
+    module Muffle.Discord.Generated.Schemas.GuildScheduledEventStatuses,
+    module Muffle.Discord.Generated.Schemas.GuildScheduledEventUserResponses,
+    module Muffle.Discord.Generated.Schemas.GuildSearchResponse,
+    module Muffle.Discord.Generated.Schemas.GuildStickerResponse,
+    module Muffle.Discord.Generated.Schemas.GuildSubscriptionIntegrationResponse,
+    module Muffle.Discord.Generated.Schemas.GuildTemplateChannelResponse,
+    module Muffle.Discord.Generated.Schemas.GuildTemplateChannelTags,
+    module Muffle.Discord.Generated.Schemas.GuildTemplateResponse,
+    module Muffle.Discord.Generated.Schemas.GuildTemplateRoleColorsResponse,
+    module Muffle.Discord.Generated.Schemas.GuildTemplateRoleResponse,
+    module Muffle.Discord.Generated.Schemas.GuildTemplateSnapshotResponse,
+    module Muffle.Discord.Generated.Schemas.GuildWelcomeChannel,
+    module Muffle.Discord.Generated.Schemas.GuildWelcomeScreenChannelResponse,
+    module Muffle.Discord.Generated.Schemas.GuildWelcomeScreenResponse,
+    module Muffle.Discord.Generated.Schemas.GuildWithCountsResponse,
+    module Muffle.Discord.Generated.Schemas.HasOption,
+    module Muffle.Discord.Generated.Schemas.IncomingWebhookInteractionRequest,
+    module Muffle.Discord.Generated.Schemas.IncomingWebhookRequestPartial,
+    module Muffle.Discord.Generated.Schemas.IncomingWebhookUpdateForInteractionCallbackRequestPartial,
+    module Muffle.Discord.Generated.Schemas.IncomingWebhookUpdateRequestPartial,
+    module Muffle.Discord.Generated.Schemas.InnerErrors,
+    module Muffle.Discord.Generated.Schemas.Int53Type,
+    module Muffle.Discord.Generated.Schemas.IntegrationApplicationResponse,
+    module Muffle.Discord.Generated.Schemas.IntegrationExpireBehaviorTypes,
+    module Muffle.Discord.Generated.Schemas.IntegrationExpireGracePeriodTypes,
+    module Muffle.Discord.Generated.Schemas.IntegrationTypes,
+    module Muffle.Discord.Generated.Schemas.InteractionApplicationCommandAutocompleteCallbackIntegerData,
+    module Muffle.Discord.Generated.Schemas.InteractionApplicationCommandAutocompleteCallbackNumberData,
+    module Muffle.Discord.Generated.Schemas.InteractionApplicationCommandAutocompleteCallbackStringData,
+    module Muffle.Discord.Generated.Schemas.InteractionCallbackResponse,
+    module Muffle.Discord.Generated.Schemas.InteractionCallbackTypes,
+    module Muffle.Discord.Generated.Schemas.InteractionContextType,
+    module Muffle.Discord.Generated.Schemas.InteractionResponse,
+    module Muffle.Discord.Generated.Schemas.InteractionTypes,
+    module Muffle.Discord.Generated.Schemas.InviteApplicationResponse,
+    module Muffle.Discord.Generated.Schemas.InviteChannelRecipientResponse,
+    module Muffle.Discord.Generated.Schemas.InviteChannelResponse,
+    module Muffle.Discord.Generated.Schemas.InviteGuildResponse,
+    module Muffle.Discord.Generated.Schemas.InviteGuildRoleResponse,
+    module Muffle.Discord.Generated.Schemas.InviteTargetTypes,
+    module Muffle.Discord.Generated.Schemas.InviteTypes,
+    module Muffle.Discord.Generated.Schemas.KeywordRuleResponse,
+    module Muffle.Discord.Generated.Schemas.KeywordTriggerMetadata,
+    module Muffle.Discord.Generated.Schemas.KeywordTriggerMetadataResponse,
+    module Muffle.Discord.Generated.Schemas.KeywordUpsertRequest,
+    module Muffle.Discord.Generated.Schemas.KeywordUpsertRequestPartial,
+    module Muffle.Discord.Generated.Schemas.LabelComponentForModalRequest,
+    module Muffle.Discord.Generated.Schemas.LaunchActivityInteractionCallbackRequest,
+    module Muffle.Discord.Generated.Schemas.LaunchActivityInteractionCallbackResponse,
+    module Muffle.Discord.Generated.Schemas.ListApplicationEmojisResponse,
+    module Muffle.Discord.Generated.Schemas.ListGuildSoundboardSoundsResponse,
+    module Muffle.Discord.Generated.Schemas.LobbyGuildInviteResponse,
+    module Muffle.Discord.Generated.Schemas.LobbyMemberRequest,
+    module Muffle.Discord.Generated.Schemas.LobbyMemberResponse,
+    module Muffle.Discord.Generated.Schemas.LobbyMessageResponse,
+    module Muffle.Discord.Generated.Schemas.LobbyResponse,
+    module Muffle.Discord.Generated.Schemas.MLSpamRuleResponse,
+    module Muffle.Discord.Generated.Schemas.MLSpamTriggerMetadata,
+    module Muffle.Discord.Generated.Schemas.MLSpamTriggerMetadataResponse,
+    module Muffle.Discord.Generated.Schemas.MLSpamUpsertRequest,
+    module Muffle.Discord.Generated.Schemas.MLSpamUpsertRequestPartial,
+    module Muffle.Discord.Generated.Schemas.MediaGalleryComponentForMessageRequest,
+    module Muffle.Discord.Generated.Schemas.MediaGalleryComponentResponse,
+    module Muffle.Discord.Generated.Schemas.MediaGalleryItemRequest,
+    module Muffle.Discord.Generated.Schemas.MediaGalleryItemResponse,
+    module Muffle.Discord.Generated.Schemas.MentionSpamRuleResponse,
+    module Muffle.Discord.Generated.Schemas.MentionSpamTriggerMetadata,
+    module Muffle.Discord.Generated.Schemas.MentionSpamTriggerMetadataResponse,
+    module Muffle.Discord.Generated.Schemas.MentionSpamUpsertRequest,
+    module Muffle.Discord.Generated.Schemas.MentionSpamUpsertRequestPartial,
+    module Muffle.Discord.Generated.Schemas.MentionableSelectComponentForMessageRequest,
+    module Muffle.Discord.Generated.Schemas.MentionableSelectComponentForModalRequest,
+    module Muffle.Discord.Generated.Schemas.MentionableSelectComponentResponse,
+    module Muffle.Discord.Generated.Schemas.MessageActivityResponse,
+    module Muffle.Discord.Generated.Schemas.MessageAllowedMentionsRequest,
+    module Muffle.Discord.Generated.Schemas.MessageAttachmentRequest,
+    module Muffle.Discord.Generated.Schemas.MessageAttachmentResponse,
+    module Muffle.Discord.Generated.Schemas.MessageCallResponse,
+    module Muffle.Discord.Generated.Schemas.MessageComponentInteractionMetadataResponse,
+    module Muffle.Discord.Generated.Schemas.MessageComponentSeparatorSpacingSize,
+    module Muffle.Discord.Generated.Schemas.MessageComponentTypes,
+    module Muffle.Discord.Generated.Schemas.MessageCreateRequest,
+    module Muffle.Discord.Generated.Schemas.MessageEditRequestPartial,
+    module Muffle.Discord.Generated.Schemas.MessageEmbedAuthorResponse,
+    module Muffle.Discord.Generated.Schemas.MessageEmbedFieldResponse,
+    module Muffle.Discord.Generated.Schemas.MessageEmbedFooterResponse,
+    module Muffle.Discord.Generated.Schemas.MessageEmbedImageResponse,
+    module Muffle.Discord.Generated.Schemas.MessageEmbedProviderResponse,
+    module Muffle.Discord.Generated.Schemas.MessageEmbedResponse,
+    module Muffle.Discord.Generated.Schemas.MessageEmbedVideoResponse,
+    module Muffle.Discord.Generated.Schemas.MessageInteractionResponse,
+    module Muffle.Discord.Generated.Schemas.MessageMentionChannelResponse,
+    module Muffle.Discord.Generated.Schemas.MessageReactionCountDetailsResponse,
+    module Muffle.Discord.Generated.Schemas.MessageReactionEmojiResponse,
+    module Muffle.Discord.Generated.Schemas.MessageReactionResponse,
+    module Muffle.Discord.Generated.Schemas.MessageReferenceRequest,
+    module Muffle.Discord.Generated.Schemas.MessageReferenceResponse,
+    module Muffle.Discord.Generated.Schemas.MessageReferenceType,
+    module Muffle.Discord.Generated.Schemas.MessageResponse,
+    module Muffle.Discord.Generated.Schemas.MessageRoleSubscriptionDataResponse,
+    module Muffle.Discord.Generated.Schemas.MessageShareCustomUserThemeBaseTheme,
+    module Muffle.Discord.Generated.Schemas.MessageSnapshotResponse,
+    module Muffle.Discord.Generated.Schemas.MessageStickerItemResponse,
+    module Muffle.Discord.Generated.Schemas.MessageType,
+    module Muffle.Discord.Generated.Schemas.MetadataItemTypes,
+    module Muffle.Discord.Generated.Schemas.MinimalContentMessageResponse,
+    module Muffle.Discord.Generated.Schemas.ModalInteractionCallbackRequest,
+    module Muffle.Discord.Generated.Schemas.ModalInteractionCallbackRequestData,
+    module Muffle.Discord.Generated.Schemas.ModalSubmitInteractionMetadataResponse,
+    module Muffle.Discord.Generated.Schemas.MultipleChoiceFormFieldResponse,
+    module Muffle.Discord.Generated.Schemas.MyGuildResponse,
+    module Muffle.Discord.Generated.Schemas.NameplatePalette,
+    module Muffle.Discord.Generated.Schemas.NewMemberActionResponse,
+    module Muffle.Discord.Generated.Schemas.NewMemberActionType,
+    module Muffle.Discord.Generated.Schemas.OAuth2GetAuthorizationResponse,
+    module Muffle.Discord.Generated.Schemas.OAuth2GetKeys,
+    module Muffle.Discord.Generated.Schemas.OAuth2GetOpenIDConnectUserInfoResponse,
+    module Muffle.Discord.Generated.Schemas.OAuth2Key,
+    module Muffle.Discord.Generated.Schemas.OAuth2Scopes,
+    module Muffle.Discord.Generated.Schemas.OnboardingPromptOptionRequest,
+    module Muffle.Discord.Generated.Schemas.OnboardingPromptOptionResponse,
+    module Muffle.Discord.Generated.Schemas.OnboardingPromptResponse,
+    module Muffle.Discord.Generated.Schemas.OnboardingPromptType,
+    module Muffle.Discord.Generated.Schemas.ParagraphFormFieldResponse,
+    module Muffle.Discord.Generated.Schemas.PartialDiscordIntegrationResponse,
+    module Muffle.Discord.Generated.Schemas.PartialExternalConnectionIntegrationResponse,
+    module Muffle.Discord.Generated.Schemas.PartialGuildSubscriptionIntegrationResponse,
+    module Muffle.Discord.Generated.Schemas.PinnedMessageResponse,
+    module Muffle.Discord.Generated.Schemas.PinnedMessagesResponse,
+    module Muffle.Discord.Generated.Schemas.PollAnswerCreateRequest,
+    module Muffle.Discord.Generated.Schemas.PollAnswerDetailsResponse,
+    module Muffle.Discord.Generated.Schemas.PollAnswerResponse,
+    module Muffle.Discord.Generated.Schemas.PollCreateRequest,
+    module Muffle.Discord.Generated.Schemas.PollEmoji,
+    module Muffle.Discord.Generated.Schemas.PollEmojiCreateRequest,
+    module Muffle.Discord.Generated.Schemas.PollLayoutTypes,
+    module Muffle.Discord.Generated.Schemas.PollMedia,
+    module Muffle.Discord.Generated.Schemas.PollMediaCreateRequest,
+    module Muffle.Discord.Generated.Schemas.PollMediaResponse,
+    module Muffle.Discord.Generated.Schemas.PollResponse,
+    module Muffle.Discord.Generated.Schemas.PollResultsEntryResponse,
+    module Muffle.Discord.Generated.Schemas.PollResultsResponse,
+    module Muffle.Discord.Generated.Schemas.PongInteractionCallbackRequest,
+    module Muffle.Discord.Generated.Schemas.PremiumGuildTiers,
+    module Muffle.Discord.Generated.Schemas.PremiumTypes,
+    module Muffle.Discord.Generated.Schemas.PrivateApplicationResponse,
+    module Muffle.Discord.Generated.Schemas.PrivateChannelLocation,
+    module Muffle.Discord.Generated.Schemas.PrivateChannelResponse,
+    module Muffle.Discord.Generated.Schemas.PrivateGroupChannelResponse,
+    module Muffle.Discord.Generated.Schemas.PrivateGuildMemberResponse,
+    module Muffle.Discord.Generated.Schemas.ProvisionalTokenResponse,
+    module Muffle.Discord.Generated.Schemas.PruneGuildRequest,
+    module Muffle.Discord.Generated.Schemas.PurchaseNotificationResponse,
+    module Muffle.Discord.Generated.Schemas.PurchaseType,
+    module Muffle.Discord.Generated.Schemas.QuarantineUserAction,
+    module Muffle.Discord.Generated.Schemas.QuarantineUserActionMetadata,
+    module Muffle.Discord.Generated.Schemas.QuarantineUserActionMetadataResponse,
+    module Muffle.Discord.Generated.Schemas.QuarantineUserActionResponse,
+    module Muffle.Discord.Generated.Schemas.RadioGroupComponentForModalRequest,
+    module Muffle.Discord.Generated.Schemas.RadioGroupOptionForRequest,
+    module Muffle.Discord.Generated.Schemas.RatelimitedResponse,
+    module Muffle.Discord.Generated.Schemas.ReactionTypes,
+    module Muffle.Discord.Generated.Schemas.RecurrenceRule,
+    module Muffle.Discord.Generated.Schemas.RecurrenceRuleFrequencies,
+    module Muffle.Discord.Generated.Schemas.RecurrenceRuleMonths,
+    module Muffle.Discord.Generated.Schemas.RecurrenceRuleResponse,
+    module Muffle.Discord.Generated.Schemas.RecurrenceRuleWeekdays,
+    module Muffle.Discord.Generated.Schemas.ResolvedObjectsResponse,
+    module Muffle.Discord.Generated.Schemas.ResourceChannelResponse,
+    module Muffle.Discord.Generated.Schemas.RichEmbed,
+    module Muffle.Discord.Generated.Schemas.RichEmbedAuthor,
+    module Muffle.Discord.Generated.Schemas.RichEmbedField,
+    module Muffle.Discord.Generated.Schemas.RichEmbedFooter,
+    module Muffle.Discord.Generated.Schemas.RichEmbedImage,
+    module Muffle.Discord.Generated.Schemas.RichEmbedProvider,
+    module Muffle.Discord.Generated.Schemas.RichEmbedThumbnail,
+    module Muffle.Discord.Generated.Schemas.RichEmbedVideo,
+    module Muffle.Discord.Generated.Schemas.RoleColors,
+    module Muffle.Discord.Generated.Schemas.RoleSelectComponentForMessageRequest,
+    module Muffle.Discord.Generated.Schemas.RoleSelectComponentForModalRequest,
+    module Muffle.Discord.Generated.Schemas.RoleSelectComponentResponse,
+    module Muffle.Discord.Generated.Schemas.RoleSelectDefaultValue,
+    module Muffle.Discord.Generated.Schemas.RoleSelectDefaultValueResponse,
+    module Muffle.Discord.Generated.Schemas.SDKMessageRequest,
+    module Muffle.Discord.Generated.Schemas.SKUIneligibilityReason,
+    module Muffle.Discord.Generated.Schemas.ScheduledEventResponse,
+    module Muffle.Discord.Generated.Schemas.ScheduledEventUserCountResponse,
+    module Muffle.Discord.Generated.Schemas.ScheduledEventUserResponse,
+    module Muffle.Discord.Generated.Schemas.SearchIndexNotReadyResponse,
+    module Muffle.Discord.Generated.Schemas.SearchMessageResponse,
+    module Muffle.Discord.Generated.Schemas.SearchableEmbedType,
+    module Muffle.Discord.Generated.Schemas.SectionComponentForMessageRequest,
+    module Muffle.Discord.Generated.Schemas.SectionComponentResponse,
+    module Muffle.Discord.Generated.Schemas.SeparatorComponentForMessageRequest,
+    module Muffle.Discord.Generated.Schemas.SeparatorComponentResponse,
+    module Muffle.Discord.Generated.Schemas.SettingsEmojiResponse,
+    module Muffle.Discord.Generated.Schemas.SlackWebhook,
+    module Muffle.Discord.Generated.Schemas.SnowflakeSelectDefaultValueTypes,
+    module Muffle.Discord.Generated.Schemas.SnowflakeType,
+    module Muffle.Discord.Generated.Schemas.SocialLayerSKUPurchaseEligibilityCallbackData,
+    module Muffle.Discord.Generated.Schemas.SocialLayerSKUPurchaseEligibilityInteractionCallbackRequest,
+    module Muffle.Discord.Generated.Schemas.SortingMode,
+    module Muffle.Discord.Generated.Schemas.SortingOrder,
+    module Muffle.Discord.Generated.Schemas.SoundboardCreateRequest,
+    module Muffle.Discord.Generated.Schemas.SoundboardPatchRequestPartial,
+    module Muffle.Discord.Generated.Schemas.SoundboardSoundResponse,
+    module Muffle.Discord.Generated.Schemas.SoundboardSoundSendRequest,
+    module Muffle.Discord.Generated.Schemas.StageInstanceResponse,
+    module Muffle.Discord.Generated.Schemas.StageInstancesPrivacyLevels,
+    module Muffle.Discord.Generated.Schemas.StageScheduledEventCreateRequest,
+    module Muffle.Discord.Generated.Schemas.StageScheduledEventPatchRequestPartial,
+    module Muffle.Discord.Generated.Schemas.StageScheduledEventResponse,
+    module Muffle.Discord.Generated.Schemas.StandardStickerResponse,
+    module Muffle.Discord.Generated.Schemas.StickerFormatTypes,
+    module Muffle.Discord.Generated.Schemas.StickerPackCollectionResponse,
+    module Muffle.Discord.Generated.Schemas.StickerPackResponse,
+    module Muffle.Discord.Generated.Schemas.StickerTypes,
+    module Muffle.Discord.Generated.Schemas.StringSelectComponentForMessageRequest,
+    module Muffle.Discord.Generated.Schemas.StringSelectComponentForModalRequest,
+    module Muffle.Discord.Generated.Schemas.StringSelectComponentResponse,
+    module Muffle.Discord.Generated.Schemas.StringSelectOptionForRequest,
+    module Muffle.Discord.Generated.Schemas.StringSelectOptionResponse,
+    module Muffle.Discord.Generated.Schemas.SubscriptionResponse,
+    module Muffle.Discord.Generated.Schemas.SubscriptionResponseStatusType,
+    module Muffle.Discord.Generated.Schemas.TargetUsersJobStatusResponse,
+    module Muffle.Discord.Generated.Schemas.TargetUsersJobStatusTypes,
+    module Muffle.Discord.Generated.Schemas.TeamMemberResponse,
+    module Muffle.Discord.Generated.Schemas.TeamMemberRoles,
+    module Muffle.Discord.Generated.Schemas.TeamMembershipStates,
+    module Muffle.Discord.Generated.Schemas.TeamResponse,
+    module Muffle.Discord.Generated.Schemas.TermsFormFieldResponse,
+    module Muffle.Discord.Generated.Schemas.TextDisplayComponentForMessageRequest,
+    module Muffle.Discord.Generated.Schemas.TextDisplayComponentForModalRequest,
+    module Muffle.Discord.Generated.Schemas.TextDisplayComponentResponse,
+    module Muffle.Discord.Generated.Schemas.TextInputComponentForModalRequest,
+    module Muffle.Discord.Generated.Schemas.TextInputComponentResponse,
+    module Muffle.Discord.Generated.Schemas.TextInputFormFieldResponse,
+    module Muffle.Discord.Generated.Schemas.TextInputStyleTypes,
+    module Muffle.Discord.Generated.Schemas.ThreadAutoArchiveDuration,
+    module Muffle.Discord.Generated.Schemas.ThreadMemberResponse,
+    module Muffle.Discord.Generated.Schemas.ThreadMetadataResponse,
+    module Muffle.Discord.Generated.Schemas.ThreadResponse,
+    module Muffle.Discord.Generated.Schemas.ThreadSearchResponse,
+    module Muffle.Discord.Generated.Schemas.ThreadSearchTagSetting,
+    module Muffle.Discord.Generated.Schemas.ThreadSortOrder,
+    module Muffle.Discord.Generated.Schemas.ThreadSortingMode,
+    module Muffle.Discord.Generated.Schemas.ThreadsResponse,
+    module Muffle.Discord.Generated.Schemas.ThumbnailComponentForMessageRequest,
+    module Muffle.Discord.Generated.Schemas.ThumbnailComponentResponse,
+    module Muffle.Discord.Generated.Schemas.TypingIndicatorResponse,
+    module Muffle.Discord.Generated.Schemas.UInt32Type,
+    module Muffle.Discord.Generated.Schemas.UnbanUserFromGuildRequest,
+    module Muffle.Discord.Generated.Schemas.UnfurledMediaRequest,
+    module Muffle.Discord.Generated.Schemas.UnfurledMediaRequestWithAttachmentReferenceRequired,
+    module Muffle.Discord.Generated.Schemas.UnfurledMediaResponse,
+    module Muffle.Discord.Generated.Schemas.UpdateApplicationUserRoleConnectionRequest,
+    module Muffle.Discord.Generated.Schemas.UpdateDMRequestPartial,
+    module Muffle.Discord.Generated.Schemas.UpdateDefaultReactionEmojiRequest,
+    module Muffle.Discord.Generated.Schemas.UpdateGroupDMRequestPartial,
+    module Muffle.Discord.Generated.Schemas.UpdateGuildChannelRequestPartial,
+    module Muffle.Discord.Generated.Schemas.UpdateGuildOnboardingRequest,
+    module Muffle.Discord.Generated.Schemas.UpdateMessageInteractionCallbackRequest,
+    module Muffle.Discord.Generated.Schemas.UpdateMessageInteractionCallbackResponse,
+    module Muffle.Discord.Generated.Schemas.UpdateOnboardingPromptRequest,
+    module Muffle.Discord.Generated.Schemas.UpdateRolePositionsRequest,
+    module Muffle.Discord.Generated.Schemas.UpdateRoleRequestPartial,
+    module Muffle.Discord.Generated.Schemas.UpdateSelfVoiceStateRequestPartial,
+    module Muffle.Discord.Generated.Schemas.UpdateThreadRequestPartial,
+    module Muffle.Discord.Generated.Schemas.UpdateThreadTagRequest,
+    module Muffle.Discord.Generated.Schemas.UpdateVoiceStateRequestPartial,
+    module Muffle.Discord.Generated.Schemas.UserAvatarDecorationResponse,
+    module Muffle.Discord.Generated.Schemas.UserCollectiblesResponse,
+    module Muffle.Discord.Generated.Schemas.UserCommunicationDisabledAction,
+    module Muffle.Discord.Generated.Schemas.UserCommunicationDisabledActionMetadata,
+    module Muffle.Discord.Generated.Schemas.UserCommunicationDisabledActionMetadataResponse,
+    module Muffle.Discord.Generated.Schemas.UserCommunicationDisabledActionResponse,
+    module Muffle.Discord.Generated.Schemas.UserGuildOnboardingResponse,
+    module Muffle.Discord.Generated.Schemas.UserNameplateResponse,
+    module Muffle.Discord.Generated.Schemas.UserNotificationSettings,
+    module Muffle.Discord.Generated.Schemas.UserPIIResponse,
+    module Muffle.Discord.Generated.Schemas.UserPrimaryGuildResponse,
+    module Muffle.Discord.Generated.Schemas.UserProfileMetadata,
+    module Muffle.Discord.Generated.Schemas.UserProfileMetadataResponse,
+    module Muffle.Discord.Generated.Schemas.UserProfileRuleResponse,
+    module Muffle.Discord.Generated.Schemas.UserProfileUpsertRequest,
+    module Muffle.Discord.Generated.Schemas.UserProfileUpsertRequestPartial,
+    module Muffle.Discord.Generated.Schemas.UserResponse,
+    module Muffle.Discord.Generated.Schemas.UserSelectComponentForMessageRequest,
+    module Muffle.Discord.Generated.Schemas.UserSelectComponentForModalRequest,
+    module Muffle.Discord.Generated.Schemas.UserSelectComponentResponse,
+    module Muffle.Discord.Generated.Schemas.UserSelectDefaultValue,
+    module Muffle.Discord.Generated.Schemas.UserSelectDefaultValueResponse,
+    module Muffle.Discord.Generated.Schemas.VanityURLErrorResponse,
+    module Muffle.Discord.Generated.Schemas.VanityURLResponse,
+    module Muffle.Discord.Generated.Schemas.VerificationLevels,
+    module Muffle.Discord.Generated.Schemas.VideoQualityModes,
+    module Muffle.Discord.Generated.Schemas.VoiceRegionResponse,
+    module Muffle.Discord.Generated.Schemas.VoiceScheduledEventCreateRequest,
+    module Muffle.Discord.Generated.Schemas.VoiceScheduledEventPatchRequestPartial,
+    module Muffle.Discord.Generated.Schemas.VoiceScheduledEventResponse,
+    module Muffle.Discord.Generated.Schemas.VoiceStateResponse,
+    module Muffle.Discord.Generated.Schemas.WebhookSlackEmbed,
+    module Muffle.Discord.Generated.Schemas.WebhookSlackEmbedField,
+    module Muffle.Discord.Generated.Schemas.WebhookSourceChannelResponse,
+    module Muffle.Discord.Generated.Schemas.WebhookSourceGuildResponse,
+    module Muffle.Discord.Generated.Schemas.WebhookTypes,
+    module Muffle.Discord.Generated.Schemas.WelcomeMessageResponse,
+    module Muffle.Discord.Generated.Schemas.WelcomeScreenPatchRequestPartial,
+    module Muffle.Discord.Generated.Schemas.WidgetActivity,
+    module Muffle.Discord.Generated.Schemas.WidgetChannel,
+    module Muffle.Discord.Generated.Schemas.WidgetImageStyles,
+    module Muffle.Discord.Generated.Schemas.WidgetMember,
+    module Muffle.Discord.Generated.Schemas.WidgetResponse,
+    module Muffle.Discord.Generated.Schemas.WidgetSettingsResponse,
+    module Muffle.Discord.Generated.Schemas.WidgetUserDiscriminator,
+) where
+
+import Muffle.Discord.Generated.Schemas.AccountResponse
+import Muffle.Discord.Generated.Schemas.ActionRowComponentForMessageRequest
+import Muffle.Discord.Generated.Schemas.ActionRowComponentForModalRequest
+import Muffle.Discord.Generated.Schemas.ActionRowComponentResponse
+import Muffle.Discord.Generated.Schemas.ActionTypes
+import Muffle.Discord.Generated.Schemas.ActivitiesAttachmentResponse
+import Muffle.Discord.Generated.Schemas.ActivityActionTypes
+import Muffle.Discord.Generated.Schemas.ActivityInstanceCallbackResponse
+import Muffle.Discord.Generated.Schemas.AfkTimeouts
+import Muffle.Discord.Generated.Schemas.AllowedMentionTypes
+import Muffle.Discord.Generated.Schemas.ApplicationCommandAttachmentOption
+import Muffle.Discord.Generated.Schemas.ApplicationCommandAttachmentOptionResponse
+import Muffle.Discord.Generated.Schemas.ApplicationCommandAutocompleteCallbackRequest
+import Muffle.Discord.Generated.Schemas.ApplicationCommandBooleanOption
+import Muffle.Discord.Generated.Schemas.ApplicationCommandBooleanOptionResponse
+import Muffle.Discord.Generated.Schemas.ApplicationCommandChannelOption
+import Muffle.Discord.Generated.Schemas.ApplicationCommandChannelOptionResponse
+import Muffle.Discord.Generated.Schemas.ApplicationCommandCreateRequest
+import Muffle.Discord.Generated.Schemas.ApplicationCommandHandler
+import Muffle.Discord.Generated.Schemas.ApplicationCommandIntegerOption
+import Muffle.Discord.Generated.Schemas.ApplicationCommandIntegerOptionResponse
+import Muffle.Discord.Generated.Schemas.ApplicationCommandInteractionMetadataResponse
+import Muffle.Discord.Generated.Schemas.ApplicationCommandMentionableOption
+import Muffle.Discord.Generated.Schemas.ApplicationCommandMentionableOptionResponse
+import Muffle.Discord.Generated.Schemas.ApplicationCommandNumberOption
+import Muffle.Discord.Generated.Schemas.ApplicationCommandNumberOptionResponse
+import Muffle.Discord.Generated.Schemas.ApplicationCommandOptionIntegerChoice
+import Muffle.Discord.Generated.Schemas.ApplicationCommandOptionIntegerChoiceResponse
+import Muffle.Discord.Generated.Schemas.ApplicationCommandOptionNumberChoice
+import Muffle.Discord.Generated.Schemas.ApplicationCommandOptionNumberChoiceResponse
+import Muffle.Discord.Generated.Schemas.ApplicationCommandOptionStringChoice
+import Muffle.Discord.Generated.Schemas.ApplicationCommandOptionStringChoiceResponse
+import Muffle.Discord.Generated.Schemas.ApplicationCommandOptionType
+import Muffle.Discord.Generated.Schemas.ApplicationCommandPatchRequestPartial
+import Muffle.Discord.Generated.Schemas.ApplicationCommandPermission
+import Muffle.Discord.Generated.Schemas.ApplicationCommandPermissionType
+import Muffle.Discord.Generated.Schemas.ApplicationCommandResponse
+import Muffle.Discord.Generated.Schemas.ApplicationCommandRoleOption
+import Muffle.Discord.Generated.Schemas.ApplicationCommandRoleOptionResponse
+import Muffle.Discord.Generated.Schemas.ApplicationCommandStringOption
+import Muffle.Discord.Generated.Schemas.ApplicationCommandStringOptionResponse
+import Muffle.Discord.Generated.Schemas.ApplicationCommandSubcommandGroupOption
+import Muffle.Discord.Generated.Schemas.ApplicationCommandSubcommandGroupOptionResponse
+import Muffle.Discord.Generated.Schemas.ApplicationCommandSubcommandOption
+import Muffle.Discord.Generated.Schemas.ApplicationCommandSubcommandOptionResponse
+import Muffle.Discord.Generated.Schemas.ApplicationCommandType
+import Muffle.Discord.Generated.Schemas.ApplicationCommandUpdateRequest
+import Muffle.Discord.Generated.Schemas.ApplicationCommandUserOption
+import Muffle.Discord.Generated.Schemas.ApplicationCommandUserOptionResponse
+import Muffle.Discord.Generated.Schemas.ApplicationEventWebhooksStatus
+import Muffle.Discord.Generated.Schemas.ApplicationExplicitContentFilterTypes
+import Muffle.Discord.Generated.Schemas.ApplicationFormPartial
+import Muffle.Discord.Generated.Schemas.ApplicationIdentityProviderAuthType
+import Muffle.Discord.Generated.Schemas.ApplicationIncomingWebhookResponse
+import Muffle.Discord.Generated.Schemas.ApplicationIntegrationType
+import Muffle.Discord.Generated.Schemas.ApplicationIntegrationTypeConfiguration
+import Muffle.Discord.Generated.Schemas.ApplicationIntegrationTypeConfigurationResponse
+import Muffle.Discord.Generated.Schemas.ApplicationOAuth2InstallParams
+import Muffle.Discord.Generated.Schemas.ApplicationOAuth2InstallParamsResponse
+import Muffle.Discord.Generated.Schemas.ApplicationResponse
+import Muffle.Discord.Generated.Schemas.ApplicationRoleConnectionsMetadataItemRequest
+import Muffle.Discord.Generated.Schemas.ApplicationRoleConnectionsMetadataItemResponse
+import Muffle.Discord.Generated.Schemas.ApplicationTypes
+import Muffle.Discord.Generated.Schemas.ApplicationUserRoleConnectionResponse
+import Muffle.Discord.Generated.Schemas.AttachmentResponse
+import Muffle.Discord.Generated.Schemas.AuditLogActionTypes
+import Muffle.Discord.Generated.Schemas.AuditLogEntryResponse
+import Muffle.Discord.Generated.Schemas.AuditLogObjectChangeResponse
+import Muffle.Discord.Generated.Schemas.AuthorType
+import Muffle.Discord.Generated.Schemas.AutomodActionType
+import Muffle.Discord.Generated.Schemas.AutomodEventType
+import Muffle.Discord.Generated.Schemas.AutomodKeywordPresetType
+import Muffle.Discord.Generated.Schemas.AutomodTriggerType
+import Muffle.Discord.Generated.Schemas.AvailableLocalesEnum
+import Muffle.Discord.Generated.Schemas.BanUserFromGuildRequest
+import Muffle.Discord.Generated.Schemas.BaseCreateMessageCreateRequest
+import Muffle.Discord.Generated.Schemas.BasicApplicationResponseWithBot
+import Muffle.Discord.Generated.Schemas.BasicGuildMemberResponse
+import Muffle.Discord.Generated.Schemas.BasicMessageResponse
+import Muffle.Discord.Generated.Schemas.BlockMessageAction
+import Muffle.Discord.Generated.Schemas.BlockMessageActionMetadata
+import Muffle.Discord.Generated.Schemas.BlockMessageActionMetadataResponse
+import Muffle.Discord.Generated.Schemas.BlockMessageActionResponse
+import Muffle.Discord.Generated.Schemas.BotAccountPatchRequest
+import Muffle.Discord.Generated.Schemas.BotAddGuildMemberRequest
+import Muffle.Discord.Generated.Schemas.BulkBanUsersRequest
+import Muffle.Discord.Generated.Schemas.BulkBanUsersResponse
+import Muffle.Discord.Generated.Schemas.BulkLobbyMemberRequest
+import Muffle.Discord.Generated.Schemas.ButtonComponentForMessageRequest
+import Muffle.Discord.Generated.Schemas.ButtonComponentResponse
+import Muffle.Discord.Generated.Schemas.ButtonStyleTypes
+import Muffle.Discord.Generated.Schemas.ByNWeekday
+import Muffle.Discord.Generated.Schemas.ByNWeekdayResponse
+import Muffle.Discord.Generated.Schemas.ChannelFollowerResponse
+import Muffle.Discord.Generated.Schemas.ChannelFollowerWebhookResponse
+import Muffle.Discord.Generated.Schemas.ChannelPermissionOverwriteRequest
+import Muffle.Discord.Generated.Schemas.ChannelPermissionOverwriteResponse
+import Muffle.Discord.Generated.Schemas.ChannelPermissionOverwrites
+import Muffle.Discord.Generated.Schemas.ChannelSelectComponentForMessageRequest
+import Muffle.Discord.Generated.Schemas.ChannelSelectComponentForModalRequest
+import Muffle.Discord.Generated.Schemas.ChannelSelectComponentResponse
+import Muffle.Discord.Generated.Schemas.ChannelSelectDefaultValue
+import Muffle.Discord.Generated.Schemas.ChannelSelectDefaultValueResponse
+import Muffle.Discord.Generated.Schemas.ChannelTypes
+import Muffle.Discord.Generated.Schemas.CheckboxComponentForModalRequest
+import Muffle.Discord.Generated.Schemas.CheckboxGroupComponentForModalRequest
+import Muffle.Discord.Generated.Schemas.CheckboxGroupOptionForRequest
+import Muffle.Discord.Generated.Schemas.CommandPermissionResponse
+import Muffle.Discord.Generated.Schemas.CommandPermissionsResponse
+import Muffle.Discord.Generated.Schemas.ComponentEmojiForRequest
+import Muffle.Discord.Generated.Schemas.ComponentEmojiResponse
+import Muffle.Discord.Generated.Schemas.ConnectedAccountGuildResponse
+import Muffle.Discord.Generated.Schemas.ConnectedAccountIntegrationResponse
+import Muffle.Discord.Generated.Schemas.ConnectedAccountProviders
+import Muffle.Discord.Generated.Schemas.ConnectedAccountResponse
+import Muffle.Discord.Generated.Schemas.ConnectedAccountVisibility
+import Muffle.Discord.Generated.Schemas.ContainerComponentForMessageRequest
+import Muffle.Discord.Generated.Schemas.ContainerComponentResponse
+import Muffle.Discord.Generated.Schemas.CreateEntitlementRequestData
+import Muffle.Discord.Generated.Schemas.CreateForumThreadRequest
+import Muffle.Discord.Generated.Schemas.CreateGroupDMInviteRequest
+import Muffle.Discord.Generated.Schemas.CreateGuildChannelRequest
+import Muffle.Discord.Generated.Schemas.CreateGuildInviteRequest
+import Muffle.Discord.Generated.Schemas.CreateMessageInteractionCallbackRequest
+import Muffle.Discord.Generated.Schemas.CreateMessageInteractionCallbackResponse
+import Muffle.Discord.Generated.Schemas.CreateOrUpdateThreadTagRequest
+import Muffle.Discord.Generated.Schemas.CreatePrivateChannelRequest
+import Muffle.Discord.Generated.Schemas.CreateRoleRequest
+import Muffle.Discord.Generated.Schemas.CreateTextThreadWithMessageRequest
+import Muffle.Discord.Generated.Schemas.CreateTextThreadWithoutMessageRequest
+import Muffle.Discord.Generated.Schemas.CreatedThreadResponse
+import Muffle.Discord.Generated.Schemas.CustomClientThemeResponse
+import Muffle.Discord.Generated.Schemas.CustomClientThemeShareRequest
+import Muffle.Discord.Generated.Schemas.DefaultKeywordListTriggerMetadata
+import Muffle.Discord.Generated.Schemas.DefaultKeywordListTriggerMetadataResponse
+import Muffle.Discord.Generated.Schemas.DefaultKeywordListUpsertRequest
+import Muffle.Discord.Generated.Schemas.DefaultKeywordListUpsertRequestPartial
+import Muffle.Discord.Generated.Schemas.DefaultKeywordRuleResponse
+import Muffle.Discord.Generated.Schemas.DefaultReactionEmojiResponse
+import Muffle.Discord.Generated.Schemas.DiscordIntegrationResponse
+import Muffle.Discord.Generated.Schemas.EmbeddedActivityInstance
+import Muffle.Discord.Generated.Schemas.EmbeddedActivityLocationKind
+import Muffle.Discord.Generated.Schemas.EmojiResponse
+import Muffle.Discord.Generated.Schemas.EntitlementOwnerTypes
+import Muffle.Discord.Generated.Schemas.EntitlementResponse
+import Muffle.Discord.Generated.Schemas.EntitlementTenantFulfillmentStatusResponse
+import Muffle.Discord.Generated.Schemas.EntitlementTypes
+import Muffle.Discord.Generated.Schemas.EntityMetadataExternal
+import Muffle.Discord.Generated.Schemas.EntityMetadataExternalResponse
+import Muffle.Discord.Generated.Schemas.EntityMetadataStageInstance
+import Muffle.Discord.Generated.Schemas.EntityMetadataStageInstanceResponse
+import Muffle.Discord.Generated.Schemas.EntityMetadataVoice
+import Muffle.Discord.Generated.Schemas.EntityMetadataVoiceResponse
+import Muffle.Discord.Generated.Schemas.Error
+import Muffle.Discord.Generated.Schemas.ErrorDetails
+import Muffle.Discord.Generated.Schemas.ErrorResponse
+import Muffle.Discord.Generated.Schemas.ExternalConnectionIntegrationResponse
+import Muffle.Discord.Generated.Schemas.ExternalScheduledEventCreateRequest
+import Muffle.Discord.Generated.Schemas.ExternalScheduledEventPatchRequestPartial
+import Muffle.Discord.Generated.Schemas.ExternalScheduledEventResponse
+import Muffle.Discord.Generated.Schemas.FileComponentForMessageRequest
+import Muffle.Discord.Generated.Schemas.FileComponentResponse
+import Muffle.Discord.Generated.Schemas.FileUploadComponentForModalRequest
+import Muffle.Discord.Generated.Schemas.FlagToChannelAction
+import Muffle.Discord.Generated.Schemas.FlagToChannelActionMetadata
+import Muffle.Discord.Generated.Schemas.FlagToChannelActionMetadataResponse
+import Muffle.Discord.Generated.Schemas.FlagToChannelActionResponse
+import Muffle.Discord.Generated.Schemas.ForumLayout
+import Muffle.Discord.Generated.Schemas.ForumTagResponse
+import Muffle.Discord.Generated.Schemas.FriendInviteResponse
+import Muffle.Discord.Generated.Schemas.GatewayBotResponse
+import Muffle.Discord.Generated.Schemas.GatewayBotSessionStartLimitResponse
+import Muffle.Discord.Generated.Schemas.GatewayResponse
+import Muffle.Discord.Generated.Schemas.GithubAuthor
+import Muffle.Discord.Generated.Schemas.GithubCheckApp
+import Muffle.Discord.Generated.Schemas.GithubCheckPullRequest
+import Muffle.Discord.Generated.Schemas.GithubCheckRun
+import Muffle.Discord.Generated.Schemas.GithubCheckRunOutput
+import Muffle.Discord.Generated.Schemas.GithubCheckSuite
+import Muffle.Discord.Generated.Schemas.GithubComment
+import Muffle.Discord.Generated.Schemas.GithubCommit
+import Muffle.Discord.Generated.Schemas.GithubDiscussion
+import Muffle.Discord.Generated.Schemas.GithubIssue
+import Muffle.Discord.Generated.Schemas.GithubRelease
+import Muffle.Discord.Generated.Schemas.GithubRepository
+import Muffle.Discord.Generated.Schemas.GithubReview
+import Muffle.Discord.Generated.Schemas.GithubUser
+import Muffle.Discord.Generated.Schemas.GithubWebhook
+import Muffle.Discord.Generated.Schemas.GroupDMInviteResponse
+import Muffle.Discord.Generated.Schemas.GuildAuditLogResponse
+import Muffle.Discord.Generated.Schemas.GuildBanResponse
+import Muffle.Discord.Generated.Schemas.GuildChannelLocation
+import Muffle.Discord.Generated.Schemas.GuildChannelResponse
+import Muffle.Discord.Generated.Schemas.GuildExplicitContentFilterTypes
+import Muffle.Discord.Generated.Schemas.GuildFeatures
+import Muffle.Discord.Generated.Schemas.GuildHomeSettingsResponse
+import Muffle.Discord.Generated.Schemas.GuildIncidentActionsRequest
+import Muffle.Discord.Generated.Schemas.GuildIncidentsDataResponse
+import Muffle.Discord.Generated.Schemas.GuildIncomingWebhookResponse
+import Muffle.Discord.Generated.Schemas.GuildInviteResponse
+import Muffle.Discord.Generated.Schemas.GuildJoinRequestApplicationStatus
+import Muffle.Discord.Generated.Schemas.GuildJoinRequestResponse
+import Muffle.Discord.Generated.Schemas.GuildJoinRequestsListResponse
+import Muffle.Discord.Generated.Schemas.GuildMFALevel
+import Muffle.Discord.Generated.Schemas.GuildMemberResponse
+import Muffle.Discord.Generated.Schemas.GuildMemberVerificationFormFieldType
+import Muffle.Discord.Generated.Schemas.GuildNSFWContentLevel
+import Muffle.Discord.Generated.Schemas.GuildOnboardingMode
+import Muffle.Discord.Generated.Schemas.GuildOnboardingResponse
+import Muffle.Discord.Generated.Schemas.GuildPatchRequestPartial
+import Muffle.Discord.Generated.Schemas.GuildPreviewResponse
+import Muffle.Discord.Generated.Schemas.GuildProductPurchaseResponse
+import Muffle.Discord.Generated.Schemas.GuildPruneResponse
+import Muffle.Discord.Generated.Schemas.GuildResponse
+import Muffle.Discord.Generated.Schemas.GuildRoleColorsResponse
+import Muffle.Discord.Generated.Schemas.GuildRoleResponse
+import Muffle.Discord.Generated.Schemas.GuildRoleTagsResponse
+import Muffle.Discord.Generated.Schemas.GuildScheduledEventEntityTypes
+import Muffle.Discord.Generated.Schemas.GuildScheduledEventExceptionCreateRequest
+import Muffle.Discord.Generated.Schemas.GuildScheduledEventExceptionPatchRequestPartial
+import Muffle.Discord.Generated.Schemas.GuildScheduledEventExceptionResponse
+import Muffle.Discord.Generated.Schemas.GuildScheduledEventPrivacyLevels
+import Muffle.Discord.Generated.Schemas.GuildScheduledEventStatuses
+import Muffle.Discord.Generated.Schemas.GuildScheduledEventUserResponses
+import Muffle.Discord.Generated.Schemas.GuildSearchResponse
+import Muffle.Discord.Generated.Schemas.GuildStickerResponse
+import Muffle.Discord.Generated.Schemas.GuildSubscriptionIntegrationResponse
+import Muffle.Discord.Generated.Schemas.GuildTemplateChannelResponse
+import Muffle.Discord.Generated.Schemas.GuildTemplateChannelTags
+import Muffle.Discord.Generated.Schemas.GuildTemplateResponse
+import Muffle.Discord.Generated.Schemas.GuildTemplateRoleColorsResponse
+import Muffle.Discord.Generated.Schemas.GuildTemplateRoleResponse
+import Muffle.Discord.Generated.Schemas.GuildTemplateSnapshotResponse
+import Muffle.Discord.Generated.Schemas.GuildWelcomeChannel
+import Muffle.Discord.Generated.Schemas.GuildWelcomeScreenChannelResponse
+import Muffle.Discord.Generated.Schemas.GuildWelcomeScreenResponse
+import Muffle.Discord.Generated.Schemas.GuildWithCountsResponse
+import Muffle.Discord.Generated.Schemas.HasOption
+import Muffle.Discord.Generated.Schemas.IncomingWebhookInteractionRequest
+import Muffle.Discord.Generated.Schemas.IncomingWebhookRequestPartial
+import Muffle.Discord.Generated.Schemas.IncomingWebhookUpdateForInteractionCallbackRequestPartial
+import Muffle.Discord.Generated.Schemas.IncomingWebhookUpdateRequestPartial
+import Muffle.Discord.Generated.Schemas.InnerErrors
+import Muffle.Discord.Generated.Schemas.Int53Type
+import Muffle.Discord.Generated.Schemas.IntegrationApplicationResponse
+import Muffle.Discord.Generated.Schemas.IntegrationExpireBehaviorTypes
+import Muffle.Discord.Generated.Schemas.IntegrationExpireGracePeriodTypes
+import Muffle.Discord.Generated.Schemas.IntegrationTypes
+import Muffle.Discord.Generated.Schemas.InteractionApplicationCommandAutocompleteCallbackIntegerData
+import Muffle.Discord.Generated.Schemas.InteractionApplicationCommandAutocompleteCallbackNumberData
+import Muffle.Discord.Generated.Schemas.InteractionApplicationCommandAutocompleteCallbackStringData
+import Muffle.Discord.Generated.Schemas.InteractionCallbackResponse
+import Muffle.Discord.Generated.Schemas.InteractionCallbackTypes
+import Muffle.Discord.Generated.Schemas.InteractionContextType
+import Muffle.Discord.Generated.Schemas.InteractionResponse
+import Muffle.Discord.Generated.Schemas.InteractionTypes
+import Muffle.Discord.Generated.Schemas.InviteApplicationResponse
+import Muffle.Discord.Generated.Schemas.InviteChannelRecipientResponse
+import Muffle.Discord.Generated.Schemas.InviteChannelResponse
+import Muffle.Discord.Generated.Schemas.InviteGuildResponse
+import Muffle.Discord.Generated.Schemas.InviteGuildRoleResponse
+import Muffle.Discord.Generated.Schemas.InviteTargetTypes
+import Muffle.Discord.Generated.Schemas.InviteTypes
+import Muffle.Discord.Generated.Schemas.KeywordRuleResponse
+import Muffle.Discord.Generated.Schemas.KeywordTriggerMetadata
+import Muffle.Discord.Generated.Schemas.KeywordTriggerMetadataResponse
+import Muffle.Discord.Generated.Schemas.KeywordUpsertRequest
+import Muffle.Discord.Generated.Schemas.KeywordUpsertRequestPartial
+import Muffle.Discord.Generated.Schemas.LabelComponentForModalRequest
+import Muffle.Discord.Generated.Schemas.LaunchActivityInteractionCallbackRequest
+import Muffle.Discord.Generated.Schemas.LaunchActivityInteractionCallbackResponse
+import Muffle.Discord.Generated.Schemas.ListApplicationEmojisResponse
+import Muffle.Discord.Generated.Schemas.ListGuildSoundboardSoundsResponse
+import Muffle.Discord.Generated.Schemas.LobbyGuildInviteResponse
+import Muffle.Discord.Generated.Schemas.LobbyMemberRequest
+import Muffle.Discord.Generated.Schemas.LobbyMemberResponse
+import Muffle.Discord.Generated.Schemas.LobbyMessageResponse
+import Muffle.Discord.Generated.Schemas.LobbyResponse
+import Muffle.Discord.Generated.Schemas.MLSpamRuleResponse
+import Muffle.Discord.Generated.Schemas.MLSpamTriggerMetadata
+import Muffle.Discord.Generated.Schemas.MLSpamTriggerMetadataResponse
+import Muffle.Discord.Generated.Schemas.MLSpamUpsertRequest
+import Muffle.Discord.Generated.Schemas.MLSpamUpsertRequestPartial
+import Muffle.Discord.Generated.Schemas.MediaGalleryComponentForMessageRequest
+import Muffle.Discord.Generated.Schemas.MediaGalleryComponentResponse
+import Muffle.Discord.Generated.Schemas.MediaGalleryItemRequest
+import Muffle.Discord.Generated.Schemas.MediaGalleryItemResponse
+import Muffle.Discord.Generated.Schemas.MentionSpamRuleResponse
+import Muffle.Discord.Generated.Schemas.MentionSpamTriggerMetadata
+import Muffle.Discord.Generated.Schemas.MentionSpamTriggerMetadataResponse
+import Muffle.Discord.Generated.Schemas.MentionSpamUpsertRequest
+import Muffle.Discord.Generated.Schemas.MentionSpamUpsertRequestPartial
+import Muffle.Discord.Generated.Schemas.MentionableSelectComponentForMessageRequest
+import Muffle.Discord.Generated.Schemas.MentionableSelectComponentForModalRequest
+import Muffle.Discord.Generated.Schemas.MentionableSelectComponentResponse
+import Muffle.Discord.Generated.Schemas.MessageActivityResponse
+import Muffle.Discord.Generated.Schemas.MessageAllowedMentionsRequest
+import Muffle.Discord.Generated.Schemas.MessageAttachmentRequest
+import Muffle.Discord.Generated.Schemas.MessageAttachmentResponse
+import Muffle.Discord.Generated.Schemas.MessageCallResponse
+import Muffle.Discord.Generated.Schemas.MessageComponentInteractionMetadataResponse
+import Muffle.Discord.Generated.Schemas.MessageComponentSeparatorSpacingSize
+import Muffle.Discord.Generated.Schemas.MessageComponentTypes
+import Muffle.Discord.Generated.Schemas.MessageCreateRequest
+import Muffle.Discord.Generated.Schemas.MessageEditRequestPartial
+import Muffle.Discord.Generated.Schemas.MessageEmbedAuthorResponse
+import Muffle.Discord.Generated.Schemas.MessageEmbedFieldResponse
+import Muffle.Discord.Generated.Schemas.MessageEmbedFooterResponse
+import Muffle.Discord.Generated.Schemas.MessageEmbedImageResponse
+import Muffle.Discord.Generated.Schemas.MessageEmbedProviderResponse
+import Muffle.Discord.Generated.Schemas.MessageEmbedResponse
+import Muffle.Discord.Generated.Schemas.MessageEmbedVideoResponse
+import Muffle.Discord.Generated.Schemas.MessageInteractionResponse
+import Muffle.Discord.Generated.Schemas.MessageMentionChannelResponse
+import Muffle.Discord.Generated.Schemas.MessageReactionCountDetailsResponse
+import Muffle.Discord.Generated.Schemas.MessageReactionEmojiResponse
+import Muffle.Discord.Generated.Schemas.MessageReactionResponse
+import Muffle.Discord.Generated.Schemas.MessageReferenceRequest
+import Muffle.Discord.Generated.Schemas.MessageReferenceResponse
+import Muffle.Discord.Generated.Schemas.MessageReferenceType
+import Muffle.Discord.Generated.Schemas.MessageResponse
+import Muffle.Discord.Generated.Schemas.MessageRoleSubscriptionDataResponse
+import Muffle.Discord.Generated.Schemas.MessageShareCustomUserThemeBaseTheme
+import Muffle.Discord.Generated.Schemas.MessageSnapshotResponse
+import Muffle.Discord.Generated.Schemas.MessageStickerItemResponse
+import Muffle.Discord.Generated.Schemas.MessageType
+import Muffle.Discord.Generated.Schemas.MetadataItemTypes
+import Muffle.Discord.Generated.Schemas.MinimalContentMessageResponse
+import Muffle.Discord.Generated.Schemas.ModalInteractionCallbackRequest
+import Muffle.Discord.Generated.Schemas.ModalInteractionCallbackRequestData
+import Muffle.Discord.Generated.Schemas.ModalSubmitInteractionMetadataResponse
+import Muffle.Discord.Generated.Schemas.MultipleChoiceFormFieldResponse
+import Muffle.Discord.Generated.Schemas.MyGuildResponse
+import Muffle.Discord.Generated.Schemas.NameplatePalette
+import Muffle.Discord.Generated.Schemas.NewMemberActionResponse
+import Muffle.Discord.Generated.Schemas.NewMemberActionType
+import Muffle.Discord.Generated.Schemas.OAuth2GetAuthorizationResponse
+import Muffle.Discord.Generated.Schemas.OAuth2GetKeys
+import Muffle.Discord.Generated.Schemas.OAuth2GetOpenIDConnectUserInfoResponse
+import Muffle.Discord.Generated.Schemas.OAuth2Key
+import Muffle.Discord.Generated.Schemas.OAuth2Scopes
+import Muffle.Discord.Generated.Schemas.OnboardingPromptOptionRequest
+import Muffle.Discord.Generated.Schemas.OnboardingPromptOptionResponse
+import Muffle.Discord.Generated.Schemas.OnboardingPromptResponse
+import Muffle.Discord.Generated.Schemas.OnboardingPromptType
+import Muffle.Discord.Generated.Schemas.ParagraphFormFieldResponse
+import Muffle.Discord.Generated.Schemas.PartialDiscordIntegrationResponse
+import Muffle.Discord.Generated.Schemas.PartialExternalConnectionIntegrationResponse
+import Muffle.Discord.Generated.Schemas.PartialGuildSubscriptionIntegrationResponse
+import Muffle.Discord.Generated.Schemas.PinnedMessageResponse
+import Muffle.Discord.Generated.Schemas.PinnedMessagesResponse
+import Muffle.Discord.Generated.Schemas.PollAnswerCreateRequest
+import Muffle.Discord.Generated.Schemas.PollAnswerDetailsResponse
+import Muffle.Discord.Generated.Schemas.PollAnswerResponse
+import Muffle.Discord.Generated.Schemas.PollCreateRequest
+import Muffle.Discord.Generated.Schemas.PollEmoji
+import Muffle.Discord.Generated.Schemas.PollEmojiCreateRequest
+import Muffle.Discord.Generated.Schemas.PollLayoutTypes
+import Muffle.Discord.Generated.Schemas.PollMedia
+import Muffle.Discord.Generated.Schemas.PollMediaCreateRequest
+import Muffle.Discord.Generated.Schemas.PollMediaResponse
+import Muffle.Discord.Generated.Schemas.PollResponse
+import Muffle.Discord.Generated.Schemas.PollResultsEntryResponse
+import Muffle.Discord.Generated.Schemas.PollResultsResponse
+import Muffle.Discord.Generated.Schemas.PongInteractionCallbackRequest
+import Muffle.Discord.Generated.Schemas.PremiumGuildTiers
+import Muffle.Discord.Generated.Schemas.PremiumTypes
+import Muffle.Discord.Generated.Schemas.PrivateApplicationResponse
+import Muffle.Discord.Generated.Schemas.PrivateChannelLocation
+import Muffle.Discord.Generated.Schemas.PrivateChannelResponse
+import Muffle.Discord.Generated.Schemas.PrivateGroupChannelResponse
+import Muffle.Discord.Generated.Schemas.PrivateGuildMemberResponse
+import Muffle.Discord.Generated.Schemas.ProvisionalTokenResponse
+import Muffle.Discord.Generated.Schemas.PruneGuildRequest
+import Muffle.Discord.Generated.Schemas.PurchaseNotificationResponse
+import Muffle.Discord.Generated.Schemas.PurchaseType
+import Muffle.Discord.Generated.Schemas.QuarantineUserAction
+import Muffle.Discord.Generated.Schemas.QuarantineUserActionMetadata
+import Muffle.Discord.Generated.Schemas.QuarantineUserActionMetadataResponse
+import Muffle.Discord.Generated.Schemas.QuarantineUserActionResponse
+import Muffle.Discord.Generated.Schemas.RadioGroupComponentForModalRequest
+import Muffle.Discord.Generated.Schemas.RadioGroupOptionForRequest
+import Muffle.Discord.Generated.Schemas.RatelimitedResponse
+import Muffle.Discord.Generated.Schemas.ReactionTypes
+import Muffle.Discord.Generated.Schemas.RecurrenceRule
+import Muffle.Discord.Generated.Schemas.RecurrenceRuleFrequencies
+import Muffle.Discord.Generated.Schemas.RecurrenceRuleMonths
+import Muffle.Discord.Generated.Schemas.RecurrenceRuleResponse
+import Muffle.Discord.Generated.Schemas.RecurrenceRuleWeekdays
+import Muffle.Discord.Generated.Schemas.ResolvedObjectsResponse
+import Muffle.Discord.Generated.Schemas.ResourceChannelResponse
+import Muffle.Discord.Generated.Schemas.RichEmbed
+import Muffle.Discord.Generated.Schemas.RichEmbedAuthor
+import Muffle.Discord.Generated.Schemas.RichEmbedField
+import Muffle.Discord.Generated.Schemas.RichEmbedFooter
+import Muffle.Discord.Generated.Schemas.RichEmbedImage
+import Muffle.Discord.Generated.Schemas.RichEmbedProvider
+import Muffle.Discord.Generated.Schemas.RichEmbedThumbnail
+import Muffle.Discord.Generated.Schemas.RichEmbedVideo
+import Muffle.Discord.Generated.Schemas.RoleColors
+import Muffle.Discord.Generated.Schemas.RoleSelectComponentForMessageRequest
+import Muffle.Discord.Generated.Schemas.RoleSelectComponentForModalRequest
+import Muffle.Discord.Generated.Schemas.RoleSelectComponentResponse
+import Muffle.Discord.Generated.Schemas.RoleSelectDefaultValue
+import Muffle.Discord.Generated.Schemas.RoleSelectDefaultValueResponse
+import Muffle.Discord.Generated.Schemas.SDKMessageRequest
+import Muffle.Discord.Generated.Schemas.SKUIneligibilityReason
+import Muffle.Discord.Generated.Schemas.ScheduledEventResponse
+import Muffle.Discord.Generated.Schemas.ScheduledEventUserCountResponse
+import Muffle.Discord.Generated.Schemas.ScheduledEventUserResponse
+import Muffle.Discord.Generated.Schemas.SearchIndexNotReadyResponse
+import Muffle.Discord.Generated.Schemas.SearchMessageResponse
+import Muffle.Discord.Generated.Schemas.SearchableEmbedType
+import Muffle.Discord.Generated.Schemas.SectionComponentForMessageRequest
+import Muffle.Discord.Generated.Schemas.SectionComponentResponse
+import Muffle.Discord.Generated.Schemas.SeparatorComponentForMessageRequest
+import Muffle.Discord.Generated.Schemas.SeparatorComponentResponse
+import Muffle.Discord.Generated.Schemas.SettingsEmojiResponse
+import Muffle.Discord.Generated.Schemas.SlackWebhook
+import Muffle.Discord.Generated.Schemas.SnowflakeSelectDefaultValueTypes
+import Muffle.Discord.Generated.Schemas.SnowflakeType
+import Muffle.Discord.Generated.Schemas.SocialLayerSKUPurchaseEligibilityCallbackData
+import Muffle.Discord.Generated.Schemas.SocialLayerSKUPurchaseEligibilityInteractionCallbackRequest
+import Muffle.Discord.Generated.Schemas.SortingMode
+import Muffle.Discord.Generated.Schemas.SortingOrder
+import Muffle.Discord.Generated.Schemas.SoundboardCreateRequest
+import Muffle.Discord.Generated.Schemas.SoundboardPatchRequestPartial
+import Muffle.Discord.Generated.Schemas.SoundboardSoundResponse
+import Muffle.Discord.Generated.Schemas.SoundboardSoundSendRequest
+import Muffle.Discord.Generated.Schemas.StageInstanceResponse
+import Muffle.Discord.Generated.Schemas.StageInstancesPrivacyLevels
+import Muffle.Discord.Generated.Schemas.StageScheduledEventCreateRequest
+import Muffle.Discord.Generated.Schemas.StageScheduledEventPatchRequestPartial
+import Muffle.Discord.Generated.Schemas.StageScheduledEventResponse
+import Muffle.Discord.Generated.Schemas.StandardStickerResponse
+import Muffle.Discord.Generated.Schemas.StickerFormatTypes
+import Muffle.Discord.Generated.Schemas.StickerPackCollectionResponse
+import Muffle.Discord.Generated.Schemas.StickerPackResponse
+import Muffle.Discord.Generated.Schemas.StickerTypes
+import Muffle.Discord.Generated.Schemas.StringSelectComponentForMessageRequest
+import Muffle.Discord.Generated.Schemas.StringSelectComponentForModalRequest
+import Muffle.Discord.Generated.Schemas.StringSelectComponentResponse
+import Muffle.Discord.Generated.Schemas.StringSelectOptionForRequest
+import Muffle.Discord.Generated.Schemas.StringSelectOptionResponse
+import Muffle.Discord.Generated.Schemas.SubscriptionResponse
+import Muffle.Discord.Generated.Schemas.SubscriptionResponseStatusType
+import Muffle.Discord.Generated.Schemas.TargetUsersJobStatusResponse
+import Muffle.Discord.Generated.Schemas.TargetUsersJobStatusTypes
+import Muffle.Discord.Generated.Schemas.TeamMemberResponse
+import Muffle.Discord.Generated.Schemas.TeamMemberRoles
+import Muffle.Discord.Generated.Schemas.TeamMembershipStates
+import Muffle.Discord.Generated.Schemas.TeamResponse
+import Muffle.Discord.Generated.Schemas.TermsFormFieldResponse
+import Muffle.Discord.Generated.Schemas.TextDisplayComponentForMessageRequest
+import Muffle.Discord.Generated.Schemas.TextDisplayComponentForModalRequest
+import Muffle.Discord.Generated.Schemas.TextDisplayComponentResponse
+import Muffle.Discord.Generated.Schemas.TextInputComponentForModalRequest
+import Muffle.Discord.Generated.Schemas.TextInputComponentResponse
+import Muffle.Discord.Generated.Schemas.TextInputFormFieldResponse
+import Muffle.Discord.Generated.Schemas.TextInputStyleTypes
+import Muffle.Discord.Generated.Schemas.ThreadAutoArchiveDuration
+import Muffle.Discord.Generated.Schemas.ThreadMemberResponse
+import Muffle.Discord.Generated.Schemas.ThreadMetadataResponse
+import Muffle.Discord.Generated.Schemas.ThreadResponse
+import Muffle.Discord.Generated.Schemas.ThreadSearchResponse
+import Muffle.Discord.Generated.Schemas.ThreadSearchTagSetting
+import Muffle.Discord.Generated.Schemas.ThreadSortOrder
+import Muffle.Discord.Generated.Schemas.ThreadSortingMode
+import Muffle.Discord.Generated.Schemas.ThreadsResponse
+import Muffle.Discord.Generated.Schemas.ThumbnailComponentForMessageRequest
+import Muffle.Discord.Generated.Schemas.ThumbnailComponentResponse
+import Muffle.Discord.Generated.Schemas.TypingIndicatorResponse
+import Muffle.Discord.Generated.Schemas.UInt32Type
+import Muffle.Discord.Generated.Schemas.UnbanUserFromGuildRequest
+import Muffle.Discord.Generated.Schemas.UnfurledMediaRequest
+import Muffle.Discord.Generated.Schemas.UnfurledMediaRequestWithAttachmentReferenceRequired
+import Muffle.Discord.Generated.Schemas.UnfurledMediaResponse
+import Muffle.Discord.Generated.Schemas.UpdateApplicationUserRoleConnectionRequest
+import Muffle.Discord.Generated.Schemas.UpdateDMRequestPartial
+import Muffle.Discord.Generated.Schemas.UpdateDefaultReactionEmojiRequest
+import Muffle.Discord.Generated.Schemas.UpdateGroupDMRequestPartial
+import Muffle.Discord.Generated.Schemas.UpdateGuildChannelRequestPartial
+import Muffle.Discord.Generated.Schemas.UpdateGuildOnboardingRequest
+import Muffle.Discord.Generated.Schemas.UpdateMessageInteractionCallbackRequest
+import Muffle.Discord.Generated.Schemas.UpdateMessageInteractionCallbackResponse
+import Muffle.Discord.Generated.Schemas.UpdateOnboardingPromptRequest
+import Muffle.Discord.Generated.Schemas.UpdateRolePositionsRequest
+import Muffle.Discord.Generated.Schemas.UpdateRoleRequestPartial
+import Muffle.Discord.Generated.Schemas.UpdateSelfVoiceStateRequestPartial
+import Muffle.Discord.Generated.Schemas.UpdateThreadRequestPartial
+import Muffle.Discord.Generated.Schemas.UpdateThreadTagRequest
+import Muffle.Discord.Generated.Schemas.UpdateVoiceStateRequestPartial
+import Muffle.Discord.Generated.Schemas.UserAvatarDecorationResponse
+import Muffle.Discord.Generated.Schemas.UserCollectiblesResponse
+import Muffle.Discord.Generated.Schemas.UserCommunicationDisabledAction
+import Muffle.Discord.Generated.Schemas.UserCommunicationDisabledActionMetadata
+import Muffle.Discord.Generated.Schemas.UserCommunicationDisabledActionMetadataResponse
+import Muffle.Discord.Generated.Schemas.UserCommunicationDisabledActionResponse
+import Muffle.Discord.Generated.Schemas.UserGuildOnboardingResponse
+import Muffle.Discord.Generated.Schemas.UserNameplateResponse
+import Muffle.Discord.Generated.Schemas.UserNotificationSettings
+import Muffle.Discord.Generated.Schemas.UserPIIResponse
+import Muffle.Discord.Generated.Schemas.UserPrimaryGuildResponse
+import Muffle.Discord.Generated.Schemas.UserProfileMetadata
+import Muffle.Discord.Generated.Schemas.UserProfileMetadataResponse
+import Muffle.Discord.Generated.Schemas.UserProfileRuleResponse
+import Muffle.Discord.Generated.Schemas.UserProfileUpsertRequest
+import Muffle.Discord.Generated.Schemas.UserProfileUpsertRequestPartial
+import Muffle.Discord.Generated.Schemas.UserResponse
+import Muffle.Discord.Generated.Schemas.UserSelectComponentForMessageRequest
+import Muffle.Discord.Generated.Schemas.UserSelectComponentForModalRequest
+import Muffle.Discord.Generated.Schemas.UserSelectComponentResponse
+import Muffle.Discord.Generated.Schemas.UserSelectDefaultValue
+import Muffle.Discord.Generated.Schemas.UserSelectDefaultValueResponse
+import Muffle.Discord.Generated.Schemas.VanityURLErrorResponse
+import Muffle.Discord.Generated.Schemas.VanityURLResponse
+import Muffle.Discord.Generated.Schemas.VerificationLevels
+import Muffle.Discord.Generated.Schemas.VideoQualityModes
+import Muffle.Discord.Generated.Schemas.VoiceRegionResponse
+import Muffle.Discord.Generated.Schemas.VoiceScheduledEventCreateRequest
+import Muffle.Discord.Generated.Schemas.VoiceScheduledEventPatchRequestPartial
+import Muffle.Discord.Generated.Schemas.VoiceScheduledEventResponse
+import Muffle.Discord.Generated.Schemas.VoiceStateResponse
+import Muffle.Discord.Generated.Schemas.WebhookSlackEmbed
+import Muffle.Discord.Generated.Schemas.WebhookSlackEmbedField
+import Muffle.Discord.Generated.Schemas.WebhookSourceChannelResponse
+import Muffle.Discord.Generated.Schemas.WebhookSourceGuildResponse
+import Muffle.Discord.Generated.Schemas.WebhookTypes
+import Muffle.Discord.Generated.Schemas.WelcomeMessageResponse
+import Muffle.Discord.Generated.Schemas.WelcomeScreenPatchRequestPartial
+import Muffle.Discord.Generated.Schemas.WidgetActivity
+import Muffle.Discord.Generated.Schemas.WidgetChannel
+import Muffle.Discord.Generated.Schemas.WidgetImageStyles
+import Muffle.Discord.Generated.Schemas.WidgetMember
+import Muffle.Discord.Generated.Schemas.WidgetResponse
+import Muffle.Discord.Generated.Schemas.WidgetSettingsResponse
+import Muffle.Discord.Generated.Schemas.WidgetUserDiscriminator

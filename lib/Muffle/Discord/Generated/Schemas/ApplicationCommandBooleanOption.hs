@@ -1,0 +1,25 @@
+{-# LANGUAGE DuplicateRecordFields #-}
+{-# LANGUAGE DeriveGeneric #-}
+module Muffle.Discord.Generated.Schemas.ApplicationCommandBooleanOption where
+
+import Data.Int (Int32, Int64)
+import GHC.Generics
+import Muffle.Discord.Generated.Schemas.ApplicationCommandOptionType
+
+data ApplicationCommandBooleanOption = ApplicationCommandBooleanOption
+    { description :: String
+    , descriptionLocalizations :: Maybe ApplicationCommandBooleanOptionDescriptionLocalizationsNullableInner
+    , name :: String
+    , nameLocalizations :: Maybe ApplicationCommandBooleanOptionNameLocalizationsNullableInner
+    , required :: Maybe Bool
+    , type' :: ApplicationCommandOptionType
+    }
+    deriving (Show, Eq, Generic)
+data ApplicationCommandBooleanOptionDescriptionLocalizationsNullableInner = ApplicationCommandBooleanOptionDescriptionLocalizationsNullableInner
+    { 
+    }
+    deriving (Show, Eq, Generic)
+data ApplicationCommandBooleanOptionNameLocalizationsNullableInner = ApplicationCommandBooleanOptionNameLocalizationsNullableInner
+    { 
+    }
+    deriving (Show, Eq, Generic)

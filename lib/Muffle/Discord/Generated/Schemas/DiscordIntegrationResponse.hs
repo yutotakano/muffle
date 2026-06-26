@@ -1,0 +1,24 @@
+{-# LANGUAGE DuplicateRecordFields #-}
+{-# LANGUAGE DeriveGeneric #-}
+module Muffle.Discord.Generated.Schemas.DiscordIntegrationResponse where
+
+import Data.Int (Int32, Int64)
+import GHC.Generics
+import Muffle.Discord.Generated.Schemas.AccountResponse
+import Muffle.Discord.Generated.Schemas.IntegrationApplicationResponse
+import Muffle.Discord.Generated.Schemas.SnowflakeType
+import Muffle.Discord.Generated.Schemas.OAuth2Scopes
+import Muffle.Discord.Generated.Schemas.IntegrationTypes
+import Muffle.Discord.Generated.Schemas.UserResponse
+
+data DiscordIntegrationResponse = DiscordIntegrationResponse
+    { account :: AccountResponse
+    , application :: IntegrationApplicationResponse
+    , enabled :: Bool
+    , id :: SnowflakeType
+    , name :: Maybe String
+    , scopes :: [OAuth2Scopes]
+    , type' :: IntegrationTypes
+    , user :: UserResponse
+    }
+    deriving (Show, Eq, Generic)
