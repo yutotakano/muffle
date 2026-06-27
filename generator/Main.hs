@@ -585,16 +585,13 @@ schemaToHaskellFromJSONInstance name (IntegerSchema _) =
             instance FromJSON ${typename} where
                 parseJSON v = ${constructorname} <$> parseJSON v
             """
-schemaToHaskellFromJSONInstance name (ArraySchema (ParsedSchemaArray flattish _min _max)) =
+schemaToHaskellFromJSONInstance name (ArraySchema (ParsedSchemaArray _ _min _max)) =
     replace "${typename}" name $
-        replace "${constructorname}" (newValidConstructorName name) $
-            replace
-                "${innerType}"
-                (fromJust (schemaToSimpleHaskellType flattish))
-                """
-                instance FromJSON ${typename} where
-                    parseJSON v = ${constructorname} <$> (parseJSON v :: Parser [${innerType}])
-                """
+        replace "${constructorname}" (newValidConstructorName name)
+            """
+            instance FromJSON ${typename} where
+                parseJSON v = ${constructorname} <$> parseJSON v
+            """
 schemaToHaskellFromJSONInstance name (ObjectSchema (ParsedSchemaObject [] _)) =
     replace "${typename}" name $
         replace
