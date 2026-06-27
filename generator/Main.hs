@@ -607,7 +607,9 @@ schemaToHaskellFromJSONInstance name (ObjectSchema (ParsedSchemaObject propertie
         replace "${constructorname}" (newValidConstructorName name) $
             replace
                 "${fieldparsers}"
-                (intercalate "\n            <*> " (map (\(propName, _) -> "o .: " ++ show propName) properties))
+                (intercalate "\n            <*> " (map (\(propName, propSchema) -> case propSchema of
+                    NullableSchema (RawTypeSchema (ParsedSchemaRawType "null")) -> "o .:! " ++ show propName
+                    _ -> "o .: " ++ show propName) properties))
                 """
                 instance FromJSON ${typename} where
                     parseJSON = withObject "${typename}" $ \\o ->

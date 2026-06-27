@@ -23,9 +23,9 @@ data GuildRoleTagsResponse = GuildRoleTagsResponse
 instance FromJSON GuildRoleTagsResponse where
     parseJSON = withObject "GuildRoleTagsResponse" $ \o ->
         GuildRoleTagsResponse <$>
-            o .: "available_for_purchase"
+            o .:! "available_for_purchase"
             <*> o .: "bot_id"
-            <*> o .: "guild_connections"
+            <*> o .:! "guild_connections"
             <*> o .: "integration_id"
-            <*> o .: "premium_subscriber"
+            <*> o .:! "premium_subscriber"
             <*> o .: "subscription_listing_id"

@@ -33,7 +33,7 @@ instance FromJSON WidgetMember where
     parseJSON = withObject "WidgetMember" $ \o ->
         WidgetMember <$>
             o .: "activity"
-            <*> o .: "avatar"
+            <*> o .:! "avatar"
             <*> o .: "avatar_url"
             <*> o .: "channel_id"
             <*> o .: "deaf"
