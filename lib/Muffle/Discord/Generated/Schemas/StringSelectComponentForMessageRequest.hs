@@ -1,9 +1,13 @@
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# OPTIONS_GHC -Wno-unused-imports #-}
 module Muffle.Discord.Generated.Schemas.StringSelectComponentForMessageRequest where
 
 import Data.Int (Int32, Int64)
 import GHC.Generics
+import Data.Aeson
+import Control.Applicative ((<|>))
 import Muffle.Discord.Generated.Schemas.StringSelectOptionForRequest
 import Muffle.Discord.Generated.Schemas.MessageComponentTypes
 
@@ -19,3 +23,16 @@ data StringSelectComponentForMessageRequest = StringSelectComponentForMessageReq
     , type' :: MessageComponentTypes
     }
     deriving (Show, Eq, Generic)
+
+instance FromJSON StringSelectComponentForMessageRequest where
+    parseJSON = withObject "StringSelectComponentForMessageRequest" $ \o ->
+        StringSelectComponentForMessageRequest <$>
+            o .: "custom_id"
+            <*> o .: "disabled"
+            <*> o .: "id"
+            <*> o .: "max_values"
+            <*> o .: "min_values"
+            <*> o .: "options"
+            <*> o .: "placeholder"
+            <*> o .: "required"
+            <*> o .: "type"

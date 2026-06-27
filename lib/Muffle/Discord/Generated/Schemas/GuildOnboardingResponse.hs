@@ -1,9 +1,13 @@
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# OPTIONS_GHC -Wno-unused-imports #-}
 module Muffle.Discord.Generated.Schemas.GuildOnboardingResponse where
 
 import Data.Int (Int32, Int64)
 import GHC.Generics
+import Data.Aeson
+import Control.Applicative ((<|>))
 import Muffle.Discord.Generated.Schemas.SnowflakeType
 import Muffle.Discord.Generated.Schemas.GuildOnboardingMode
 import Muffle.Discord.Generated.Schemas.OnboardingPromptResponse
@@ -16,3 +20,12 @@ data GuildOnboardingResponse = GuildOnboardingResponse
     , prompts :: [OnboardingPromptResponse]
     }
     deriving (Show, Eq, Generic)
+
+instance FromJSON GuildOnboardingResponse where
+    parseJSON = withObject "GuildOnboardingResponse" $ \o ->
+        GuildOnboardingResponse <$>
+            o .: "default_channel_ids"
+            <*> o .: "enabled"
+            <*> o .: "guild_id"
+            <*> o .: "mode"
+            <*> o .: "prompts"

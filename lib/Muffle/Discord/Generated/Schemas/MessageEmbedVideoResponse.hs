@@ -1,9 +1,13 @@
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# OPTIONS_GHC -Wno-unused-imports #-}
 module Muffle.Discord.Generated.Schemas.MessageEmbedVideoResponse where
 
 import Data.Int (Int32, Int64)
 import GHC.Generics
+import Data.Aeson
+import Control.Applicative ((<|>))
 import Muffle.Discord.Generated.Schemas.UInt32Type
 
 data MessageEmbedVideoResponse = MessageEmbedVideoResponse
@@ -18,3 +22,16 @@ data MessageEmbedVideoResponse = MessageEmbedVideoResponse
     , width :: Maybe UInt32Type
     }
     deriving (Show, Eq, Generic)
+
+instance FromJSON MessageEmbedVideoResponse where
+    parseJSON = withObject "MessageEmbedVideoResponse" $ \o ->
+        MessageEmbedVideoResponse <$>
+            o .: "content_type"
+            <*> o .: "description"
+            <*> o .: "flags"
+            <*> o .: "height"
+            <*> o .: "placeholder"
+            <*> o .: "placeholder_version"
+            <*> o .: "proxy_url"
+            <*> o .: "url"
+            <*> o .: "width"

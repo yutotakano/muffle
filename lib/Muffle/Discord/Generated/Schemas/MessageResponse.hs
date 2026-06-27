@@ -1,9 +1,13 @@
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# OPTIONS_GHC -Wno-unused-imports #-}
 module Muffle.Discord.Generated.Schemas.MessageResponse where
 
 import Data.Int (Int32, Int64)
 import GHC.Generics
+import Data.Aeson
+import Control.Applicative ((<|>))
 import Muffle.Discord.Generated.Schemas.MessageActivityResponse
 import Muffle.Discord.Generated.Schemas.BasicApplicationResponseWithBot
 import Muffle.Discord.Generated.Schemas.SnowflakeType
@@ -79,13 +83,89 @@ data MessageResponse = MessageResponse
     , webhookId :: Maybe SnowflakeType
     }
     deriving (Show, Eq, Generic)
+
+instance FromJSON MessageResponse where
+    parseJSON = withObject "MessageResponse" $ \o ->
+        MessageResponse <$>
+            o .: "activity"
+            <*> o .: "application"
+            <*> o .: "application_id"
+            <*> o .: "attachments"
+            <*> o .: "author"
+            <*> o .: "call"
+            <*> o .: "channel_id"
+            <*> o .: "components"
+            <*> o .: "content"
+            <*> o .: "edited_timestamp"
+            <*> o .: "embeds"
+            <*> o .: "flags"
+            <*> o .: "id"
+            <*> o .: "interaction"
+            <*> o .: "interaction_metadata"
+            <*> o .: "mention_channels"
+            <*> o .: "mention_everyone"
+            <*> o .: "mention_roles"
+            <*> o .: "mentions"
+            <*> o .: "message_reference"
+            <*> o .: "message_snapshots"
+            <*> o .: "nonce"
+            <*> o .: "pinned"
+            <*> o .: "poll"
+            <*> o .: "position"
+            <*> o .: "purchase_notification"
+            <*> o .: "reactions"
+            <*> o .: "referenced_message"
+            <*> o .: "resolved"
+            <*> o .: "role_subscription_data"
+            <*> o .: "shared_client_theme"
+            <*> o .: "sticker_items"
+            <*> o .: "stickers"
+            <*> o .: "thread"
+            <*> o .: "timestamp"
+            <*> o .: "tts"
+            <*> o .: "type"
+            <*> o .: "webhook_id"
+
 data MessageResponseComponentsItem = MessageResponseComponentsItem0 ActionRowComponentResponse | MessageResponseComponentsItem1 ContainerComponentResponse | MessageResponseComponentsItem2 FileComponentResponse | MessageResponseComponentsItem3 MediaGalleryComponentResponse | MessageResponseComponentsItem4 SectionComponentResponse | MessageResponseComponentsItem5 SeparatorComponentResponse | MessageResponseComponentsItem6 TextDisplayComponentResponse
     deriving (Show, Eq, Generic)
+
+instance FromJSON MessageResponseComponentsItem where
+    parseJSON v =
+        MessageResponseComponentsItem0 <$> parseJSON v
+            <|> MessageResponseComponentsItem1 <$> parseJSON v
+            <|> MessageResponseComponentsItem2 <$> parseJSON v
+            <|> MessageResponseComponentsItem3 <$> parseJSON v
+            <|> MessageResponseComponentsItem4 <$> parseJSON v
+            <|> MessageResponseComponentsItem5 <$> parseJSON v
+            <|> MessageResponseComponentsItem6 <$> parseJSON v
+
 data MessageResponseInteractionMetadataNullableInner = MessageResponseInteractionMetadataNullableInner0 ApplicationCommandInteractionMetadataResponse | MessageResponseInteractionMetadataNullableInner1 MessageComponentInteractionMetadataResponse | MessageResponseInteractionMetadataNullableInner2 ModalSubmitInteractionMetadataResponse
     deriving (Show, Eq, Generic)
+
+instance FromJSON MessageResponseInteractionMetadataNullableInner where
+    parseJSON v =
+        MessageResponseInteractionMetadataNullableInner0 <$> parseJSON v
+            <|> MessageResponseInteractionMetadataNullableInner1 <$> parseJSON v
+            <|> MessageResponseInteractionMetadataNullableInner2 <$> parseJSON v
+
 data MessageResponseNonceNullableInner = MessageResponseNonceNullableInner0 Int64 | MessageResponseNonceNullableInner1 String
     deriving (Show, Eq, Generic)
+
+instance FromJSON MessageResponseNonceNullableInner where
+    parseJSON v =
+        MessageResponseNonceNullableInner0 <$> parseJSON v
+            <|> MessageResponseNonceNullableInner1 <$> parseJSON v
+
 newtype MessageResponseStickersNullableInner = MessageResponseStickersNullableInner [MessageResponseStickersNullableInnerItem]
     deriving (Show, Eq, Generic)
+
+instance FromJSON MessageResponseStickersNullableInner where
+    parseJSON v = MessageResponseStickersNullableInner <$> parseJSON v
+
 data MessageResponseStickersNullableInnerItem = MessageResponseStickersNullableInnerItem0 GuildStickerResponse | MessageResponseStickersNullableInnerItem1 StandardStickerResponse
     deriving (Show, Eq, Generic)
+
+instance FromJSON MessageResponseStickersNullableInnerItem where
+    parseJSON v =
+        MessageResponseStickersNullableInnerItem0 <$> parseJSON v
+            <|> MessageResponseStickersNullableInnerItem1 <$> parseJSON v

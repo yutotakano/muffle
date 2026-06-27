@@ -1,10 +1,13 @@
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# OPTIONS_GHC -Wno-unused-imports #-}
 module Muffle.Discord.Generated.Schemas.MessageEmbedFieldResponse where
 
 import Data.Int (Int32, Int64)
 import GHC.Generics
-
+import Data.Aeson
+import Control.Applicative ((<|>))
 
 data MessageEmbedFieldResponse = MessageEmbedFieldResponse
     { inline :: Bool
@@ -12,3 +15,10 @@ data MessageEmbedFieldResponse = MessageEmbedFieldResponse
     , value :: String
     }
     deriving (Show, Eq, Generic)
+
+instance FromJSON MessageEmbedFieldResponse where
+    parseJSON = withObject "MessageEmbedFieldResponse" $ \o ->
+        MessageEmbedFieldResponse <$>
+            o .: "inline"
+            <*> o .: "name"
+            <*> o .: "value"

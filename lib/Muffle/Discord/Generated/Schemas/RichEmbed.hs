@@ -1,9 +1,13 @@
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# OPTIONS_GHC -Wno-unused-imports #-}
 module Muffle.Discord.Generated.Schemas.RichEmbed where
 
 import Data.Int (Int32, Int64)
 import GHC.Generics
+import Data.Aeson
+import Control.Applicative ((<|>))
 import Muffle.Discord.Generated.Schemas.RichEmbedAuthor
 import Muffle.Discord.Generated.Schemas.RichEmbedField
 import Muffle.Discord.Generated.Schemas.RichEmbedFooter
@@ -28,3 +32,20 @@ data RichEmbed = RichEmbed
     , video :: Maybe (Maybe RichEmbedVideo)
     }
     deriving (Show, Eq, Generic)
+
+instance FromJSON RichEmbed where
+    parseJSON = withObject "RichEmbed" $ \o ->
+        RichEmbed <$>
+            o .: "author"
+            <*> o .: "color"
+            <*> o .: "description"
+            <*> o .: "fields"
+            <*> o .: "footer"
+            <*> o .: "image"
+            <*> o .: "provider"
+            <*> o .: "thumbnail"
+            <*> o .: "timestamp"
+            <*> o .: "title"
+            <*> o .: "type"
+            <*> o .: "url"
+            <*> o .: "video"

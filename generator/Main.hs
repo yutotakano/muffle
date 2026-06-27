@@ -560,11 +560,12 @@ schemaToHaskellFromJSONInstance name (EnumSchema (ParsedSchemaEnum (Right values
             (intercalate ", " (map show values))
             """
             instance FromJSON ${typename} where
+
             """
             ++ concatMap
                 (\v -> "    parseJSON (Number " ++ show v ++ ") = pure " ++ name ++ "Enum" ++ show v ++ "\n")
                 values
-            ++ "\n    parseJSON _ = fail \"Expected one of: "
+            ++ "    parseJSON _ = fail \"Expected one of: "
             ++ intercalate ", " (map show values)
             ++ "\""
 schemaToHaskellFromJSONInstance name (TypedEnumSchema _) =

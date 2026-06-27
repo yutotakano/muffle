@@ -1,9 +1,13 @@
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# OPTIONS_GHC -Wno-unused-imports #-}
 module Muffle.Discord.Generated.Schemas.GuildPatchRequestPartial where
 
 import Data.Int (Int32, Int64)
 import GHC.Generics
+import Data.Aeson
+import Control.Applicative ((<|>))
 import Muffle.Discord.Generated.Schemas.SnowflakeType
 import Muffle.Discord.Generated.Schemas.AfkTimeouts
 import Muffle.Discord.Generated.Schemas.UserNotificationSettings
@@ -35,3 +39,28 @@ data GuildPatchRequestPartial = GuildPatchRequestPartial
     , verificationLevel :: Maybe (Maybe VerificationLevels)
     }
     deriving (Show, Eq, Generic)
+
+instance FromJSON GuildPatchRequestPartial where
+    parseJSON = withObject "GuildPatchRequestPartial" $ \o ->
+        GuildPatchRequestPartial <$>
+            o .: "afk_channel_id"
+            <*> o .: "afk_timeout"
+            <*> o .: "banner"
+            <*> o .: "default_message_notifications"
+            <*> o .: "description"
+            <*> o .: "discovery_splash"
+            <*> o .: "explicit_content_filter"
+            <*> o .: "features"
+            <*> o .: "home_header"
+            <*> o .: "icon"
+            <*> o .: "name"
+            <*> o .: "preferred_locale"
+            <*> o .: "premium_progress_bar_enabled"
+            <*> o .: "public_updates_channel_id"
+            <*> o .: "region"
+            <*> o .: "rules_channel_id"
+            <*> o .: "safety_alerts_channel_id"
+            <*> o .: "splash"
+            <*> o .: "system_channel_flags"
+            <*> o .: "system_channel_id"
+            <*> o .: "verification_level"

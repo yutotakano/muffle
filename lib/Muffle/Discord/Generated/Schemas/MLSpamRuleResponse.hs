@@ -1,9 +1,13 @@
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# OPTIONS_GHC -Wno-unused-imports #-}
 module Muffle.Discord.Generated.Schemas.MLSpamRuleResponse where
 
 import Data.Int (Int32, Int64)
 import GHC.Generics
+import Data.Aeson
+import Control.Applicative ((<|>))
 import Muffle.Discord.Generated.Schemas.SnowflakeType
 import Muffle.Discord.Generated.Schemas.AutomodEventType
 import Muffle.Discord.Generated.Schemas.MLSpamTriggerMetadataResponse
@@ -27,5 +31,28 @@ data MLSpamRuleResponse = MLSpamRuleResponse
     , triggerType :: AutomodTriggerType
     }
     deriving (Show, Eq, Generic)
+
+instance FromJSON MLSpamRuleResponse where
+    parseJSON = withObject "MLSpamRuleResponse" $ \o ->
+        MLSpamRuleResponse <$>
+            o .: "actions"
+            <*> o .: "creator_id"
+            <*> o .: "enabled"
+            <*> o .: "event_type"
+            <*> o .: "exempt_channels"
+            <*> o .: "exempt_roles"
+            <*> o .: "guild_id"
+            <*> o .: "id"
+            <*> o .: "name"
+            <*> o .: "trigger_metadata"
+            <*> o .: "trigger_type"
+
 data MLSpamRuleResponseActionsItem = MLSpamRuleResponseActionsItem0 BlockMessageActionResponse | MLSpamRuleResponseActionsItem1 FlagToChannelActionResponse | MLSpamRuleResponseActionsItem2 QuarantineUserActionResponse | MLSpamRuleResponseActionsItem3 UserCommunicationDisabledActionResponse
     deriving (Show, Eq, Generic)
+
+instance FromJSON MLSpamRuleResponseActionsItem where
+    parseJSON v =
+        MLSpamRuleResponseActionsItem0 <$> parseJSON v
+            <|> MLSpamRuleResponseActionsItem1 <$> parseJSON v
+            <|> MLSpamRuleResponseActionsItem2 <$> parseJSON v
+            <|> MLSpamRuleResponseActionsItem3 <$> parseJSON v

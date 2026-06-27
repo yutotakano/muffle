@@ -1,9 +1,13 @@
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# OPTIONS_GHC -Wno-unused-imports #-}
 module Muffle.Discord.Generated.Schemas.IncomingWebhookRequestPartial where
 
 import Data.Int (Int32, Int64)
 import GHC.Generics
+import Data.Aeson
+import Control.Applicative ((<|>))
 import Muffle.Discord.Generated.Schemas.MessageAllowedMentionsRequest
 import Muffle.Discord.Generated.Schemas.SnowflakeType
 import Muffle.Discord.Generated.Schemas.MessageAttachmentRequest
@@ -32,7 +36,38 @@ data IncomingWebhookRequestPartial = IncomingWebhookRequestPartial
     , username :: Maybe (Maybe String)
     }
     deriving (Show, Eq, Generic)
+
+instance FromJSON IncomingWebhookRequestPartial where
+    parseJSON = withObject "IncomingWebhookRequestPartial" $ \o ->
+        IncomingWebhookRequestPartial <$>
+            o .: "allowed_mentions"
+            <*> o .: "applied_tags"
+            <*> o .: "attachments"
+            <*> o .: "avatar_url"
+            <*> o .: "components"
+            <*> o .: "content"
+            <*> o .: "embeds"
+            <*> o .: "flags"
+            <*> o .: "poll"
+            <*> o .: "thread_name"
+            <*> o .: "tts"
+            <*> o .: "username"
+
 newtype IncomingWebhookRequestPartialComponentsNullableInner = IncomingWebhookRequestPartialComponentsNullableInner [IncomingWebhookRequestPartialComponentsNullableInnerItem]
     deriving (Show, Eq, Generic)
+
+instance FromJSON IncomingWebhookRequestPartialComponentsNullableInner where
+    parseJSON v = IncomingWebhookRequestPartialComponentsNullableInner <$> parseJSON v
+
 data IncomingWebhookRequestPartialComponentsNullableInnerItem = IncomingWebhookRequestPartialComponentsNullableInnerItem0 ActionRowComponentForMessageRequest | IncomingWebhookRequestPartialComponentsNullableInnerItem1 ContainerComponentForMessageRequest | IncomingWebhookRequestPartialComponentsNullableInnerItem2 FileComponentForMessageRequest | IncomingWebhookRequestPartialComponentsNullableInnerItem3 MediaGalleryComponentForMessageRequest | IncomingWebhookRequestPartialComponentsNullableInnerItem4 SectionComponentForMessageRequest | IncomingWebhookRequestPartialComponentsNullableInnerItem5 SeparatorComponentForMessageRequest | IncomingWebhookRequestPartialComponentsNullableInnerItem6 TextDisplayComponentForMessageRequest
     deriving (Show, Eq, Generic)
+
+instance FromJSON IncomingWebhookRequestPartialComponentsNullableInnerItem where
+    parseJSON v =
+        IncomingWebhookRequestPartialComponentsNullableInnerItem0 <$> parseJSON v
+            <|> IncomingWebhookRequestPartialComponentsNullableInnerItem1 <$> parseJSON v
+            <|> IncomingWebhookRequestPartialComponentsNullableInnerItem2 <$> parseJSON v
+            <|> IncomingWebhookRequestPartialComponentsNullableInnerItem3 <$> parseJSON v
+            <|> IncomingWebhookRequestPartialComponentsNullableInnerItem4 <$> parseJSON v
+            <|> IncomingWebhookRequestPartialComponentsNullableInnerItem5 <$> parseJSON v
+            <|> IncomingWebhookRequestPartialComponentsNullableInnerItem6 <$> parseJSON v

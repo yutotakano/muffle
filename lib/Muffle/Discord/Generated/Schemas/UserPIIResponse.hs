@@ -1,9 +1,13 @@
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# OPTIONS_GHC -Wno-unused-imports #-}
 module Muffle.Discord.Generated.Schemas.UserPIIResponse where
 
 import Data.Int (Int32, Int64)
 import GHC.Generics
+import Data.Aeson
+import Control.Applicative ((<|>))
 import Muffle.Discord.Generated.Schemas.UserAvatarDecorationResponse
 import Muffle.Discord.Generated.Schemas.UserCollectiblesResponse
 import Muffle.Discord.Generated.Schemas.Int53Type
@@ -34,3 +38,26 @@ data UserPIIResponse = UserPIIResponse
     , verified :: Maybe Bool
     }
     deriving (Show, Eq, Generic)
+
+instance FromJSON UserPIIResponse where
+    parseJSON = withObject "UserPIIResponse" $ \o ->
+        UserPIIResponse <$>
+            o .: "accent_color"
+            <*> o .: "avatar"
+            <*> o .: "avatar_decoration_data"
+            <*> o .: "banner"
+            <*> o .: "bot"
+            <*> o .: "collectibles"
+            <*> o .: "discriminator"
+            <*> o .: "email"
+            <*> o .: "flags"
+            <*> o .: "global_name"
+            <*> o .: "id"
+            <*> o .: "locale"
+            <*> o .: "mfa_enabled"
+            <*> o .: "premium_type"
+            <*> o .: "primary_guild"
+            <*> o .: "public_flags"
+            <*> o .: "system"
+            <*> o .: "username"
+            <*> o .: "verified"

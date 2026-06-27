@@ -1,9 +1,13 @@
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# OPTIONS_GHC -Wno-unused-imports #-}
 module Muffle.Discord.Generated.Schemas.GuildInviteResponse where
 
 import Data.Int (Int32, Int64)
 import GHC.Generics
+import Data.Aeson
+import Control.Applicative ((<|>))
 import Muffle.Discord.Generated.Schemas.InviteChannelResponse
 import Muffle.Discord.Generated.Schemas.InviteGuildResponse
 import Muffle.Discord.Generated.Schemas.SnowflakeType
@@ -41,3 +45,31 @@ data GuildInviteResponse = GuildInviteResponse
     , uses :: Maybe Int32
     }
     deriving (Show, Eq, Generic)
+
+instance FromJSON GuildInviteResponse where
+    parseJSON = withObject "GuildInviteResponse" $ \o ->
+        GuildInviteResponse <$>
+            o .: "approximate_member_count"
+            <*> o .: "approximate_presence_count"
+            <*> o .: "channel"
+            <*> o .: "code"
+            <*> o .: "created_at"
+            <*> o .: "expires_at"
+            <*> o .: "flags"
+            <*> o .: "guild"
+            <*> o .: "guild_id"
+            <*> o .: "guild_scheduled_event"
+            <*> o .: "inviter"
+            <*> o .: "is_contact"
+            <*> o .: "is_nickname_changeable"
+            <*> o .: "max_age"
+            <*> o .: "max_uses"
+            <*> o .: "roles"
+            <*> o .: "target_application"
+            <*> o .: "target_channel_id"
+            <*> o .: "target_message_id"
+            <*> o .: "target_type"
+            <*> o .: "target_user"
+            <*> o .: "temporary"
+            <*> o .: "type"
+            <*> o .: "uses"

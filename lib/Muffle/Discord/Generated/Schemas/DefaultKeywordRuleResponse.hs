@@ -1,9 +1,13 @@
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# OPTIONS_GHC -Wno-unused-imports #-}
 module Muffle.Discord.Generated.Schemas.DefaultKeywordRuleResponse where
 
 import Data.Int (Int32, Int64)
 import GHC.Generics
+import Data.Aeson
+import Control.Applicative ((<|>))
 import Muffle.Discord.Generated.Schemas.SnowflakeType
 import Muffle.Discord.Generated.Schemas.AutomodEventType
 import Muffle.Discord.Generated.Schemas.DefaultKeywordListTriggerMetadataResponse
@@ -27,5 +31,28 @@ data DefaultKeywordRuleResponse = DefaultKeywordRuleResponse
     , triggerType :: AutomodTriggerType
     }
     deriving (Show, Eq, Generic)
+
+instance FromJSON DefaultKeywordRuleResponse where
+    parseJSON = withObject "DefaultKeywordRuleResponse" $ \o ->
+        DefaultKeywordRuleResponse <$>
+            o .: "actions"
+            <*> o .: "creator_id"
+            <*> o .: "enabled"
+            <*> o .: "event_type"
+            <*> o .: "exempt_channels"
+            <*> o .: "exempt_roles"
+            <*> o .: "guild_id"
+            <*> o .: "id"
+            <*> o .: "name"
+            <*> o .: "trigger_metadata"
+            <*> o .: "trigger_type"
+
 data DefaultKeywordRuleResponseActionsItem = DefaultKeywordRuleResponseActionsItem0 BlockMessageActionResponse | DefaultKeywordRuleResponseActionsItem1 FlagToChannelActionResponse | DefaultKeywordRuleResponseActionsItem2 QuarantineUserActionResponse | DefaultKeywordRuleResponseActionsItem3 UserCommunicationDisabledActionResponse
     deriving (Show, Eq, Generic)
+
+instance FromJSON DefaultKeywordRuleResponseActionsItem where
+    parseJSON v =
+        DefaultKeywordRuleResponseActionsItem0 <$> parseJSON v
+            <|> DefaultKeywordRuleResponseActionsItem1 <$> parseJSON v
+            <|> DefaultKeywordRuleResponseActionsItem2 <$> parseJSON v
+            <|> DefaultKeywordRuleResponseActionsItem3 <$> parseJSON v

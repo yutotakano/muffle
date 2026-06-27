@@ -1,9 +1,13 @@
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# OPTIONS_GHC -Wno-unused-imports #-}
 module Muffle.Discord.Generated.Schemas.MessageAttachmentRequest where
 
 import Data.Int (Int32, Int64)
 import GHC.Generics
+import Data.Aeson
+import Control.Applicative ((<|>))
 import Muffle.Discord.Generated.Schemas.SnowflakeType
 
 data MessageAttachmentRequest = MessageAttachmentRequest
@@ -17,3 +21,15 @@ data MessageAttachmentRequest = MessageAttachmentRequest
     , waveform :: Maybe (Maybe String)
     }
     deriving (Show, Eq, Generic)
+
+instance FromJSON MessageAttachmentRequest where
+    parseJSON = withObject "MessageAttachmentRequest" $ \o ->
+        MessageAttachmentRequest <$>
+            o .: "description"
+            <*> o .: "duration_secs"
+            <*> o .: "filename"
+            <*> o .: "id"
+            <*> o .: "is_remix"
+            <*> o .: "is_spoiler"
+            <*> o .: "title"
+            <*> o .: "waveform"

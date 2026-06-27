@@ -1,9 +1,13 @@
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# OPTIONS_GHC -Wno-unused-imports #-}
 module Muffle.Discord.Generated.Schemas.StageScheduledEventResponse where
 
 import Data.Int (Int32, Int64)
 import GHC.Generics
+import Data.Aeson
+import Control.Applicative ((<|>))
 import Muffle.Discord.Generated.Schemas.SnowflakeType
 import Muffle.Discord.Generated.Schemas.UserResponse
 import Muffle.Discord.Generated.Schemas.EntityMetadataStageInstanceResponse
@@ -36,3 +40,26 @@ data StageScheduledEventResponse = StageScheduledEventResponse
     , userRsvp :: Maybe (Maybe ScheduledEventUserResponse)
     }
     deriving (Show, Eq, Generic)
+
+instance FromJSON StageScheduledEventResponse where
+    parseJSON = withObject "StageScheduledEventResponse" $ \o ->
+        StageScheduledEventResponse <$>
+            o .: "channel_id"
+            <*> o .: "creator"
+            <*> o .: "creator_id"
+            <*> o .: "description"
+            <*> o .: "entity_id"
+            <*> o .: "entity_metadata"
+            <*> o .: "entity_type"
+            <*> o .: "guild_id"
+            <*> o .: "guild_scheduled_event_exceptions"
+            <*> o .: "id"
+            <*> o .: "image"
+            <*> o .: "name"
+            <*> o .: "privacy_level"
+            <*> o .: "recurrence_rule"
+            <*> o .: "scheduled_end_time"
+            <*> o .: "scheduled_start_time"
+            <*> o .: "status"
+            <*> o .: "user_count"
+            <*> o .: "user_rsvp"

@@ -1,9 +1,13 @@
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# OPTIONS_GHC -Wno-unused-imports #-}
 module Muffle.Discord.Generated.Schemas.UserSelectComponentForModalRequest where
 
 import Data.Int (Int32, Int64)
 import GHC.Generics
+import Data.Aeson
+import Control.Applicative ((<|>))
 import Muffle.Discord.Generated.Schemas.UserSelectDefaultValue
 import Muffle.Discord.Generated.Schemas.MessageComponentTypes
 
@@ -19,3 +23,16 @@ data UserSelectComponentForModalRequest = UserSelectComponentForModalRequest
     , type' :: MessageComponentTypes
     }
     deriving (Show, Eq, Generic)
+
+instance FromJSON UserSelectComponentForModalRequest where
+    parseJSON = withObject "UserSelectComponentForModalRequest" $ \o ->
+        UserSelectComponentForModalRequest <$>
+            o .: "custom_id"
+            <*> o .: "default_values"
+            <*> o .: "disabled"
+            <*> o .: "id"
+            <*> o .: "max_values"
+            <*> o .: "min_values"
+            <*> o .: "placeholder"
+            <*> o .: "required"
+            <*> o .: "type"

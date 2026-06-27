@@ -1,9 +1,13 @@
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# OPTIONS_GHC -Wno-unused-imports #-}
 module Muffle.Discord.Generated.Schemas.StageScheduledEventCreateRequest where
 
 import Data.Int (Int32, Int64)
 import GHC.Generics
+import Data.Aeson
+import Control.Applicative ((<|>))
 import Muffle.Discord.Generated.Schemas.SnowflakeType
 import Muffle.Discord.Generated.Schemas.EntityMetadataStageInstance
 import Muffle.Discord.Generated.Schemas.GuildScheduledEventEntityTypes
@@ -23,3 +27,17 @@ data StageScheduledEventCreateRequest = StageScheduledEventCreateRequest
     , scheduledStartTime :: String
     }
     deriving (Show, Eq, Generic)
+
+instance FromJSON StageScheduledEventCreateRequest where
+    parseJSON = withObject "StageScheduledEventCreateRequest" $ \o ->
+        StageScheduledEventCreateRequest <$>
+            o .: "channel_id"
+            <*> o .: "description"
+            <*> o .: "entity_metadata"
+            <*> o .: "entity_type"
+            <*> o .: "image"
+            <*> o .: "name"
+            <*> o .: "privacy_level"
+            <*> o .: "recurrence_rule"
+            <*> o .: "scheduled_end_time"
+            <*> o .: "scheduled_start_time"

@@ -1,9 +1,13 @@
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# OPTIONS_GHC -Wno-unused-imports #-}
 module Muffle.Discord.Generated.Schemas.ApplicationCommandAutocompleteCallbackRequest where
 
 import Data.Int (Int32, Int64)
 import GHC.Generics
+import Data.Aeson
+import Control.Applicative ((<|>))
 import Muffle.Discord.Generated.Schemas.InteractionCallbackTypes
 import Muffle.Discord.Generated.Schemas.InteractionApplicationCommandAutocompleteCallbackIntegerData
 import Muffle.Discord.Generated.Schemas.InteractionApplicationCommandAutocompleteCallbackNumberData
@@ -14,5 +18,18 @@ data ApplicationCommandAutocompleteCallbackRequest = ApplicationCommandAutocompl
     , type' :: InteractionCallbackTypes
     }
     deriving (Show, Eq, Generic)
+
+instance FromJSON ApplicationCommandAutocompleteCallbackRequest where
+    parseJSON = withObject "ApplicationCommandAutocompleteCallbackRequest" $ \o ->
+        ApplicationCommandAutocompleteCallbackRequest <$>
+            o .: "data"
+            <*> o .: "type"
+
 data ApplicationCommandAutocompleteCallbackRequestData' = ApplicationCommandAutocompleteCallbackRequestData'0 InteractionApplicationCommandAutocompleteCallbackIntegerData | ApplicationCommandAutocompleteCallbackRequestData'1 InteractionApplicationCommandAutocompleteCallbackNumberData | ApplicationCommandAutocompleteCallbackRequestData'2 InteractionApplicationCommandAutocompleteCallbackStringData
     deriving (Show, Eq, Generic)
+
+instance FromJSON ApplicationCommandAutocompleteCallbackRequestData' where
+    parseJSON v =
+        ApplicationCommandAutocompleteCallbackRequestData'0 <$> parseJSON v
+            <|> ApplicationCommandAutocompleteCallbackRequestData'1 <$> parseJSON v
+            <|> ApplicationCommandAutocompleteCallbackRequestData'2 <$> parseJSON v

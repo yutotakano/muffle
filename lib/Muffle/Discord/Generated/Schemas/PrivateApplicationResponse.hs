@@ -1,9 +1,13 @@
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# OPTIONS_GHC -Wno-unused-imports #-}
 module Muffle.Discord.Generated.Schemas.PrivateApplicationResponse where
 
 import Data.Int (Int32, Int64)
 import GHC.Generics
+import Data.Aeson
+import Control.Applicative ((<|>))
 import Muffle.Discord.Generated.Schemas.UserResponse
 import Muffle.Discord.Generated.Schemas.ApplicationEventWebhooksStatus
 import Muffle.Discord.Generated.Schemas.ActionTypes
@@ -51,7 +55,48 @@ data PrivateApplicationResponse = PrivateApplicationResponse
     , verifyKey :: String
     }
     deriving (Show, Eq, Generic)
+
+instance FromJSON PrivateApplicationResponse where
+    parseJSON = withObject "PrivateApplicationResponse" $ \o ->
+        PrivateApplicationResponse <$>
+            o .: "approximate_guild_count"
+            <*> o .: "approximate_user_authorization_count"
+            <*> o .: "approximate_user_install_count"
+            <*> o .: "bot"
+            <*> o .: "bot_public"
+            <*> o .: "bot_require_code_grant"
+            <*> o .: "cover_image"
+            <*> o .: "custom_install_url"
+            <*> o .: "description"
+            <*> o .: "event_webhooks_status"
+            <*> o .: "event_webhooks_types"
+            <*> o .: "event_webhooks_url"
+            <*> o .: "explicit_content_filter"
+            <*> o .: "flags"
+            <*> o .: "flags_new"
+            <*> o .: "guild_id"
+            <*> o .: "icon"
+            <*> o .: "id"
+            <*> o .: "install_params"
+            <*> o .: "integration_types_config"
+            <*> o .: "interactions_endpoint_url"
+            <*> o .: "max_participants"
+            <*> o .: "name"
+            <*> o .: "owner"
+            <*> o .: "primary_sku_id"
+            <*> o .: "privacy_policy_url"
+            <*> o .: "redirect_uris"
+            <*> o .: "role_connections_verification_url"
+            <*> o .: "rpc_origins"
+            <*> o .: "slug"
+            <*> o .: "tags"
+            <*> o .: "team"
+            <*> o .: "terms_of_service_url"
+            <*> o .: "type"
+            <*> o .: "verify_key"
+
 data PrivateApplicationResponseIntegrationTypesConfigNullableInner = PrivateApplicationResponseIntegrationTypesConfigNullableInner
-    { 
-    }
     deriving (Show, Eq, Generic)
+
+instance FromJSON PrivateApplicationResponseIntegrationTypesConfigNullableInner where
+    parseJSON = withObject "PrivateApplicationResponseIntegrationTypesConfigNullableInner" $ \_ -> pure PrivateApplicationResponseIntegrationTypesConfigNullableInner

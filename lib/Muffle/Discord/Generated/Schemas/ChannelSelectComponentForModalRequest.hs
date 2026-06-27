@@ -1,9 +1,13 @@
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# OPTIONS_GHC -Wno-unused-imports #-}
 module Muffle.Discord.Generated.Schemas.ChannelSelectComponentForModalRequest where
 
 import Data.Int (Int32, Int64)
 import GHC.Generics
+import Data.Aeson
+import Control.Applicative ((<|>))
 import Muffle.Discord.Generated.Schemas.ChannelTypes
 import Muffle.Discord.Generated.Schemas.ChannelSelectDefaultValue
 import Muffle.Discord.Generated.Schemas.MessageComponentTypes
@@ -21,3 +25,17 @@ data ChannelSelectComponentForModalRequest = ChannelSelectComponentForModalReque
     , type' :: MessageComponentTypes
     }
     deriving (Show, Eq, Generic)
+
+instance FromJSON ChannelSelectComponentForModalRequest where
+    parseJSON = withObject "ChannelSelectComponentForModalRequest" $ \o ->
+        ChannelSelectComponentForModalRequest <$>
+            o .: "channel_types"
+            <*> o .: "custom_id"
+            <*> o .: "default_values"
+            <*> o .: "disabled"
+            <*> o .: "id"
+            <*> o .: "max_values"
+            <*> o .: "min_values"
+            <*> o .: "placeholder"
+            <*> o .: "required"
+            <*> o .: "type"

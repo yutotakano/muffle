@@ -1,9 +1,13 @@
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# OPTIONS_GHC -Wno-unused-imports #-}
 module Muffle.Discord.Generated.Schemas.WebhookSlackEmbed where
 
 import Data.Int (Int32, Int64)
 import GHC.Generics
+import Data.Aeson
+import Control.Applicative ((<|>))
 import Muffle.Discord.Generated.Schemas.WebhookSlackEmbedField
 
 data WebhookSlackEmbed = WebhookSlackEmbed
@@ -23,3 +27,21 @@ data WebhookSlackEmbed = WebhookSlackEmbed
     , ts :: Maybe (Maybe Integer)
     }
     deriving (Show, Eq, Generic)
+
+instance FromJSON WebhookSlackEmbed where
+    parseJSON = withObject "WebhookSlackEmbed" $ \o ->
+        WebhookSlackEmbed <$>
+            o .: "author_icon"
+            <*> o .: "author_link"
+            <*> o .: "author_name"
+            <*> o .: "color"
+            <*> o .: "fields"
+            <*> o .: "footer"
+            <*> o .: "footer_icon"
+            <*> o .: "image_url"
+            <*> o .: "pretext"
+            <*> o .: "text"
+            <*> o .: "thumb_url"
+            <*> o .: "title"
+            <*> o .: "title_link"
+            <*> o .: "ts"

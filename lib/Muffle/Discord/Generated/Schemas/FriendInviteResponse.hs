@@ -1,9 +1,13 @@
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# OPTIONS_GHC -Wno-unused-imports #-}
 module Muffle.Discord.Generated.Schemas.FriendInviteResponse where
 
 import Data.Int (Int32, Int64)
 import GHC.Generics
+import Data.Aeson
+import Control.Applicative ((<|>))
 import Muffle.Discord.Generated.Schemas.InviteChannelResponse
 import Muffle.Discord.Generated.Schemas.UserResponse
 import Muffle.Discord.Generated.Schemas.InviteTypes
@@ -23,3 +27,19 @@ data FriendInviteResponse = FriendInviteResponse
     , uses :: Maybe Int32
     }
     deriving (Show, Eq, Generic)
+
+instance FromJSON FriendInviteResponse where
+    parseJSON = withObject "FriendInviteResponse" $ \o ->
+        FriendInviteResponse <$>
+            o .: "channel"
+            <*> o .: "code"
+            <*> o .: "created_at"
+            <*> o .: "expires_at"
+            <*> o .: "flags"
+            <*> o .: "friends_count"
+            <*> o .: "inviter"
+            <*> o .: "is_contact"
+            <*> o .: "max_age"
+            <*> o .: "max_uses"
+            <*> o .: "type"
+            <*> o .: "uses"

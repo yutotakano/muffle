@@ -1,9 +1,13 @@
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# OPTIONS_GHC -Wno-unused-imports #-}
 module Muffle.Discord.Generated.Schemas.GithubWebhook where
 
 import Data.Int (Int32, Int64)
 import GHC.Generics
+import Data.Aeson
+import Control.Applicative ((<|>))
 import Muffle.Discord.Generated.Schemas.GithubComment
 import Muffle.Discord.Generated.Schemas.GithubCheckRun
 import Muffle.Discord.Generated.Schemas.GithubCheckSuite
@@ -38,3 +42,27 @@ data GithubWebhook = GithubWebhook
     , sender :: GithubUser
     }
     deriving (Show, Eq, Generic)
+
+instance FromJSON GithubWebhook where
+    parseJSON = withObject "GithubWebhook" $ \o ->
+        GithubWebhook <$>
+            o .: "action"
+            <*> o .: "answer"
+            <*> o .: "check_run"
+            <*> o .: "check_suite"
+            <*> o .: "comment"
+            <*> o .: "commits"
+            <*> o .: "compare"
+            <*> o .: "discussion"
+            <*> o .: "forced"
+            <*> o .: "forkee"
+            <*> o .: "head_commit"
+            <*> o .: "issue"
+            <*> o .: "member"
+            <*> o .: "pull_request"
+            <*> o .: "ref"
+            <*> o .: "ref_type"
+            <*> o .: "release"
+            <*> o .: "repository"
+            <*> o .: "review"
+            <*> o .: "sender"

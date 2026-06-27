@@ -1,9 +1,13 @@
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# OPTIONS_GHC -Wno-unused-imports #-}
 module Muffle.Discord.Generated.Schemas.RecurrenceRuleResponse where
 
 import Data.Int (Int32, Int64)
 import GHC.Generics
+import Data.Aeson
+import Control.Applicative ((<|>))
 import Muffle.Discord.Generated.Schemas.RecurrenceRuleMonths
 import Muffle.Discord.Generated.Schemas.ByNWeekdayResponse
 import Muffle.Discord.Generated.Schemas.RecurrenceRuleWeekdays
@@ -22,3 +26,17 @@ data RecurrenceRuleResponse = RecurrenceRuleResponse
     , start :: String
     }
     deriving (Show, Eq, Generic)
+
+instance FromJSON RecurrenceRuleResponse where
+    parseJSON = withObject "RecurrenceRuleResponse" $ \o ->
+        RecurrenceRuleResponse <$>
+            o .: "by_month"
+            <*> o .: "by_month_day"
+            <*> o .: "by_n_weekday"
+            <*> o .: "by_weekday"
+            <*> o .: "by_year_day"
+            <*> o .: "count"
+            <*> o .: "end"
+            <*> o .: "frequency"
+            <*> o .: "interval"
+            <*> o .: "start"

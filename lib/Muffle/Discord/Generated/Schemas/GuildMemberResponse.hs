@@ -1,9 +1,13 @@
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# OPTIONS_GHC -Wno-unused-imports #-}
 module Muffle.Discord.Generated.Schemas.GuildMemberResponse where
 
 import Data.Int (Int32, Int64)
 import GHC.Generics
+import Data.Aeson
+import Control.Applicative ((<|>))
 import Muffle.Discord.Generated.Schemas.UserAvatarDecorationResponse
 import Muffle.Discord.Generated.Schemas.UserCollectiblesResponse
 import Muffle.Discord.Generated.Schemas.SnowflakeType
@@ -26,3 +30,21 @@ data GuildMemberResponse = GuildMemberResponse
     , user :: UserResponse
     }
     deriving (Show, Eq, Generic)
+
+instance FromJSON GuildMemberResponse where
+    parseJSON = withObject "GuildMemberResponse" $ \o ->
+        GuildMemberResponse <$>
+            o .: "avatar"
+            <*> o .: "avatar_decoration_data"
+            <*> o .: "banner"
+            <*> o .: "collectibles"
+            <*> o .: "communication_disabled_until"
+            <*> o .: "deaf"
+            <*> o .: "flags"
+            <*> o .: "joined_at"
+            <*> o .: "mute"
+            <*> o .: "nick"
+            <*> o .: "pending"
+            <*> o .: "premium_since"
+            <*> o .: "roles"
+            <*> o .: "user"
