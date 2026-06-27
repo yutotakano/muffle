@@ -861,7 +861,7 @@ main = do
                     (not . null)
                     [ "import Data.Int (Int32, Int64)"
                     , "import GHC.Generics"
-                    , "import Data.Aeson hiding (Error(..))" -- conflicts with Error discord type
+                    , "import Data.Aeson hiding (Result(Error))" -- conflicts with Error discord type
                     , "import Control.Applicative ((<|>))"
                     , otherRefsImport
                     ]
