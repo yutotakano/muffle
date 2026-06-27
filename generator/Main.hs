@@ -510,7 +510,7 @@ schemaToHaskellFromJSONInstance name (NullableSchema _) =
             (newValidConstructorName name)
             """
             instance FromJSON ${typename} where
-                parseJSON v = ${constructorname} <$> parseJSON v)
+                parseJSON v = ${constructorname} <$> parseJSON v
             """
 schemaToHaskellFromJSONInstance name (ConstSchema (ParsedSchemaConstant constValue)) =
     replace "${typename}" name $
