@@ -395,6 +395,8 @@ schemaToHaskellDeclaration name flattish@(TypedEnumSchema _) = "newtype " ++ nam
 schemaToHaskellDeclaration name flattish@(IntegerSchema _) = "newtype " ++ name ++ " = " ++ newValidConstructorName name ++ " " ++ fromJust (schemaToSimpleHaskellType flattish)
 schemaToHaskellDeclaration name (ArraySchema (ParsedSchemaArray flattish _min _max)) =
     "newtype " ++ name ++ " = " ++ newValidConstructorName name ++ " [" ++ fromJust (schemaToSimpleHaskellType flattish) ++ "]"
+schemaToHaskellDeclaration name (ObjectSchema (ParsedSchemaObject [] _)) =
+    "data " ++ name ++ " = " ++ newValidConstructorName name
 schemaToHaskellDeclaration name (ObjectSchema (ParsedSchemaObject properties _)) =
     "data "
         ++ name
@@ -572,6 +574,13 @@ schemaToHaskellFromJSONInstance name (ArraySchema (ParsedSchemaArray flattish _m
     """
     instance FromJSON ${typename} where
         parseJSON v = ${constructorname} <$> (parseJSON v :: Parser [${innerType}])
+    """
+schemaToHaskellFromJSONInstance name (ObjectSchema (ParsedSchemaObject [] _)) =
+    replace "${typename}" name
+    $ replace "${constructorname}" (newValidConstructorName name)
+    """
+    instance FromJSON ${typename} where
+        parseJSON = withObject "${typename}" $ \\_ -> pure ${constructorname}
     """
 schemaToHaskellFromJSONInstance name (ObjectSchema (ParsedSchemaObject properties _)) =
     replace "${typename}" name
