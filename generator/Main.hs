@@ -287,7 +287,7 @@ flattenSchema name (ObjectSchema (ParsedSchemaObject properties required)) acc =
     let (newProperties, accWithFlattenedProps) =
             foldl'
                 ( \(propsAcc, accAcc) (propName, propSchema) ->
-                    let newPropName = name ++ newValidConstructorName propName
+                    let newPropName = newValidConstructorName $ name ++ capitalize propName
                         -- Special case for object keys with only type: null
                         -- subschema, this should be treated as
                         -- Nullable (RawType "null") instead of just RawType "null".

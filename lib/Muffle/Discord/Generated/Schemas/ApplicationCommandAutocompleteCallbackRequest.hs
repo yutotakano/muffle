@@ -14,7 +14,7 @@ import Muffle.Discord.Generated.Schemas.InteractionApplicationCommandAutocomplet
 import Muffle.Discord.Generated.Schemas.InteractionApplicationCommandAutocompleteCallbackStringData
 
 data ApplicationCommandAutocompleteCallbackRequest = ApplicationCommandAutocompleteCallbackRequest
-    { data' :: ApplicationCommandAutocompleteCallbackRequestData'
+    { data' :: ApplicationCommandAutocompleteCallbackRequestData
     , type' :: InteractionCallbackTypes
     }
     deriving (Show, Eq, Generic)
@@ -25,11 +25,11 @@ instance FromJSON ApplicationCommandAutocompleteCallbackRequest where
             o .: "data"
             <*> o .: "type"
 
-data ApplicationCommandAutocompleteCallbackRequestData' = ApplicationCommandAutocompleteCallbackRequestData'0 InteractionApplicationCommandAutocompleteCallbackIntegerData | ApplicationCommandAutocompleteCallbackRequestData'1 InteractionApplicationCommandAutocompleteCallbackNumberData | ApplicationCommandAutocompleteCallbackRequestData'2 InteractionApplicationCommandAutocompleteCallbackStringData
+data ApplicationCommandAutocompleteCallbackRequestData = ApplicationCommandAutocompleteCallbackRequestData0 InteractionApplicationCommandAutocompleteCallbackIntegerData | ApplicationCommandAutocompleteCallbackRequestData1 InteractionApplicationCommandAutocompleteCallbackNumberData | ApplicationCommandAutocompleteCallbackRequestData2 InteractionApplicationCommandAutocompleteCallbackStringData
     deriving (Show, Eq, Generic)
 
-instance FromJSON ApplicationCommandAutocompleteCallbackRequestData' where
+instance FromJSON ApplicationCommandAutocompleteCallbackRequestData where
     parseJSON v =
-        ApplicationCommandAutocompleteCallbackRequestData'0 <$> parseJSON v
-            <|> ApplicationCommandAutocompleteCallbackRequestData'1 <$> parseJSON v
-            <|> ApplicationCommandAutocompleteCallbackRequestData'2 <$> parseJSON v
+        ApplicationCommandAutocompleteCallbackRequestData0 <$> parseJSON v
+            <|> ApplicationCommandAutocompleteCallbackRequestData1 <$> parseJSON v
+            <|> ApplicationCommandAutocompleteCallbackRequestData2 <$> parseJSON v
