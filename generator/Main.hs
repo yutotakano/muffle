@@ -302,7 +302,7 @@ flattenSchema name (ObjectSchema (ParsedSchemaObject properties required)) acc =
                             -- If the flattened schema became simple enough, use that.
                             -- Remove from the accumulator.
                             else
-                                if (isJust (schemaToSimpleHaskellType mainSchemaInFlattened))
+                                if isJust (schemaToSimpleHaskellType mainSchemaInFlattened)
                                     then (propsAcc ++ [(propName, mainSchemaInFlattened)], StrictMap.delete nameOfMainSchemaInFlattened accWithFlattenedProp)
                                     else (propsAcc ++ [(propName, RefSchema (ParsedSchemaRef newPropName))], accWithFlattenedProp)
                 )
@@ -581,11 +581,12 @@ schemaToHaskellFromJSONInstance name (ObjectSchema (ParsedSchemaObject [] _)) =
 schemaToHaskellFromJSONInstance name (ObjectSchema (ParsedSchemaObject properties _)) =
     replace "${typename}" name
     $ replace "${constructorname}" (newValidConstructorName name)
-    $ replace "${fieldparsers}" (intercalate "\n            <*> " (map (\(propName, propSchema) -> "o .: "++ show propName) properties))
+    $ replace "${fieldparsers}" (intercalate "\n            <*> " (map (\(propName, _) -> "o .: "++ show propName) properties))
     """
     instance FromJSON ${typename} where
         parseJSON = withObject "${typename}" $ \\o ->
-            ${constructorname} <$> ${fieldparsers}
+            ${constructorname} <$>
+                ${fieldparsers}
     """
 schemaToHaskellFromJSONInstance name (AnyOfSchema schemas)
     | all (isConstSchema . snd) schemas =
@@ -612,7 +613,7 @@ schemaToHaskellFromJSONInstance name (AnyOfSchema schemas)
             parseJSON v =
                 ${cases}
         """
-
+-- todo: allOf is generally wack
 schemaToHaskellFromJSONInstance name (AllOfSchema schemas) =
     replace "${typename}" name
     $ replace "${constructorname}" (newValidConstructorName name)
@@ -621,10 +622,10 @@ schemaToHaskellFromJSONInstance name (AllOfSchema schemas) =
     instance FromJSON ${typename} where
         parseJSON v = case v of
     """
-        ++ intercalate "\n        " (zipWith
-            (\i schema -> "_ -> ${constructorname} <$> (parseJSON v :: Parser " ++ fromJust (schemaToSimpleHaskellType schema) ++ ")"
+        ++ intercalate "\n        " (map
+            (\schema -> "_ -> ${constructorname} <$> (parseJSON v :: Parser " ++ fromJust (schemaToSimpleHaskellType $ snd schema) ++ ")"
             )
-            [(0 :: Integer) ..] (map snd schemas))
+            schemas)
         ++ "        _ -> fail \"Expected one of the types in the allOf schema\""
 schemaToHaskellFromJSONInstance name (OneOfSchema schemas)
     | all (isConstSchema . snd) schemas =
