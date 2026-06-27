@@ -1,5 +1,5 @@
-{-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultilineStrings #-}
+{-# LANGUAGE OverloadedStrings #-}
 
 {- HLINT ignore "Use newtype instead of data" -}
 
@@ -498,161 +498,208 @@ schemaToHaskellDeclaration name EmptySchema = "data " ++ name ++ " = " ++ name
 replace :: String -> String -> String -> String
 replace old new = T.unpack . T.replace (T.pack old) (T.pack new) . T.pack
 
--- | Given a parsed schema that's about to become a Haskell declaration, return
--- the corresponding FromJSON instance declaration for it.
+{- | Given a parsed schema that's about to become a Haskell declaration, return
+the corresponding FromJSON instance declaration for it.
+-}
 schemaToHaskellFromJSONInstance :: String -> ParsedSchema -> String
 schemaToHaskellFromJSONInstance _ (RefSchema _) = error "Only way this can happen is if the original OpenAPI doc has a top-level ref schema"
 schemaToHaskellFromJSONInstance name (NullableSchema _) =
-    replace "${typename}" name
-    $ replace "${constructorname}" (newValidConstructorName name)
-    """
-    instance FromJSON ${typename} where
-        parseJSON v = ${constructorname} <$> parseJSON v)
-    """
+    replace "${typename}" name $
+        replace
+            "${constructorname}"
+            (newValidConstructorName name)
+            """
+            instance FromJSON ${typename} where
+                parseJSON v = ${constructorname} <$> parseJSON v)
+            """
 schemaToHaskellFromJSONInstance name (ConstSchema (ParsedSchemaConstant constValue)) =
-    replace "${typename}" name
-    $ replace "${constValue}" constValue
-    $ replace "${constructorname}" (newValidConstructorName name)
-    $ replace "${constructorValue}" (newValidConstructorName constValue)
-    """
-    instance FromJSON ${typename} where
-        parseJSON (String s) | s == ${constValue} = pure (${constructorname} ${constructorValue})
-        parseJSON _ = fail "Expected constant value: ${constValue}"
-    """
+    replace "${typename}" name $
+        replace "${constValue}" constValue $
+            replace "${constructorname}" (newValidConstructorName name) $
+                replace
+                    "${constructorValue}"
+                    (newValidConstructorName constValue)
+                    """
+                    instance FromJSON ${typename} where
+                        parseJSON (String s) | s == ${constValue} = pure (${constructorname} ${constructorValue})
+                        parseJSON _ = fail "Expected constant value: ${constValue}"
+                    """
 schemaToHaskellFromJSONInstance name (RawTypeSchema _) =
-    replace "${typename}" name
-    $ replace "${constructorname}" (newValidConstructorName name)
-    """
-    instance FromJSON ${typename} where
-        parseJSON v = ${constructorname} <$> parseJSON v
-    """
+    replace "${typename}" name $
+        replace
+            "${constructorname}"
+            (newValidConstructorName name)
+            """
+            instance FromJSON ${typename} where
+                parseJSON v = ${constructorname} <$> parseJSON v
+            """
 schemaToHaskellFromJSONInstance name (EnumSchema (ParsedSchemaEnum (Left values))) =
-    replace "${typename}" name
-    """
-    instance FromJSON ${typename} where
-        parseJSON (String s) = case s of
-    """ ++ concatMap (\v -> "        " ++ show v ++ " -> pure " ++ capitalize v ++ "\n") values
-        ++ "        _ -> fail \"Expected one of: " ++ intercalate ", " values ++ "\""
+    replace
+        "${typename}"
+        name
+        """
+        instance FromJSON ${typename} where
+            parseJSON (String s) = case s of
+        """
+        ++ concatMap (\v -> "        " ++ show v ++ " -> pure " ++ capitalize v ++ "\n") values
+        ++ "        _ -> fail \"Expected one of: "
+        ++ intercalate ", " values
+        ++ "\""
 schemaToHaskellFromJSONInstance name EmptySchema =
-    replace "${typename}" name
-    """
-    instance FromJSON ${typename} where
-        parseJSON _ = fail "Expected empty schema"
-    """
+    replace
+        "${typename}"
+        name
+        """
+        instance FromJSON ${typename} where
+            parseJSON _ = fail "Expected empty schema"
+        """
 schemaToHaskellFromJSONInstance name (EnumSchema (ParsedSchemaEnum (Right values))) =
-    replace "${typename}" name
-    $ replace "${commaSepEnumValues}" (intercalate ", " (map show values))
-    """
-    instance FromJSON ${typename} where
-    """
-        ++ concatMap
-            (\v -> "    parseJSON (Number " ++ show v ++ ") = pure " ++ name ++ "Enum" ++ show v ++ "\n")
-            values
-        ++ "\n    parseJSON _ = fail \"Expected one of: " ++ intercalate ", " (map show values) ++ "\""
+    replace "${typename}" name $
+        replace
+            "${commaSepEnumValues}"
+            (intercalate ", " (map show values))
+            """
+            instance FromJSON ${typename} where
+            """
+            ++ concatMap
+                (\v -> "    parseJSON (Number " ++ show v ++ ") = pure " ++ name ++ "Enum" ++ show v ++ "\n")
+                values
+            ++ "\n    parseJSON _ = fail \"Expected one of: "
+            ++ intercalate ", " (map show values)
+            ++ "\""
 schemaToHaskellFromJSONInstance name (TypedEnumSchema _) =
-    replace "${typename}" name
-    $ replace "${constructorname}" (newValidConstructorName name)
-    """
-    instance FromJSON ${typename} where
-        parseJSON v = ${constructorname} <$> parseJSON v
-    """
+    replace "${typename}" name $
+        replace
+            "${constructorname}"
+            (newValidConstructorName name)
+            """
+            instance FromJSON ${typename} where
+                parseJSON v = ${constructorname} <$> parseJSON v
+            """
 schemaToHaskellFromJSONInstance name (IntegerSchema _) =
-    replace "${typename}" name
-    $ replace "${constructorname}" (newValidConstructorName name)
-    """
-    instance FromJSON ${typename} where
-        parseJSON v = ${constructorname} <$> parseJSON v
-    """
+    replace "${typename}" name $
+        replace
+            "${constructorname}"
+            (newValidConstructorName name)
+            """
+            instance FromJSON ${typename} where
+                parseJSON v = ${constructorname} <$> parseJSON v
+            """
 schemaToHaskellFromJSONInstance name (ArraySchema (ParsedSchemaArray flattish _min _max)) =
-    replace "${typename}" name
-    $ replace "${constructorname}" (newValidConstructorName name)
-    $ replace "${innerType}" (fromJust (schemaToSimpleHaskellType flattish))
-    """
-    instance FromJSON ${typename} where
-        parseJSON v = ${constructorname} <$> (parseJSON v :: Parser [${innerType}])
-    """
+    replace "${typename}" name $
+        replace "${constructorname}" (newValidConstructorName name) $
+            replace
+                "${innerType}"
+                (fromJust (schemaToSimpleHaskellType flattish))
+                """
+                instance FromJSON ${typename} where
+                    parseJSON v = ${constructorname} <$> (parseJSON v :: Parser [${innerType}])
+                """
 schemaToHaskellFromJSONInstance name (ObjectSchema (ParsedSchemaObject [] _)) =
-    replace "${typename}" name
-    $ replace "${constructorname}" (newValidConstructorName name)
-    """
-    instance FromJSON ${typename} where
-        parseJSON = withObject "${typename}" $ \\_ -> pure ${constructorname}
-    """
+    replace "${typename}" name $
+        replace
+            "${constructorname}"
+            (newValidConstructorName name)
+            """
+            instance FromJSON ${typename} where
+                parseJSON = withObject "${typename}" $ \\_ -> pure ${constructorname}
+            """
 schemaToHaskellFromJSONInstance name (ObjectSchema (ParsedSchemaObject properties _)) =
-    replace "${typename}" name
-    $ replace "${constructorname}" (newValidConstructorName name)
-    $ replace "${fieldparsers}" (intercalate "\n            <*> " (map (\(propName, _) -> "o .: "++ show propName) properties))
-    """
-    instance FromJSON ${typename} where
-        parseJSON = withObject "${typename}" $ \\o ->
-            ${constructorname} <$>
-                ${fieldparsers}
-    """
+    replace "${typename}" name $
+        replace "${constructorname}" (newValidConstructorName name) $
+            replace
+                "${fieldparsers}"
+                (intercalate "\n            <*> " (map (\(propName, _) -> "o .: " ++ show propName) properties))
+                """
+                instance FromJSON ${typename} where
+                    parseJSON = withObject "${typename}" $ \\o ->
+                        ${constructorname} <$>
+                            ${fieldparsers}
+                """
 schemaToHaskellFromJSONInstance name (AnyOfSchema schemas)
     | all (isConstSchema . snd) schemas =
-        replace "${typename}" name
-        $ replace "${constructorname}" (newValidConstructorName name)
-        $ replace "${cases}" (intercalate "\n        " (
-            map (\schema -> case snd schema of
-                ConstSchema (ParsedSchemaConstant value) -> "\"" ++ value ++ "\" -> pure $ " ++ name ++ fromJust (schemaToSimpleHaskellType $ snd schema)
-                _ -> error "Input was not flatted enough...!"
-            ) schemas)
-        )
-        """
-        instance FromJSON ${typename} where
-            parseJSON v = case v of
-                ${cases}
-                _ -> fail "Expected one of the constant values in the anyOf schema"
-        """
+        replace "${typename}" name $
+            replace "${constructorname}" (newValidConstructorName name) $
+                replace
+                    "${cases}"
+                    ( intercalate
+                        "\n        "
+                        ( map
+                            ( \schema -> case snd schema of
+                                ConstSchema (ParsedSchemaConstant value) -> "\"" ++ value ++ "\" -> pure $ " ++ name ++ fromJust (schemaToSimpleHaskellType $ snd schema)
+                                _ -> error "Input was not flatted enough...!"
+                            )
+                            schemas
+                        )
+                    )
+                    """
+                    instance FromJSON ${typename} where
+                        parseJSON v = case v of
+                            ${cases}
+                            _ -> fail "Expected one of the constant values in the anyOf schema"
+                    """
     | otherwise =
-        replace "${typename}" name
-        $ replace "${constructorname}" (newValidConstructorName name)
-        $ replace "${cases}" (intercalate "\n            <|> " (map (\i -> name ++ show i ++ " <$> parseJSON v") [0 .. toInteger (length schemas) - 1]))
-        """
-        instance FromJSON ${typename} where
-            parseJSON v =
-                ${cases}
-        """
+        replace "${typename}" name $
+            replace "${constructorname}" (newValidConstructorName name) $
+                replace
+                    "${cases}"
+                    (intercalate "\n            <|> " (map (\i -> name ++ show i ++ " <$> parseJSON v") [0 .. toInteger (length schemas) - 1]))
+                    """
+                    instance FromJSON ${typename} where
+                        parseJSON v =
+                            ${cases}
+                    """
 -- todo: allOf is generally wack
 schemaToHaskellFromJSONInstance name (AllOfSchema schemas) =
-    replace "${typename}" name
-    $ replace "${constructorname}" (newValidConstructorName name)
-    $
-    """
-    instance FromJSON ${typename} where
-        parseJSON v = case v of
-    """
-        ++ intercalate "\n        " (map
-            (\schema -> "_ -> ${constructorname} <$> (parseJSON v :: Parser " ++ fromJust (schemaToSimpleHaskellType $ snd schema) ++ ")"
-            )
-            schemas)
-        ++ "        _ -> fail \"Expected one of the types in the allOf schema\""
+    replace "${typename}" name $
+        replace "${constructorname}" (newValidConstructorName name) $
+            """
+            instance FromJSON ${typename} where
+                parseJSON v = case v of
+            """
+                ++ intercalate
+                    "\n        "
+                    ( map
+                        (\schema -> "_ -> ${constructorname} <$> (parseJSON v :: Parser " ++ fromJust (schemaToSimpleHaskellType $ snd schema) ++ ")")
+                        schemas
+                    )
+                ++ "        _ -> fail \"Expected one of the types in the allOf schema\""
 schemaToHaskellFromJSONInstance name (OneOfSchema schemas)
     | all (isConstSchema . snd) schemas =
         replace "${typename}" name
-        $ replace "${constructorname}" (newValidConstructorName name)
-        $ replace "${cases}" (intercalate "\n        " (
-            map (\schema -> case snd schema of
-                ConstSchema (ParsedSchemaConstant value) -> "\"" ++ value ++ "\" -> pure $ " ++ name ++ fromJust (schemaToSimpleHaskellType $ snd schema)
-                _ -> error "Input was not flatted enough...!"
-            ) schemas)
-        )
-        $ replace "${failCase}" "_ -> fail \"Expected one of the constants in the oneOf schema\""
-        """
-        instance FromJSON ${typename} where
-            parseJSON v = case v of
-                ${cases}
-                ${failCase}
-        """
+            $ replace "${constructorname}" (newValidConstructorName name)
+            $ replace
+                "${cases}"
+                ( intercalate
+                    "\n        "
+                    ( map
+                        ( \schema -> case snd schema of
+                            ConstSchema (ParsedSchemaConstant value) -> "\"" ++ value ++ "\" -> pure $ " ++ name ++ fromJust (schemaToSimpleHaskellType $ snd schema)
+                            _ -> error "Input was not flatted enough...!"
+                        )
+                        schemas
+                    )
+                )
+            $ replace
+                "${failCase}"
+                "_ -> fail \"Expected one of the constants in the oneOf schema\""
+                """
+                instance FromJSON ${typename} where
+                    parseJSON v = case v of
+                        ${cases}
+                        ${failCase}
+                """
     | otherwise =
-        replace "${typename}" name
-        $ replace "${constructorname}" (newValidConstructorName name)
-        $ replace "${cases}" (intercalate "\n            <|> " (map (\i -> name ++ show i ++ " <$> parseJSON v") [0 .. toInteger (length schemas) - 1]))
-        """
-        instance FromJSON ${typename} where
-            parseJSON v =
-                ${cases}
-        """
+        replace "${typename}" name $
+            replace "${constructorname}" (newValidConstructorName name) $
+                replace
+                    "${cases}"
+                    (intercalate "\n            <|> " (map (\i -> name ++ show i ++ " <$> parseJSON v") [0 .. toInteger (length schemas) - 1]))
+                    """
+                    instance FromJSON ${typename} where
+                        parseJSON v =
+                            ${cases}
+                    """
 
 haskellKeywords :: [String]
 haskellKeywords = ["type", "data", "default"]
@@ -805,18 +852,20 @@ main = do
         let intermediateOutputFile = "lib/Muffle/Discord/Generated/Schemas/" ++ name ++ ".hs.txt"
 
         let otherRefsImport = intercalate "\n" $ map ("import Muffle.Discord.Generated.Schemas." ++) $ nub $ filterUnresolvedRefs flattenedSchemas
-        let extensions = [
-                "{-# LANGUAGE DuplicateRecordFields #-}",
-                "{-# LANGUAGE DeriveGeneric #-}",
-                "{-# LANGUAGE OverloadedStrings #-}"
+        let extensions =
+                [ "{-# LANGUAGE DuplicateRecordFields #-}"
+                , "{-# LANGUAGE DeriveGeneric #-}"
+                , "{-# LANGUAGE OverloadedStrings #-}"
                 ]
-        let imports = filter (not . null) [
-                if any ("Int32" `isInfixOf`) haskellDeclarations then "import Data.Int (Int32)" else "",
-                if any ("Int64" `isInfixOf`) haskellDeclarations then "import Data.Int (Int64)" else "",
-                "import GHC.Generics",
-                "import Data.Aeson",
-                otherRefsImport
-                ]
+        let imports =
+                filter
+                    (not . null)
+                    [ if any ("Int32" `isInfixOf`) haskellDeclarations then "import Data.Int (Int32)" else ""
+                    , if any ("Int64" `isInfixOf`) haskellDeclarations then "import Data.Int (Int64)" else ""
+                    , "import GHC.Generics"
+                    , "import Data.Aeson"
+                    , otherRefsImport
+                    ]
         let moduleHeader = intercalate "\n" extensions ++ "\nmodule Muffle.Discord.Generated.Schemas." ++ name ++ " where\n\n" ++ intercalate "\n" imports ++ "\n\n"
         writeFile outputFile (moduleHeader ++ intercalate "\n\n" haskellDeclarations)
         TLIO.writeFile intermediateOutputFile $ pShowNoColor flattenedSchemas
