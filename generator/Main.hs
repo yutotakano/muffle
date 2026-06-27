@@ -856,14 +856,15 @@ main = do
                 [ "{-# LANGUAGE DuplicateRecordFields #-}"
                 , "{-# LANGUAGE DeriveGeneric #-}"
                 , "{-# LANGUAGE OverloadedStrings #-}"
+                , "{-# OPTIONS_GHC -Wno-unused-imports #-}"
                 ]
         let imports =
                 filter
                     (not . null)
-                    [ if any ("Int32" `isInfixOf`) haskellDeclarations then "import Data.Int (Int32)" else ""
-                    , if any ("Int64" `isInfixOf`) haskellDeclarations then "import Data.Int (Int64)" else ""
+                    [ "import Data.Int (Int32, Int64)"
                     , "import GHC.Generics"
                     , "import Data.Aeson"
+                    , "import Control.Applicative ((<|>))"
                     , otherRefsImport
                     ]
         let moduleHeader = intercalate "\n" extensions ++ "\nmodule Muffle.Discord.Generated.Schemas." ++ name ++ " where\n\n" ++ intercalate "\n" imports ++ "\n\n"
