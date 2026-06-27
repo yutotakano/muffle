@@ -6,7 +6,7 @@ module Muffle.Discord.Generated.Schemas.SeparatorComponentForMessageRequest wher
 
 import Data.Int (Int32, Int64)
 import GHC.Generics
-import Data.Aeson
+import Data.Aeson hiding (Result(Error))
 import Control.Applicative ((<|>))
 import Muffle.Discord.Generated.Schemas.MessageComponentSeparatorSpacingSize
 import Muffle.Discord.Generated.Schemas.MessageComponentTypes

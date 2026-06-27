@@ -567,6 +567,7 @@ library
     -- other-extensions:
     build-depends:
         base ^>=4.21.0.0
+      , aeson ^>=2.3.0.0
     hs-source-dirs:   lib
     default-language: Haskell2010
 
@@ -576,8 +577,10 @@ executable muffle
     -- other-modules:
     -- other-extensions:
     build-depends:
-        base ^>=4.21.0.0,
-        muffle
+        base ^>=4.21.0.0
+      , muffle
+      , aeson ^>=2.3.0.0
+      , bytestring ^>=0.12.0.0
 
     hs-source-dirs:   app
     default-language: Haskell2010

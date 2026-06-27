@@ -6,7 +6,7 @@ module Muffle.Discord.Generated.Schemas.GuildFeatures where
 
 import Data.Int (Int32, Int64)
 import GHC.Generics
-import Data.Aeson
+import Data.Aeson hiding (Result(Error))
 import Control.Applicative ((<|>))
 
 data GuildFeatures = GuildFeaturesANIMATEDBANNER | GuildFeaturesANIMATEDICON | GuildFeaturesAPPLICATIONCOMMANDPERMISSIONSV2 | GuildFeaturesAUTOMODERATION | GuildFeaturesBANNER | GuildFeaturesCOMMUNITY | GuildFeaturesCREATORMONETIZABLEPROVISIONAL | GuildFeaturesCREATORSTOREPAGE | GuildFeaturesDEVELOPERSUPPORTSERVER | GuildFeaturesDISCOVERABLE | GuildFeaturesFEATURABLE | GuildFeaturesINVITESDISABLED | GuildFeaturesINVITESPLASH | GuildFeaturesMEMBERVERIFICATIONGATEENABLED | GuildFeaturesMORESTICKERS | GuildFeaturesNEWS | GuildFeaturesPARTNERED | GuildFeaturesPREVIEWENABLED | GuildFeaturesRAIDALERTSDISABLED | GuildFeaturesPRUNEREQUIRESADMIN | GuildFeaturesROLEICONS | GuildFeaturesROLESUBSCRIPTIONSAVAILABLEFORPURCHASE | GuildFeaturesROLESUBSCRIPTIONSENABLED | GuildFeaturesTICKETEDEVENTSENABLED | GuildFeaturesVANITYURL | GuildFeaturesVERIFIED | GuildFeaturesVIPREGIONS | GuildFeaturesWELCOMESCREENENABLED | GuildFeaturesOFFICIALGAMEGUILD

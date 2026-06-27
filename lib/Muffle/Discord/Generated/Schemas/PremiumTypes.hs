@@ -6,7 +6,7 @@ module Muffle.Discord.Generated.Schemas.PremiumTypes where
 
 import Data.Int (Int32, Int64)
 import GHC.Generics
-import Data.Aeson
+import Data.Aeson hiding (Result(Error))
 import Control.Applicative ((<|>))
 
 newtype PremiumTypes = PremiumTypes Int32

@@ -6,7 +6,7 @@ module Muffle.Discord.Generated.Schemas.WidgetImageStyles where
 
 import Data.Int (Int32, Int64)
 import GHC.Generics
-import Data.Aeson
+import Data.Aeson hiding (Result(Error))
 import Control.Applicative ((<|>))
 
 data WidgetImageStyles = WidgetImageStylesShield | WidgetImageStylesBanner1 | WidgetImageStylesBanner2 | WidgetImageStylesBanner3 | WidgetImageStylesBanner4

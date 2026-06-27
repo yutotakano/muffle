@@ -6,7 +6,7 @@ module Muffle.Discord.Generated.Schemas.ApplicationUserRoleConnectionResponse wh
 
 import Data.Int (Int32, Int64)
 import GHC.Generics
-import Data.Aeson
+import Data.Aeson hiding (Result(Error))
 import Control.Applicative ((<|>))
 
 data ApplicationUserRoleConnectionResponse = ApplicationUserRoleConnectionResponse

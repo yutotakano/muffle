@@ -6,7 +6,7 @@ module Muffle.Discord.Generated.Schemas.OAuth2GetOpenIDConnectUserInfoResponse w
 
 import Data.Int (Int32, Int64)
 import GHC.Generics
-import Data.Aeson
+import Data.Aeson hiding (Result(Error))
 import Control.Applicative ((<|>))
 
 data OAuth2GetOpenIDConnectUserInfoResponse = OAuth2GetOpenIDConnectUserInfoResponse

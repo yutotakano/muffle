@@ -6,7 +6,7 @@ module Muffle.Discord.Generated.Schemas.LobbyMemberRequest where
 
 import Data.Int (Int32, Int64)
 import GHC.Generics
-import Data.Aeson
+import Data.Aeson hiding (Result(Error))
 import Control.Applicative ((<|>))
 import Muffle.Discord.Generated.Schemas.SnowflakeType
 
@@ -33,8 +33,8 @@ instance FromJSON LobbyMemberRequestFlagsNullableInner where
 data LobbyMemberRequestFlagsNullableInnerNullableInner = LobbyMemberRequestFlagsNullableInnerNullableInnerEnum1
     deriving (Show, Eq, Generic)
 
-instance FromJSON LobbyMemberRequestFlagsNullableInnerNullableInner where    parseJSON (Number 1) = pure LobbyMemberRequestFlagsNullableInnerNullableInnerEnum1
-
+instance FromJSON LobbyMemberRequestFlagsNullableInnerNullableInner where
+    parseJSON (Number 1) = pure LobbyMemberRequestFlagsNullableInnerNullableInnerEnum1
     parseJSON _ = fail "Expected one of: 1"
 
 newtype LobbyMemberRequestMetadataNullableInner = LobbyMemberRequestMetadataNullableInner (Maybe LobbyMemberRequestMetadataNullableInnerNullableInner)

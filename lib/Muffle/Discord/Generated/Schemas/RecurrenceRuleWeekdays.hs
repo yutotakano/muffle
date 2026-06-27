@@ -6,7 +6,7 @@ module Muffle.Discord.Generated.Schemas.RecurrenceRuleWeekdays where
 
 import Data.Int (Int32, Int64)
 import GHC.Generics
-import Data.Aeson
+import Data.Aeson hiding (Result(Error))
 import Control.Applicative ((<|>))
 
 newtype RecurrenceRuleWeekdays = RecurrenceRuleWeekdays Int32

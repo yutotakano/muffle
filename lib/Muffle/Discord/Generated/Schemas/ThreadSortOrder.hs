@@ -6,7 +6,7 @@ module Muffle.Discord.Generated.Schemas.ThreadSortOrder where
 
 import Data.Int (Int32, Int64)
 import GHC.Generics
-import Data.Aeson
+import Data.Aeson hiding (Result(Error))
 import Control.Applicative ((<|>))
 
 newtype ThreadSortOrder = ThreadSortOrder Int32

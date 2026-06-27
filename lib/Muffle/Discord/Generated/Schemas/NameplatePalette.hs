@@ -6,7 +6,7 @@ module Muffle.Discord.Generated.Schemas.NameplatePalette where
 
 import Data.Int (Int32, Int64)
 import GHC.Generics
-import Data.Aeson
+import Data.Aeson hiding (Result(Error))
 import Control.Applicative ((<|>))
 
 data NameplatePalette = NameplatePaletteCrimson | NameplatePaletteBerry | NameplatePaletteSky | NameplatePaletteTeal | NameplatePaletteForest | NameplatePaletteBubbleGum | NameplatePaletteViolet | NameplatePaletteCobalt | NameplatePaletteClover | NameplatePaletteLemon | NameplatePaletteWhite | NameplatePaletteBlack
