@@ -502,13 +502,12 @@ replace old new = T.unpack . T.replace (T.pack old) (T.pack new) . T.pack
 -- the corresponding FromJSON instance declaration for it.
 schemaToHaskellFromJSONInstance :: String -> ParsedSchema -> String
 schemaToHaskellFromJSONInstance _ (RefSchema _) = error "Only way this can happen is if the original OpenAPI doc has a top-level ref schema"
-schemaToHaskellFromJSONInstance name (NullableSchema flattish) =
+schemaToHaskellFromJSONInstance name (NullableSchema _) =
     replace "${typename}" name
     $ replace "${constructorname}" (newValidConstructorName name)
-    $ replace "${innerType}" (fromJust (schemaToSimpleHaskellType flattish))
     """
     instance FromJSON ${typename} where
-        parseJSON v = ${constructorname} <$> (parseJSON v :: Parser (${innerType}))
+        parseJSON v = ${constructorname} <$> parseJSON v)
     """
 schemaToHaskellFromJSONInstance name (ConstSchema (ParsedSchemaConstant constValue)) =
     replace "${typename}" name
@@ -520,13 +519,12 @@ schemaToHaskellFromJSONInstance name (ConstSchema (ParsedSchemaConstant constVal
         parseJSON (String s) | s == ${constValue} = pure (${constructorname} ${constructorValue})
         parseJSON _ = fail "Expected constant value: ${constValue}"
     """
-schemaToHaskellFromJSONInstance name flattish@(RawTypeSchema _) =
+schemaToHaskellFromJSONInstance name (RawTypeSchema _) =
     replace "${typename}" name
     $ replace "${constructorname}" (newValidConstructorName name)
-    $ replace "${innerType}" (fromJust (schemaToSimpleHaskellType flattish))
     """
     instance FromJSON ${typename} where
-        parseJSON v = ${constructorname} <$> (parseJSON v :: Parser (${innerType}))
+        parseJSON v = ${constructorname} <$> parseJSON v
     """
 schemaToHaskellFromJSONInstance name (EnumSchema (ParsedSchemaEnum (Left values))) =
     replace "${typename}" name
@@ -551,21 +549,19 @@ schemaToHaskellFromJSONInstance name (EnumSchema (ParsedSchemaEnum (Right values
             (\v -> "    parseJSON (Number " ++ show v ++ ") = pure " ++ name ++ "Enum" ++ show v ++ "\n")
             values
         ++ "\n    parseJSON _ = fail \"Expected one of: " ++ intercalate ", " (map show values) ++ "\""
-schemaToHaskellFromJSONInstance name flattish@(TypedEnumSchema _) =
+schemaToHaskellFromJSONInstance name (TypedEnumSchema _) =
     replace "${typename}" name
     $ replace "${constructorname}" (newValidConstructorName name)
-    $ replace "${innerType}" (fromJust (schemaToSimpleHaskellType flattish))
     """
     instance FromJSON ${typename} where
-        parseJSON v = ${constructorname} <$> (parseJSON v :: Parser (${innerType}))
+        parseJSON v = ${constructorname} <$> parseJSON v
     """
-schemaToHaskellFromJSONInstance name flattish@(IntegerSchema _) =
+schemaToHaskellFromJSONInstance name (IntegerSchema _) =
     replace "${typename}" name
     $ replace "${constructorname}" (newValidConstructorName name)
-    $ replace "${innerType}" (fromJust (schemaToSimpleHaskellType flattish))
     """
     instance FromJSON ${typename} where
-        parseJSON v = ${constructorname} <$> (parseJSON v :: Parser (${innerType}))
+        parseJSON v = ${constructorname} <$> parseJSON v
     """
 schemaToHaskellFromJSONInstance name (ArraySchema (ParsedSchemaArray flattish _min _max)) =
     replace "${typename}" name
@@ -808,7 +804,7 @@ main = do
         let intermediateOutputFile = "lib/Muffle/Discord/Generated/Schemas/" ++ name ++ ".hs.txt"
 
         let otherRefsImport = intercalate "\n" $ map ("import Muffle.Discord.Generated.Schemas." ++) $ nub $ filterUnresolvedRefs flattenedSchemas
-        let moduleHeader = "{-# LANGUAGE DuplicateRecordFields #-}\n{-# LANGUAGE DeriveGeneric #-}\n{-# LANGUAGE OverloadedStrings #-}\nmodule Muffle.Discord.Generated.Schemas." ++ name ++ " where\n\nimport Data.Int (Int32, Int64)\nimport GHC.Generics\nimport Data.Aeson\nimport Data.Aeson.Types\n" ++ otherRefsImport ++ "\n\n"
+        let moduleHeader = "{-# LANGUAGE DuplicateRecordFields #-}\n{-# LANGUAGE DeriveGeneric #-}\n{-# LANGUAGE OverloadedStrings #-}\nmodule Muffle.Discord.Generated.Schemas." ++ name ++ " where\n\nimport Data.Int (Int32, Int64)\nimport GHC.Generics\nimport Data.Aeson\n" ++ otherRefsImport ++ "\n\n"
         writeFile outputFile (moduleHeader ++ intercalate "\n\n" haskellDeclarations)
         TLIO.writeFile intermediateOutputFile $ pShowNoColor flattenedSchemas
 
