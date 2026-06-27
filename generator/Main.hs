@@ -623,7 +623,7 @@ schemaToHaskellFromJSONInstance name (AnyOfSchema schemas)
                         "\n        "
                         ( map
                             ( \schema -> case snd schema of
-                                ConstSchema (ParsedSchemaConstant value) -> "\"" ++ value ++ "\" -> pure $ " ++ name ++ fromJust (schemaToSimpleHaskellType $ snd schema)
+                                ConstSchema (ParsedSchemaConstant value) -> "\"" ++ value ++ "\" -> pure " ++ name ++ fromJust (schemaToSimpleHaskellType $ snd schema)
                                 _ -> error "Input was not flatted enough...!"
                             )
                             schemas
@@ -671,7 +671,7 @@ schemaToHaskellFromJSONInstance name (OneOfSchema schemas)
                     "\n        "
                     ( map
                         ( \schema -> case snd schema of
-                            ConstSchema (ParsedSchemaConstant value) -> "\"" ++ value ++ "\" -> pure $ " ++ name ++ fromJust (schemaToSimpleHaskellType $ snd schema)
+                            ConstSchema (ParsedSchemaConstant value) -> "\"" ++ value ++ "\" -> pure " ++ name ++ fromJust (schemaToSimpleHaskellType $ snd schema)
                             _ -> error "Input was not flatted enough...!"
                         )
                         schemas
