@@ -567,7 +567,7 @@ library
     -- other-extensions:
     build-depends:
         base ^>=4.21.0.0
-      , aeson ^>=2.3.0.0
+      , aeson >=2.0.1.0 && <2.3
     hs-source-dirs:   lib
     default-language: Haskell2010
 
@@ -579,7 +579,7 @@ executable muffle
     build-depends:
         base ^>=4.21.0.0
       , muffle
-      , aeson ^>=2.3.0.0
+      , aeson >=2.0.1.0 && <2.3
       , bytestring ^>=0.12.0.0
 
     hs-source-dirs:   app
@@ -592,12 +592,13 @@ executable generator
     -- other-extensions:
     build-depends:
         base ^>=4.21.0.0
-      , aeson ^>=2.3.0.0
+      , aeson >=2.0.1.0 && <2.3
       , bytestring ^>=0.12.0.0
       , text ^>=2.1.1
       , pretty-simple ^>=4.1.4.0
-      , containers ^>=0.8
+      , containers ^>=0.7
       , directory ^>=1.3.11.0
+      , openapi-hs ^>=4.0.0
 
     hs-source-dirs:   generator
     default-language: Haskell2010
